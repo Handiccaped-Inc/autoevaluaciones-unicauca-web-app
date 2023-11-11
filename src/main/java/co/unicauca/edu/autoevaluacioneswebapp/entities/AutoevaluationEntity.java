@@ -19,6 +19,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,7 +38,7 @@ public class AutoevaluationEntity {
      /**
      * Identifier of the associated work for the autoevaluation.
      */
-    private Long workId;
+    private Long work;
       /**
      * Activity status indicating whether the autoevaluation is active or not.
      */
