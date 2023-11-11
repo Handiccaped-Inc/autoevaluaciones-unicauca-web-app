@@ -23,7 +23,7 @@ public class SecurityConfiguration {
     private final JwtService jwtService;
 
     @Autowired
-    public SecurityConfiguration(JwtService jwtService){
+    public SecurityConfiguration(JwtService jwtService) {
         this.jwtService = jwtService;
     }
 
@@ -32,12 +32,23 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
 
-        http.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated())
-                .addFilterBefore(new UserAuthenticationFilter(jwtService),UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement((sess)-> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        http.authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/swagger-ui/**",
+                                "/swagger-ui/index.html",
+                                "/configuration/**",
+                                "/swagger-resources/**",
+                                "/v2/api-docs",
+                                "/webjars/**")
+                        .permitAll()
+                        .requestMatchers("h2-console/**")
+                        .permitAll()
+                        .anyRequest()
+                        .authenticated())
+                .addFilterBefore(new UserAuthenticationFilter(jwtService), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement((sess) -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
 
-        http.headers((hds)-> hds.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
+        http.headers((hds) -> hds.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
         return http.build();
     }
 
