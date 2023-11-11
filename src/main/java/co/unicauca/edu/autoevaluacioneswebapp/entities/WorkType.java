@@ -1,7 +1,8 @@
 /**
- * Represents a work entity in the system.
+ * Represents a type of work in the system.
  * <p>
- * Each work entity has a unique identifier, name, type identifier, and assigned hours.
+ * Each work type has a unique identifier, code, and description.
+ * <p>
  *
  * @author Santiago Agredo Vallejo
  * @version 1.0
@@ -15,29 +16,25 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class WorkEntity {
-    /**
-     * Unique identifier for the work entity.
+public class WorkType {
+     /**
+     * Unique identifier for the work type.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    /**
-     * Name of the work entity.
-     */
-    private String workName;
       /**
-     * Identifier for the type of work.
+     * Code associated with the work type.
      */
-    private long workTypeID;
+    private String code;
      /**
-     * Number of assigned hours for the work entity.
+     * Description of the work type.
      */
-    private int AssignedHours;
-
+    private String description;
 }
