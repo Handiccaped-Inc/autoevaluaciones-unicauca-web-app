@@ -58,9 +58,15 @@ public class User {
     @NotBlank
     private String password;
 
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
 
     @ElementCollection(targetClass = ProfessorType.class)
     @Enumerated(EnumType.STRING)
     private Set<ProfessorType> professorTypes;
+
+
 
 }
