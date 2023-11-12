@@ -7,7 +7,7 @@
  * @version 1.0
  * @since 2023-11-11
  */
-package co.unicauca.edu.autoevaluacioneswebapp.entities;
+package co.unicauca.edu.autoevaluacioneswebapp.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,16 +25,19 @@ import co.unicauca.edu.autoevaluacioneswebapp.model.Role;
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "labour")
-public class LabourEntity {
+public class Labour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ElementCollection(targetClass = Role.class)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
     private String labourName;
+
     private long labourType;
+
     private int assignedHours;
 
 }
