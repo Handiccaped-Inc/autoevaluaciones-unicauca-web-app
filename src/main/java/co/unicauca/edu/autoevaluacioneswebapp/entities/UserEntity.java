@@ -11,7 +11,7 @@
 package co.unicauca.edu.autoevaluacioneswebapp.entities;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.Role;
-import co.unicauca.edu.autoevaluacioneswebapp.model.professorType;
+import co.unicauca.edu.autoevaluacioneswebapp.model.ProfessorType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -70,9 +70,9 @@ public class UserEntity {
     /**
      * The set of professor types assigned to the user.
      */
-    @ElementCollection(targetClass = professorType.class)
+    @ElementCollection(targetClass = ProfessorType.class)
     @Enumerated(EnumType.STRING)
-    private Set<professorType> professorTypes;
+    private Set<ProfessorType> professorTypes;
 
 
 }

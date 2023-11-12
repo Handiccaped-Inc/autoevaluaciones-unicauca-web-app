@@ -9,8 +9,6 @@
  */
 package co.unicauca.edu.autoevaluacioneswebapp.entities;
 
-import co.unicauca.edu.autoevaluacioneswebapp.model.workType;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +25,7 @@ import co.unicauca.edu.autoevaluacioneswebapp.model.Role;
 @AllArgsConstructor
 @Getter
 @Setter
-public class WorkEntity {
+public class LabourEntity {
     /**
      * Unique identifier for the work entity.
      */
@@ -40,14 +38,14 @@ public class WorkEntity {
     @ElementCollection(targetClass = Role.class)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-    private String workName;
+    private String labourName;
       /**
      * Identifier for the type of work.
      */
-    private long workType;
+    private long labourType;
      /**
      * Number of assigned hours for the work entity.
      */
-    private int AssignedHours;
+    private int assignedHours;
 
 }

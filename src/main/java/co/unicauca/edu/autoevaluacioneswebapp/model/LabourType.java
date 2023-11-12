@@ -1,5 +1,5 @@
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
-public enum workType {
+public enum LabourType {
     D,TD,PI,TI,AD,AS,S,E,C,OS
 }
