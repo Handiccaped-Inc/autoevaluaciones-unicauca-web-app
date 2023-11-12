@@ -21,7 +21,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
+
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 
 @Entity
@@ -62,4 +65,7 @@ public class User {
     @ElementCollection(targetClass = ProfessorType.class)
     @Enumerated(EnumType.STRING)
     private Set<ProfessorType> professorTypes;
+
+    @OneToMany(mappedBy="user")
+    private List<Autoevaluation> autoevaluationsList;
 }
