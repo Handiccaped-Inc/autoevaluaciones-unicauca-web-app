@@ -58,14 +58,9 @@ public class User {
     @NotBlank
     private String password;
 
-    @ElementCollection(targetClass = Role.class)
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
 
     @ElementCollection(targetClass = ProfessorType.class)
     @Enumerated(EnumType.STRING)
     private Set<ProfessorType> professorTypes;
 
-    @OneToMany(mappedBy="user")
-    private List<Autoevaluation> autoevaluationsList;
 }

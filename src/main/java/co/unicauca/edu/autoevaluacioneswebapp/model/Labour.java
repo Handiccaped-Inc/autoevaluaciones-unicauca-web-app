@@ -34,9 +34,9 @@ public class Labour {
     @NotBlank
     private String labourName;
 
-    @ElementCollection(targetClass = LabourType.class)
-    @Enumerated(EnumType.STRING)
-    private Set<LabourType> type;
+    @ManyToOne
+    @JoinColumn(name = "labour_type")
+    private LabourType type;
 
     private int assignedHours;
 

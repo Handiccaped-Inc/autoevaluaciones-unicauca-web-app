@@ -1,5 +1,22 @@
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
-public enum Role {
-    ROLE_DECANO,ROLE_COORDINADOR,ROLE_DOCENTE
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class Role {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String description;
+    
 }

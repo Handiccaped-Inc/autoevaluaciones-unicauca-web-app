@@ -34,6 +34,10 @@ public class Autoevaluation {
     private Long id;
 
     @ManyToMany
+    @JoinTable(
+    name = "Autoevaluation_Labours", 
+    joinColumns = @JoinColumn(name = "Autoevaluation_id"), 
+    inverseJoinColumns = @JoinColumn(name = "Labour_id"))
     private Set<Labour> Labours;
 
     private boolean Act;
@@ -50,7 +54,11 @@ public class Autoevaluation {
     private long evaluation;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
-    private User user;
+    @JoinColumns({
+        @JoinColumn(name = "user_id"),
+        @JoinColumn(name = "role_id")
+    })
+    private UserRole userRole;
+
 
 }
