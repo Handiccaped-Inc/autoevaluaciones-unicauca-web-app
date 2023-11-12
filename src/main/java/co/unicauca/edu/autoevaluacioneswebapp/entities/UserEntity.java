@@ -13,6 +13,9 @@ package co.unicauca.edu.autoevaluacioneswebapp.entities;
 import co.unicauca.edu.autoevaluacioneswebapp.model.Role;
 import co.unicauca.edu.autoevaluacioneswebapp.model.ProfessorType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,19 +47,27 @@ public class UserEntity {
      /**
      * The first name of the user.
      */
+     @NotBlank
+     @Size(max = 30)
     private String firstName;
     /**
      * The last name of the user.
      */
+    @NotBlank
+    @Size(max = 30)
     private String lastName;
      /**
      * The email of the user.
      */
+     @Email
+     @NotBlank
+     @Size(max = 80)
     private String email;
     
     /**
      * The password of the user.
      */
+    @NotBlank
     private String password;
 
 
