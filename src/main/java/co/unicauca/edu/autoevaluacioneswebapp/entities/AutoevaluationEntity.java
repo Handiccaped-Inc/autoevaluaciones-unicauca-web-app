@@ -27,41 +27,17 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-
+@Table(name = "autoevaluation")
 public class AutoevaluationEntity {
-     /**
-     * Unique identifier for the autoevaluation entity.
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-     /**
-     * Identifier of the associated work for the autoevaluation.
-     */
     private Long work;
-      /**
-     * Activity status indicating whether the autoevaluation is active or not.
-     */
     private boolean Act;
-      /**
-     * Start date of the autoevaluation.
-     */
     private Date intiDate;
-    /**
-     * Finish date of the autoevaluation.
-     */
     private Date finishData;
-     /**
-     * Current estate of the autoevaluation.
-     */
     private String Estate;
-     /**
-     * Result of the autoevaluation.
-     */
     private String result;
-    /**
-     * Identifier for the type of evaluation.
-     */
     private long evaluation;
 
 }

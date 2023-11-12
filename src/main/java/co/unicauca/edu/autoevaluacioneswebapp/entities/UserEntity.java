@@ -29,6 +29,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "user")
+
 public class UserEntity {
     /**
      * The unique identifier of the user.
@@ -43,7 +45,7 @@ public class UserEntity {
     /**
      * The type identifier of the user.
      */
-    private String typeId;
+    private String typePersonalId;
      /**
      * The first name of the user.
      */

@@ -25,27 +25,16 @@ import co.unicauca.edu.autoevaluacioneswebapp.model.Role;
 @AllArgsConstructor
 @Getter
 @Setter
+@Table(name = "labour")
 public class LabourEntity {
-    /**
-     * Unique identifier for the work entity.
-     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    /**
-     * Name of the work entity.
-     */
     @ElementCollection(targetClass = Role.class)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
     private String labourName;
-      /**
-     * Identifier for the type of work.
-     */
     private long labourType;
-     /**
-     * Number of assigned hours for the work entity.
-     */
     private int assignedHours;
 
 }
