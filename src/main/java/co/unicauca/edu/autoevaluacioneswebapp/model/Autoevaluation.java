@@ -12,8 +12,10 @@
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,14 +36,15 @@ public class Autoevaluation {
 
     private boolean Act;
 
-    private Date intiDate;
+    private LocalDate initDate;
 
-    private Date finishData;
+    private LocalDate finishData;
 
     private String Estate;
 
     private String result;
 
+    @Max(value = 100)
     private long evaluation;
 
 }

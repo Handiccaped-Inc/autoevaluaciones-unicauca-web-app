@@ -10,6 +10,7 @@
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,13 +31,12 @@ public class Labour {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ElementCollection(targetClass = Role.class)
-    @Enumerated(EnumType.STRING)
-    private Set<Role> roles;
-
+    @NotBlank
     private String labourName;
 
-    private long labourType;
+    @ElementCollection(targetClass = LabourType.class)
+    @Enumerated(EnumType.STRING)
+    private Set<LabourType> type;
 
     private int assignedHours;
 

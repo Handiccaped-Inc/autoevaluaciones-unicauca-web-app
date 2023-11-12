@@ -1,6 +1,6 @@
 package co.unicauca.edu.autoevaluacioneswebapp.services;
 
-import co.unicauca.edu.autoevaluacioneswebapp.entities.UserEntity;
+import co.unicauca.edu.autoevaluacioneswebapp.model.User;
 import co.unicauca.edu.autoevaluacioneswebapp.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class UserService {
     public UserService(UsersRepository usersRepository){
         this.usersRepository = usersRepository;
     }
-    public Optional<UserEntity> getUser(String email){
+    public Optional<User> getUser(String email){
 
         return  this.usersRepository.findByEmail(email);
     }
