@@ -21,6 +21,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -32,7 +33,12 @@ public class Autoevaluation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long work;
+    @ManyToMany
+    @JoinTable(
+    name = "Autoevaluation_Labours", 
+    joinColumns = @JoinColumn(name = "Autoevaluation_id"), 
+    inverseJoinColumns = @JoinColumn(name = "Labour_id"))
+    private Set<Labour> Labours;
 
     private boolean Act;
 
