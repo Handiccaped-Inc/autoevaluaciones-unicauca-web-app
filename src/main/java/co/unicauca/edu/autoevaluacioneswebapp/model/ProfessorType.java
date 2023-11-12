@@ -1,5 +1,5 @@
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
-public enum professorType {
+public enum ProfessorType {
     CATEDRA,TIEMPO_COMPLETO,PLANTA
 }
