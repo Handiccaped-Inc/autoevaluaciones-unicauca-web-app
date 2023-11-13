@@ -33,6 +33,10 @@ public class SecurityConfiguration {
                             flg.successHandler(successHandler());
                         }
                 )
+                .logout((lgo) -> lgo
+                        .permitAll()
+                        .logoutSuccessUrl("/login")
+                )
                 .sessionManagement((ssmg) -> {
                             ssmg.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                                     .invalidSessionUrl("/login")
