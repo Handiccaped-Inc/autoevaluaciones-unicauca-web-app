@@ -36,6 +36,9 @@ public class SecurityConfiguration {
                         .logoutSuccessUrl("/login")
                         .permitAll()
                 )
+                .exceptionHandling((exh) -> exh
+                        .accessDeniedPage("/error/access-denied")
+                )
                 .sessionManagement((ssmg) -> {
                             ssmg.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                                     .invalidSessionUrl("/login")
