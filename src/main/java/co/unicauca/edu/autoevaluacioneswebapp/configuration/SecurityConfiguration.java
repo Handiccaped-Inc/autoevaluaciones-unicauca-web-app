@@ -21,7 +21,7 @@ public class SecurityConfiguration {
         return httpsecurity
 
                 .authorizeHttpRequests((reqs) -> reqs
-                        .requestMatchers("/public/**")
+                        .requestMatchers("/welcome")
                         .permitAll()
                         .anyRequest()
                         .authenticated()
