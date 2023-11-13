@@ -7,14 +7,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
-public class UserService {
+public class UserService implements IUserService{
     UsersRepository usersRepository;
 
     @Autowired
     public UserService(UsersRepository usersRepository){
         this.usersRepository = usersRepository;
     }
-    public Optional<UserEntity> find(String email){
+   @Override
+    public Optional<UserEntity> findByEmail(String email){
         return  this.usersRepository.findByEmail(email);
     }
 }

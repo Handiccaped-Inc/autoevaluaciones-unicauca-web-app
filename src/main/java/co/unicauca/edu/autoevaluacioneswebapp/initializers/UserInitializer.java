@@ -8,6 +8,7 @@ import co.unicauca.edu.autoevaluacioneswebapp.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -30,7 +31,7 @@ public class UserInitializer implements ApplicationRunner {
                         .firstName("Pablo")
                         .lastName("Ruiz")
                         .email("prestrepo@unicauca.edu.co")
-                        .password("123456")
+                        .password(new BCryptPasswordEncoder().encode("123456"))
                         .role(Role.builder()
                                 .name(ERole.ROLE_DECANO)
                                 .initDate(LocalDate.now())
@@ -44,7 +45,7 @@ public class UserInitializer implements ApplicationRunner {
                         .firstName("Jojan")
                         .lastName("Serna")
                         .email("jeserna@unicauca.edu.co")
-                        .password("123456")
+                        .password(new BCryptPasswordEncoder().encode("123456"))
                         .role(Role.builder()
                                 .name(ERole.ROLE_COORDINADOR)
                                 .initDate(LocalDate.now())
@@ -58,7 +59,7 @@ public class UserInitializer implements ApplicationRunner {
                         .firstName("Santiago")
                         .lastName("Agredo")
                         .email("sagredov@unicauca.edu.co")
-                        .password("123456")
+                        .password(new BCryptPasswordEncoder().encode("123456"))
                         .role(Role.builder()
                                 .name(ERole.ROLE_DECANO)
                                 .initDate(LocalDate.now())
