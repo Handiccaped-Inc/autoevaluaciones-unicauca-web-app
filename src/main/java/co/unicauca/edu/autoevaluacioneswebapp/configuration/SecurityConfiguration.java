@@ -38,6 +38,6 @@ public class SecurityConfiguration {
     }
 
     public AuthenticationSuccessHandler successHandler() {
-        return ((request, response, authentication) -> response.sendRedirect("index"));
+        return ((request, response, authentication) -> response.sendRedirect("/index"));
     }
 }
