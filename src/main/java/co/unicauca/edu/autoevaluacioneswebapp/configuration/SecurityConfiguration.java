@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                         }
                 )
                 .logout((lgo) -> lgo
-                        .logoutSuccessUrl("/login")
+                        .logoutSuccessUrl("/welcome")
                         .permitAll()
                 )
                 .exceptionHandling((exh) -> exh
