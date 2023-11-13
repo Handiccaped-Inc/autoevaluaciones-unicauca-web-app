@@ -1,10 +1,12 @@
 package co.unicauca.edu.autoevaluacioneswebapp.services;
 
+import co.unicauca.edu.autoevaluacioneswebapp.model.ERole;
 import co.unicauca.edu.autoevaluacioneswebapp.model.UserEntity;
 import co.unicauca.edu.autoevaluacioneswebapp.repositories.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,4 +37,11 @@ public class UserService implements IUserService {
     public void deleteById(Long id) {
         usersRepository.deleteById(id);
     }
+
+    @Override
+    public List<UserEntity> findAllByRole(String roleName) {
+        ERole role = ERole.valueOf(roleName);
+        return usersRepository.findAllByRole(role);
+    }
 }
+   

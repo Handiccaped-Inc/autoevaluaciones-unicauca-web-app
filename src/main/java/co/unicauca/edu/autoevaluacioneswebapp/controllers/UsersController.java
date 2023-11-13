@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +30,20 @@ public class UsersController {
         this.userService = userService;
     }
 
+    @GetMapping("/proffesor-management")
+    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
+    public String ListProffesors(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication.getPrincipal() instanceof UserDetails) {
+        model.addAttribute("proffesors", userService.findAllByRole("ROLE_DOCENTE"));
+        return "proffessor-management";
+    }else{
+        return "access-denied";
+    }
+}
+
+
+
     @GetMapping("/create-proffesor")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String createProffesorForm(Model model){
@@ -36,16 +51,20 @@ public class UsersController {
     if (authentication.getPrincipal() instanceof UserDetails) {
         UserEntity user  = new UserEntity();
         model.addAttribute("user", user);
-        return "create-professor";
+        return "create-proffessor";
     }else{
-        return "Error-Auth";
+        return "access-denied";
     }
 
     }
     
     @PostMapping("/create-proffesor")
+    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String saveProffesor(@ModelAttribute("user") UserEntity user){
-        user.setPassword(user.getPersonalId().toString());
+        /*
+         * Añadir Validacion de usuario y redirrecion a la pagina
+         */
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPersonalId().toString()));
         user.setRole(Role.builder()
                                 .name(ERole.ROLE_DOCENTE)
                                 .initDate(LocalDate.now())
@@ -54,6 +73,11 @@ public class UsersController {
         userService.save(user);
         return "redirect:/create-proffesor";
     }
+
+
+
+
+
 
 
 }
