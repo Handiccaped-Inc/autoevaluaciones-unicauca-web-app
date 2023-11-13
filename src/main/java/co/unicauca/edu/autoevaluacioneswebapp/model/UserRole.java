@@ -21,7 +21,7 @@ public class UserRole {
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
-    private User user;
+    private UserEntity user;
 
     @ManyToOne
     @MapsId("roleId")

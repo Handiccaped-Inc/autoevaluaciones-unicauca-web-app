@@ -10,8 +10,6 @@
  */
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
-import co.unicauca.edu.autoevaluacioneswebapp.model.Role;
-import co.unicauca.edu.autoevaluacioneswebapp.model.ProfessorType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -21,10 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.Set;
-
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 
 @Entity
@@ -32,8 +27,8 @@ import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 @AllArgsConstructor
 @Getter
 @Setter
-
-public class User {
+@Table(name = "user")
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
