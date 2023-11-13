@@ -44,7 +44,7 @@ public class Autoevaluation {
 
     private LocalDate initDate;
 
-    private LocalDate finishData;
+    private LocalDate finishDate;
 
     private String Estate;
 
@@ -54,11 +54,7 @@ public class Autoevaluation {
     private long evaluation;
 
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name = "user_id"),
-        @JoinColumn(name = "role_id")
-    })
-    private UserRole userRole;
+    private UserEntity user;
 
 
 }

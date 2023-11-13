@@ -1,15 +1,16 @@
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 public class Role {
@@ -17,6 +18,11 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String description;
+
+    @Enumerated(EnumType.STRING)
+    private ERole name;
+
+    private LocalDate initDate;
+    private LocalDate finishDate;
     
 }
