@@ -1,4 +1,4 @@
-package co.unicauca.edu.autoevaluacioneswebapp.services;
+package co.unicauca.edu.autoevaluacioneswebapp.services.security;
 
 import co.unicauca.edu.autoevaluacioneswebapp.configuration.security.SecurityUser;
 import co.unicauca.edu.autoevaluacioneswebapp.repositories.UsersRepository;

@@ -1,10 +1,12 @@
 package co.unicauca.edu.autoevaluacioneswebapp.configuration.security;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.UserEntity;
+import co.unicauca.edu.autoevaluacioneswebapp.model.UserRole;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Set;
 
@@ -13,7 +15,11 @@ public class SecurityUser implements UserDetails {
     private final UserEntity userEntity;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Set.of(userEntity.getRole()).stream().map(SecurityAuthority::new).toList();
+        Set<UserRole> userRoles = userEntity.getUserRoles();
+        return userRoles.stream()
+                .filter(userRole -> userRole.getFinishDate().isAfter(LocalDate.now()))
+                .map(userRole -> new SecurityAuthority(userRole.getRole()))
+                .toList();
     }
 
     @Override

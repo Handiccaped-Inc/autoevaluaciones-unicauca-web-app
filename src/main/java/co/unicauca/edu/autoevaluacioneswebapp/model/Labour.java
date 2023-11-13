@@ -40,7 +40,4 @@ public class Labour {
 
     private int assignedHours;
 
-    @ManyToMany(mappedBy = "Labours")
-    private Set<Autoevaluation> autoevaluations;
-
 }

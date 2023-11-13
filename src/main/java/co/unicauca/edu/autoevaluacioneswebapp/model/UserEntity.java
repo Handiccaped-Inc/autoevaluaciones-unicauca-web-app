@@ -17,7 +17,6 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 
-import java.util.List;
 import java.util.Set;
 
 
@@ -53,18 +52,13 @@ public class UserEntity {
     @NotBlank
     private String password;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER /*,cascade = CascadeType.PERSIST*/)
+    private Set<UserRole> userRoles;
+
+
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    private ProfessorType professorType;
 
 
-    @ElementCollection(targetClass = ProfessorType.class)
-    @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_professor_types")
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
-    private Set<ProfessorType> professorTypes;
-
-    @OneToMany(mappedBy = "user")
-    private List<Autoevaluation> autoevaluations;
 
 }

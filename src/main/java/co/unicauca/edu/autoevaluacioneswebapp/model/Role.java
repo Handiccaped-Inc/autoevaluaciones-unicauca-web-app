@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Set;
 
 
 @Entity
@@ -22,7 +23,7 @@ public class Role {
     @Enumerated(EnumType.STRING)
     private ERole name;
 
-    private LocalDate initDate;
-    private LocalDate finishDate;
+    @OneToMany(mappedBy = "role",cascade = CascadeType.PERSIST)
+    private Set<UserRole> userRoles;
     
 }

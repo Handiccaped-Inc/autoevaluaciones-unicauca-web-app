@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 public interface UsersRepository extends JpaRepository<UserEntity, Long> {
     Optional<UserEntity> findByEmail(String Email);
-    @Query("SELECT u FROM UserEntity u JOIN u.role r WHERE r.name = ?1")
-    List<UserEntity> findAllByRole(ERole role);
+    //@Query("SELECT u FROM UserEntity u JOIN u.role r WHERE r.name = ?1")
+    //List<UserEntity> findAllByRole(ERole role);
 }

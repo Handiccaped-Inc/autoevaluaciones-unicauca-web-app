@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                             flg.loginPage("/login")
                                     .permitAll()
                                     .successHandler(successHandler());
+
                         }
                 )
                 .logout((lgo) -> lgo
