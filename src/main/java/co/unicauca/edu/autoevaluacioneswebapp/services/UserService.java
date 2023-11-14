@@ -38,10 +38,10 @@ public class UserService implements IUserService {
         usersRepository.deleteById(id);
     }
 
-    @Override
+    /*@Override
     public List<UserEntity> findAllByRole(String roleName) {
         ERole role = ERole.valueOf(roleName);
         return usersRepository.findAllByRole(role);
-    }
+    }*/
 }
    
