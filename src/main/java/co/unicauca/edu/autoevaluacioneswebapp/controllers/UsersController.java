@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.UserRole;
+import co.unicauca.edu.autoevaluacioneswebapp.services.RoleService;
+import co.unicauca.edu.autoevaluacioneswebapp.services.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -26,10 +28,14 @@ import co.unicauca.edu.autoevaluacioneswebapp.services.UserService;
 public class UsersController {
 
     private UserService userService;
+    private UserRoleService userRoleService;
+    private RoleService roleService;
 
     @Autowired
-    public UsersController(UserService userService) {
+    public UsersController(UserService userService, UserRoleService userRoleService, RoleService roleService) {
         this.userService = userService;
+        this.userRoleService = userRoleService;
+        this.roleService = roleService;
     }
 
     /*@GetMapping("/proffesor-management")
