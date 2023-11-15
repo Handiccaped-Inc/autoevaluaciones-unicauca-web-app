@@ -3,7 +3,7 @@ package co.unicauca.edu.autoevaluacioneswebapp.controllers;
 import java.time.LocalDate;
 import java.util.Set;
 
-import co.unicauca.edu.autoevaluacioneswebapp.model.UserRole;
+import co.unicauca.edu.autoevaluacioneswebapp.model.*;
 import co.unicauca.edu.autoevaluacioneswebapp.services.ProfessorTypeService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.RoleService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.UserRoleService;
@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
-import co.unicauca.edu.autoevaluacioneswebapp.model.ERole;
-import co.unicauca.edu.autoevaluacioneswebapp.model.Role;
-import co.unicauca.edu.autoevaluacioneswebapp.model.UserEntity;
 import co.unicauca.edu.autoevaluacioneswebapp.services.UserService;
 
 @Controller
@@ -75,15 +72,16 @@ public class UsersController {
         /*
          * Añadir Validacion de usuario y redirrecion a la pagina
          */
-        user.setProfessorType(professorTypeService.findByName(String.valueOf(user.getProfessorType().getName())));
+        ProfessorType professorType = professorTypeService.findByName(String.valueOf(user.getProfessorType().getName()));
+        user.setProfessorType(professorType);
+        Role role = roleService.findByName("ROLE_DOCENTE");
         user.setPassword(user.getPersonalId().toString());
         user.setUserRoles(
                 Set.of(UserRole.builder()
-                        .role(Role.builder()
-                                .name(ERole.ROLE_DOCENTE)
-                                .build())
+                        .role(role)
                         .initDate(LocalDate.now())
                         .finishDate(LocalDate.now().plusYears(1))
+                        .user(user)
                         .build())
         );
 

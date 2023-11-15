@@ -52,7 +52,7 @@ public class UserEntity {
     @NotBlank
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER /*,cascade = CascadeType.PERSIST*/)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER ,cascade = CascadeType.PERSIST)
     private Set<UserRole> userRoles;
 
 
