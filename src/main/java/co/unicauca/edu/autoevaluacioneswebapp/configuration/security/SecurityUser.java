@@ -3,6 +3,8 @@ package co.unicauca.edu.autoevaluacioneswebapp.configuration.security;
 import co.unicauca.edu.autoevaluacioneswebapp.model.UserEntity;
 import co.unicauca.edu.autoevaluacioneswebapp.model.UserRole;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,6 +13,8 @@ import java.util.Collection;
 import java.util.Set;
 
 @AllArgsConstructor
+@Getter
+@Setter
 public class SecurityUser implements UserDetails {
     private final UserEntity userEntity;
     @Override

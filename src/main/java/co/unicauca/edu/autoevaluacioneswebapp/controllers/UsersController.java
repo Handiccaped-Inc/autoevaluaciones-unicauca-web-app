@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.UserRole;
+import co.unicauca.edu.autoevaluacioneswebapp.services.ProfessorTypeService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.RoleService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.UserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +32,17 @@ public class UsersController {
     private UserRoleService userRoleService;
     private RoleService roleService;
 
+    private ProfessorTypeService professorTypeService;
+
     @Autowired
-    public UsersController(UserService userService, UserRoleService userRoleService, RoleService roleService) {
+    public UsersController(UserService userService, UserRoleService userRoleService, RoleService roleService, ProfessorTypeService professorTypeService) {
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.roleService = roleService;
+        this.professorTypeService = professorTypeService;
     }
 
-    /*@GetMapping("/proffesor-management")
+    @GetMapping("/proffesor-management")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String ListProffesors(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -48,7 +52,7 @@ public class UsersController {
         } else {
             return "access-denied";
         }
-    }*/
+    }
 
 
     @GetMapping("/create-proffesor")
@@ -71,7 +75,8 @@ public class UsersController {
         /*
          * Añadir Validacion de usuario y redirrecion a la pagina
          */
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPersonalId().toString()));
+        user.setProfessorType(professorTypeService.findByName(String.valueOf(user.getProfessorType().getName())));
+        user.setPassword(user.getPersonalId().toString());
         user.setUserRoles(
                 Set.of(UserRole.builder()
                         .role(Role.builder()
