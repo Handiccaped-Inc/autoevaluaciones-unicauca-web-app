@@ -16,8 +16,10 @@ public class SecurityUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<UserRole> userRoles = userEntity.getUserRoles();
+        LocalDate now = LocalDate.now();
+        //Mapear los roles que esten activos en la fecha actual
         return userRoles.stream()
-                .filter(userRole -> userRole.getFinishDate().isAfter(LocalDate.now()))
+                .filter(userRole -> !userRole.getInitDate().isAfter(now) && !userRole.getFinishDate().isBefore(now))
                 .map(userRole -> new SecurityAuthority(userRole.getRole()))
                 .toList();
     }
