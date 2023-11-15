@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -15,10 +16,12 @@ import java.util.Set;
 @Component
 public class UserRoleInitializer implements ApplicationRunner {
     UserRoleRepository userRoleRepository;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserRoleInitializer(UserRoleRepository userRoleRepository) {
+    public UserRoleInitializer(UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
         this.userRoleRepository = userRoleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -29,7 +32,7 @@ public class UserRoleInitializer implements ApplicationRunner {
                                 .firstName("Pablo")
                                 .lastName("Ruiz")
                                 .email("prestrepo@unicauca.edu.co")
-                                .password(new BCryptPasswordEncoder().encode("123456"))
+                                .password(passwordEncoder.encode("123456"))
                                 .personalId(123456789L)
                                 .typePersonalId("CC")
                                 .professorType(ProfessorType.builder()
@@ -47,7 +50,7 @@ public class UserRoleInitializer implements ApplicationRunner {
                                 .firstName("Jojan")
                                 .lastName("Serna")
                                 .email("jeserna@unicauca.edu.co")
-                                .password(new BCryptPasswordEncoder().encode("123456"))
+                                .password(passwordEncoder.encode("123456"))
                                 .personalId(123456789L)
                                 .typePersonalId("CC")
                                 .professorType(ProfessorType.builder()
@@ -65,7 +68,7 @@ public class UserRoleInitializer implements ApplicationRunner {
                                 .firstName("Santiago")
                                 .lastName("Agredo")
                                 .email("sagredov@unicauca.edu.co")
-                                .password(new BCryptPasswordEncoder().encode("123456"))
+                                .password(passwordEncoder.encode("123456"))
                                 .personalId(123456789L)
                                 .typePersonalId("CC")
                                 .professorType(ProfessorType.builder()

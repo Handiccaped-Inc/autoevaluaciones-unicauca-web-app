@@ -1,5 +1,7 @@
 package co.unicauca.edu.autoevaluacioneswebapp.configuration;
 
+import co.unicauca.edu.autoevaluacioneswebapp.services.security.SecurityUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -16,7 +18,11 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
-
+    private SecurityUserDetailsService userDetailsService;
+    @Autowired
+    public SecurityConfiguration(SecurityUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpsecurity) throws Exception {
         return httpsecurity
@@ -49,8 +55,8 @@ public class SecurityConfiguration {
                             ssmg.sessionFixation().migrateSession();
                         }
                 )
+                .userDetailsService(userDetailsService)
                 .build();
-
     }
 
     public AuthenticationSuccessHandler successHandler() {
