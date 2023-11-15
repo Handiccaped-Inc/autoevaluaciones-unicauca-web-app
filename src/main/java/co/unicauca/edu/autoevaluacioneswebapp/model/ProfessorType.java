@@ -2,11 +2,8 @@ package co.unicauca.edu.autoevaluacioneswebapp.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.Set;
-
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @NoArgsConstructor
@@ -14,16 +11,13 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-public class Role {
-    
+public class ProfessorType {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private ERole name;
+    private EProfessorType name;
 
-    @OneToMany(mappedBy = "role",cascade = CascadeType.PERSIST)
-    private Set<UserRole> userRoles;
-    
 }

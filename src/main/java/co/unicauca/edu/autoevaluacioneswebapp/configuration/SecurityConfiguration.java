@@ -1,56 +1,70 @@
 package co.unicauca.edu.autoevaluacioneswebapp.configuration;
 
-
-import co.unicauca.edu.autoevaluacioneswebapp.filters.UserAuthenticationFilter;
-import co.unicauca.edu.autoevaluacioneswebapp.services.JwtService;
+import co.unicauca.edu.autoevaluacioneswebapp.services.security.SecurityUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration {
-
-    private final JwtService jwtService;
-
+    private SecurityUserDetailsService userDetailsService;
     @Autowired
-    public SecurityConfiguration(JwtService jwtService) {
-        this.jwtService = jwtService;
+    public SecurityConfiguration(SecurityUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
     }
-
-
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable);
+    public SecurityFilterChain filterChain(HttpSecurity httpsecurity) throws Exception {
+        return httpsecurity
 
-        http.authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/swagger-ui/**",
-                                "/swagger-ui/index.html",
-                                "/configuration/**",
-                                "/swagger-resources/**",
-                                "/v2/api-docs",
-                                "/webjars/**")
-                        .permitAll()
-                        .requestMatchers("h2-console/**")
+                .authorizeHttpRequests((reqs) -> reqs
+                        .requestMatchers("/welcome","/")
                         .permitAll()
                         .anyRequest()
-                        .authenticated())
-                .addFilterBefore(new UserAuthenticationFilter(jwtService), UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement((sess) -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                        .authenticated()
+                )
+                .formLogin((flg) -> {
+                            flg.loginPage("/login")
+                                    .permitAll()
+                                    .successHandler(successHandler());
 
-
-        http.headers((hds) -> hds.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
-        return http.build();
+                        }
+                )
+                .logout((lgo) -> lgo
+                        .logoutSuccessUrl("/welcome")
+                        .permitAll()
+                )
+                .exceptionHandling((exh) -> exh
+                        .accessDeniedPage("/error/access-denied")
+                )
+                .sessionManagement((ssmg) -> {
+                            ssmg.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                                    .invalidSessionUrl("/login")
+                                    .maximumSessions(1)
+                                    .expiredUrl("/login");
+                            ssmg.sessionFixation().migrateSession();
+                        }
+                )
+                .userDetailsService(userDetailsService)
+                .build();
     }
 
-}
+    public AuthenticationSuccessHandler successHandler() {
+        return ((request, response, authentication) -> response.sendRedirect("/index"));
+    }
 
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
+}
