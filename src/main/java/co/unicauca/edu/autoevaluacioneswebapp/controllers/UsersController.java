@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
 import co.unicauca.edu.autoevaluacioneswebapp.services.UserService;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/users")
 public class UsersController {
 
     private UserService userService;
@@ -39,36 +41,29 @@ public class UsersController {
         this.professorTypeService = professorTypeService;
     }
 
-    @GetMapping("/proffesor-management")
+    @GetMapping("/professor-management")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String ListProffesors(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            model.addAttribute("proffesors", userService.findAllByRole("ROLE_DOCENTE"));
-            return "proffessor-management";
-        } else {
-            return "access-denied";
-        }
+    public String listProfessors(Model model) {
+        model.addAttribute("professors", userService.findAllByRole("ROLE_DOCENTE"));
+        return "professor-management";
+
     }
 
 
-    @GetMapping("/create-proffesor")
+    @GetMapping("/create-professor")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String createProffesorForm(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getPrincipal() instanceof UserDetails) {
-            UserEntity user = new UserEntity();
-            model.addAttribute("user", user);
-            return "create-proffessor";
-        } else {
-            return "access-denied";
-        }
+    public String createProfessorForm(Model model) {
+
+        UserEntity user = new UserEntity();
+        model.addAttribute("user", user);
+        return "create-professor";
+
 
     }
 
-    @PostMapping("/create-proffesor")
+    @PostMapping("/create-professor")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String saveProffesor(@ModelAttribute("user") UserEntity user) {
+    public String createProfessor(@ModelAttribute("user") UserEntity user) {
         /*
          * Añadir Validacion de usuario y redirrecion a la pagina
          */
@@ -86,7 +81,7 @@ public class UsersController {
         );
 
         userService.save(user);
-        return "redirect:/create-proffesor";
+        return "redirect:/create-professor";
     }
 
 

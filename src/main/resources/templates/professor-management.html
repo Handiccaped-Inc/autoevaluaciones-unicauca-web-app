@@ -20,13 +20,13 @@
         </thead>
         
         <tbody>
-            <tr th:each = "proffesor: ${proffesors}">
-                <td th:text = "${proffesor.personalId}"></td>
-                <td th:text = "${proffesor.typePersonalId}"></td>
-                <td th:text = "${proffesor.firstName}"></td>
-                <td th:text = "${proffesor.lastName}"></td>
-                <td th:text = "${proffesor.professorType.name.toString()}"></td>
-                <td th:text = "${proffesor.email}"></td>
+            <tr th:each = "professor: ${professors}">
+                <td th:text = "${professor.personalId}"></td>
+                <td th:text = "${professor.typePersonalId}"></td>
+                <td th:text = "${professor.firstName}"></td>
+                <td th:text = "${professor.lastName}"></td>
+                <td th:text = "${professor.professorType.name.toString()}"></td>
+                <td th:text = "${professor.email}"></td>
             </tr>
         </tbody>
     
