@@ -27,11 +27,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/users")
 public class UsersController {
 
-    private UserService userService;
-    private UserRoleService userRoleService;
-    private RoleService roleService;
+    private final UserService userService;
+    private final UserRoleService userRoleService;
+    private final RoleService roleService;
 
-    private ProfessorTypeService professorTypeService;
+    private final ProfessorTypeService professorTypeService;
 
     @Autowired
     public UsersController(UserService userService, UserRoleService userRoleService, RoleService roleService, ProfessorTypeService professorTypeService) {
