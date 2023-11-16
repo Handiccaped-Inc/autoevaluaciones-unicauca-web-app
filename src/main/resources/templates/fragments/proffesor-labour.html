@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+  <body>
+
+<div th:fragment = "professor-labour-head(title,namebtn,link)">
+    <div class="d-flex flex-column justify-content-center text-white">
+        <h2 th:text = "${title}"></h2>
+    </div>
+    <hr>
+    <div class="d-flex flex-row m-4" style="width: 40%;">
+        <a th:text="${namebtn}" th:href="${link}" th class="btn btn-primary p-3">Crear Labor</a>
+        <input class="form-control me-2 p-3" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-primary p-3">Buscar</button>
+    </div>
+</div>
+
+  </body>
+</html>

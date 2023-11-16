@@ -27,11 +27,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/users")
 public class UsersController {
 
-    private final UserService userService;
-    private final UserRoleService userRoleService;
-    private final RoleService roleService;
+    private UserService userService;
+    private UserRoleService userRoleService;
+    private RoleService roleService;
 
-    private final ProfessorTypeService professorTypeService;
+    private ProfessorTypeService professorTypeService;
 
     @Autowired
     public UsersController(UserService userService, UserRoleService userRoleService, RoleService roleService, ProfessorTypeService professorTypeService) {
@@ -81,7 +81,8 @@ public class UsersController {
         );
 
         userService.save(user);
-        return "redirect:/create-professor";
+        return "redirect:/users/professor-management";
+        
     }
 
 
