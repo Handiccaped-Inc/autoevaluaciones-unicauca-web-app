@@ -1,0 +1,14 @@
+:root {
+    --primary-color: #7752FE;
+    --secondary-color: #32A0EF;
+    --tertiary-color: #474747;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+input::placeholder {
+    color: #BCBCBC !important;
+}
