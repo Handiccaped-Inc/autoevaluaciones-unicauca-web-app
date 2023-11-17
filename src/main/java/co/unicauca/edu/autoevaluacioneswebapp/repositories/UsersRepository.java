@@ -3,7 +3,6 @@ package co.unicauca.edu.autoevaluacioneswebapp.repositories;
 import co.unicauca.edu.autoevaluacioneswebapp.model.ERole;
 import co.unicauca.edu.autoevaluacioneswebapp.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;

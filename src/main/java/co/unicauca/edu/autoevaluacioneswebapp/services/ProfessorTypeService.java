@@ -3,7 +3,6 @@ package co.unicauca.edu.autoevaluacioneswebapp.services;
 import co.unicauca.edu.autoevaluacioneswebapp.model.EProfessorType;
 import co.unicauca.edu.autoevaluacioneswebapp.model.ProfessorType;
 import co.unicauca.edu.autoevaluacioneswebapp.repositories.ProfessorTypeRepository;
-import jakarta.persistence.Access;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,6 @@
 package co.unicauca.edu.autoevaluacioneswebapp.controllers;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.Labour;
-import co.unicauca.edu.autoevaluacioneswebapp.model.UserEntity;
 import co.unicauca.edu.autoevaluacioneswebapp.services.LabourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

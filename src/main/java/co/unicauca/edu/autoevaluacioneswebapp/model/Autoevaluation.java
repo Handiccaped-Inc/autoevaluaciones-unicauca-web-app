@@ -11,7 +11,6 @@
  */
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
@@ -20,8 +19,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
