@@ -1,5 +1,7 @@
 package co.unicauca.edu.autoevaluacioneswebapp.controllers;
 
+import co.unicauca.edu.autoevaluacioneswebapp.configuration.security.SecurityAuthority;
+import co.unicauca.edu.autoevaluacioneswebapp.configuration.security.SecurityUser;
 import co.unicauca.edu.autoevaluacioneswebapp.facades.AutoevaluationFacade;
 import co.unicauca.edu.autoevaluacioneswebapp.model.Autoevaluation;
 import co.unicauca.edu.autoevaluacioneswebapp.model.Labour;
@@ -7,10 +9,13 @@ import co.unicauca.edu.autoevaluacioneswebapp.model.UserRole;
 import co.unicauca.edu.autoevaluacioneswebapp.services.ILabourService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.IUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,9 +39,14 @@ public class AutoevaluationsController {
     // el metodo para mostrar las autoevaluaciones de los usuarios en una lista con su nota total
     // desde ahi al presionar ver detalles se puede ver las autoevaluaciones con este metodo
     @GetMapping("/user-autoevaluations/{userId}")
-    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String getUserAutoevaluations(@PathVariable Long userId, Model model) {
+    @PreAuthorize("hasRole('ROLE_COORDINADOR') or hasRole('ROLE_DOCENTE')")
+    public String getUserAutoevaluations(@AuthenticationPrincipal SecurityUser userDetails, @PathVariable Long userId, Model model) {
         UserRole userRole = userRoleService.findByUserId(userId);
+        boolean isCoordinator = userDetails.getAuthorities().stream()
+                .anyMatch(authority -> authority.getAuthority().equals("ROLE_COORDINADOR"));
+        if (!isCoordinator && !userDetails.getUserEntity().getId().equals(userId)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "No tienes permitido ver esas autoevaluaciones");
+        }
         List<Autoevaluation> autoevaluations = autoevaluationFacade.findAutoevaluationsByUserId(userId);
         model.addAttribute("autoevaluations", autoevaluations);
         model.addAttribute("userRole", userRole);
@@ -55,7 +65,7 @@ public class AutoevaluationsController {
         Autoevaluation autoevaluation = Autoevaluation.builder()
                 .userRole(user)
                 .build();
-        
+
         //TODO: Con th:field crear los dropdown y los campos mapeados a EAutoevaluationState para que sea posible guardar
         model.addAttribute("autoevaluation", autoevaluation);
         model.addAttribute("user", user);
