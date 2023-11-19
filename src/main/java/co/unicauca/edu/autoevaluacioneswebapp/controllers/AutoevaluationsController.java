@@ -52,7 +52,11 @@ public class AutoevaluationsController {
     public String createAutoevaluationForm(@PathVariable Long userId, Model model) {
         UserRole user = userRoleService.findByUserId(userId);
         List<Labour> labours = labourService.findAll();
-        Autoevaluation autoevaluation = new Autoevaluation();
+        Autoevaluation autoevaluation = Autoevaluation.builder()
+                .userRole(user)
+                .build();
+        
+        //TODO: Con th:field crear los dropdown y los campos mapeados a EAutoevaluationState para que sea posible guardar
         model.addAttribute("autoevaluation", autoevaluation);
         model.addAttribute("user", user);
         model.addAttribute("labours", labours);

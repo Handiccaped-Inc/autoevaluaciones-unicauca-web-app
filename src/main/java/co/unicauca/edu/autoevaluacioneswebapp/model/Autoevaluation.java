@@ -15,16 +15,14 @@ import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Autoevaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +37,8 @@ public class Autoevaluation {
 
     private LocalDate finishDate;
 
-    private String state;
+    @Enumerated(EnumType.STRING)
+    private EAutoevaluationState state;
 
     private String result;
 
