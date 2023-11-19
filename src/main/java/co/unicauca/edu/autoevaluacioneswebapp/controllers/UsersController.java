@@ -4,9 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.*;
-import co.unicauca.edu.autoevaluacioneswebapp.services.ProfessorTypeService;
-import co.unicauca.edu.autoevaluacioneswebapp.services.RoleService;
-import co.unicauca.edu.autoevaluacioneswebapp.services.UserRoleService;
+import co.unicauca.edu.autoevaluacioneswebapp.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -15,21 +13,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
-import co.unicauca.edu.autoevaluacioneswebapp.services.UserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/users")
 public class UsersController {
 
-    private UserService userService;
-    private UserRoleService userRoleService;
-    private RoleService roleService;
+    private IUserService userService;
+    private IUserRoleService userRoleService;
+    private IRoleService roleService;
 
-    private ProfessorTypeService professorTypeService;
+    private IProfessorTypeService professorTypeService;
 
     @Autowired
-    public UsersController(UserService userService, UserRoleService userRoleService, RoleService roleService, ProfessorTypeService professorTypeService) {
+    public UsersController(IUserService userService, IUserRoleService userRoleService, IRoleService roleService, IProfessorTypeService professorTypeService) {
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.roleService = roleService;

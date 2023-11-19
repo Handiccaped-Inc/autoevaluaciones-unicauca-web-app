@@ -1,6 +1,7 @@
 package co.unicauca.edu.autoevaluacioneswebapp.controllers;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.Labour;
+import co.unicauca.edu.autoevaluacioneswebapp.services.ILabourService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.LabourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/labours")
 public class LaboursController {
-    LabourService labourService;
+    ILabourService labourService;
 
 
     @Autowired
-    public LaboursController(LabourService labourService){
+    public LaboursController(ILabourService labourService){
         this.labourService = labourService;
     }
 
