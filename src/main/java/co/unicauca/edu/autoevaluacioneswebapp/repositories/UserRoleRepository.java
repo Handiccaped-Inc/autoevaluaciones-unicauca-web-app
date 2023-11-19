@@ -13,6 +13,6 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Long> {
     public Optional<UserRole>findByUser(UserEntity userEntity);
     List<UserRole> findByRole_NameAndInitDateLessThanEqualAndFinishDateGreaterThanEqual(ERole name, LocalDate now, LocalDate now1);
 
-    public Optional<UserRole> findByUserEmail(String email);
+    public Optional<UserRole> findByUserEmailAndInitDateLessThanEqualAndFinishDateGreaterThanEqual(String email, LocalDate now, LocalDate now1);
 
 }

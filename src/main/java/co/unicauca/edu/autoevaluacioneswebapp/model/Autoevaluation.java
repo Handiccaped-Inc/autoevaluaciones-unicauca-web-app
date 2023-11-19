@@ -33,13 +33,13 @@ public class Autoevaluation {
     @ManyToOne
     private Labour labour;
 
-    private boolean Act;
+    private boolean act;
 
     private LocalDate initDate;
 
     private LocalDate finishDate;
 
-    private String Estate;
+    private String state;
 
     private String result;
 
