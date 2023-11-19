@@ -35,9 +35,9 @@ public class AutoevaluationsController {
         this.labourService = labourService;
     }
 
-    //TODO: Este metodo obtiene las autoevaluaciones de un usuario basado en el id dado, implementar
-    // el metodo para mostrar las autoevaluaciones de los usuarios en una lista con su nota total
-    // desde ahi al presionar ver detalles se puede ver las autoevaluaciones con este metodo
+    //TODO: Este metodo muestra autoevaluaciones, con las adiciones correctas se puede usar para redirigir a la vista de añadir
+    // Una autoevaluacion para el usario con id userid, esto se puede ver segun yo de mejor forma desde UserRole, para no agregar una por una
+    // sino con un checkbox
     @GetMapping("/user-autoevaluations/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR') or hasRole('ROLE_DOCENTE')")
     public String getUserAutoevaluations(@AuthenticationPrincipal SecurityUser userDetails, @PathVariable Long userId, Model model) {
@@ -51,12 +51,10 @@ public class AutoevaluationsController {
         model.addAttribute("autoevaluations", autoevaluations);
         model.addAttribute("userRole", userRole);
         model.addAttribute("userId", userId);
-        // Añadir el boton de agregar las autoevaluaciones que redirija a la vista de crear autoevaluaciones
         return "user-autoevaluations";
     }
-
-    //TODO: Este es el metodo que se llama cuando se presiona Agregar fila, aqui se permite agregar una autoevaluacion
-    // a un usuario, se debe implementar la vista para agregar la autoevaluacion
+    //FIXME: es esto necesario?, podria simplemente crearlo en plural, seleccionar labores con checkbox, y crear
+    //un objeto autoevaluacion por cada una, luego simplemente asignarselas a userrole y de esa forma no tendria que agregar una por una
     @GetMapping("/create-autoevaluation/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String createAutoevaluationForm(@PathVariable Long userId, Model model) {
