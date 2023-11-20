@@ -24,7 +24,7 @@
         <h3 class="me-4" style="font-weight: 600;">Crear Labor</h3>
 
         <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 80%; height: 100%;">
-            <form th:action="@{/labours/create-labours}" th:object="${labour}" method="post">
+            <form th:action="@{/labours/create-labour}" th:object="${labour}" method="post">
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Nombre</label>
                     <input class="form-control" type="text" th:field="*{labourName}"
@@ -34,18 +34,18 @@
 
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Tipo de Labor</label>
-                    <select class="form-select" th:field="*{type}"
+                    <select class="form-select" th:field="*{type.code}"
                         style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;">
-                        <option value="D">Docente</option>
-                        <option value="TD">Trabajos Docencia</option>
-                        <option value="PI">Proyecto Investigación</option>
-                        <option value="TI">Trabajos Investigación</option>
-                        <option value="AD">Administración</option>
-                        <option value="AS">Asesoría</option>
-                        <option value="S">Servicios</option>
-                        <option value="E">Extensión</option>
-                        <option value="C">Capacitación</option>
-                        <option value="OS">Otros Servicios</option>
+                        <option value="D,Docente">Docente</option>
+                        <option value="TD,Trabajos Docencia">Trabajos Docencia</option>
+                        <option value="PI,Proyecto Investigación">Proyecto Investigación</option>
+                        <option value="TI,Trabajos Investigación">Trabajos Investigación</option>
+                        <option value="AD,Administración">Administración</option>
+                        <option value="AS,Asesoría">Asesoría</option>
+                        <option value="S,Servicios">Servicios</option>
+                        <option value="E,Extensión">Extensión</option>
+                        <option value="C,Capacitación">Capacitación</option>
+                        <option value="OS,Otros Servicios">Otros Servicios</option>
                     </select>
                 </div>
 
