@@ -1,43 +1,15 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<body>
-  <div th:fragment="navbar" class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
-    style="width: 25%; height: 100%;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-      <svg class="bi me-2" width="40" height="32">
-        <use xlink:href="#bootstrap"></use>
-      </svg>
-      <span class="fs-4">Gestion <br> AutoEvaluación </span>
+<nav th:fragment="navbar(username)" class="navbar navbar-expand-lg" style="font-weight: 700;">
+  <div class="container-fluid p-0">
+    <span class=" navbar-brand collapse navbar-collapse navbar-brand" style="color: #474747; font-size: 14px;">Informe
+      y
+      evalución de
+      actividades -
+      Departamento de Sistemas -
+      FIET</span>
+    <a href="#" class="text-decoration-none text-white ms-auto">
+      <img src="/static/img/user.png" th:src="@{/img/user.png}" alt="User" class="img-fluid rounded-circle me-2"
+        style="width: 35px; height: 35px;">
+      <span class="text-center" th:text="${username}"></span>
     </a>
-    <hr>
-    <ul class="nav nav-pills flex-column mb-auto">
-      <li class="nav-item">
-        <a href="#" class="nav-link active" aria-current="page">
-          <svg class="bi me-2" width="16" height="16">
-            <use xlink:href="#home"></use>
-          </svg>
-          Docentes
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16">
-            <use xlink:href="#speedometer2"></use>
-          </svg>
-          Labores
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link text-white">
-          <svg class="bi me-2" width="16" height="16">
-            <use xlink:href="#table"></use>
-          </svg>
-          AutoEvaluación
-        </a>
-      </li>
-    </ul>
   </div>
-</body>
-
-</html>
+</nav>

@@ -4,31 +4,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Crear Docente</title>
     <link th:replace="fragments/configuration :: bootstrap">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}">
 </head>
 
-<body class="vh-100 d-flex justify-content-start align-items-start flex-row">
-    <div th:replace="fragments/navbar :: navbar"> </div>
+<body class="vh-100 d-flex justify-content-start align-items-start flex-row"
+    style="font-family: Inter; background-color: #0E0E0E; color: #FFFFFF;">
 
-    <div class="mb-3 d-flex justify-content-center align-items-center text-white bg-dark"
-        style="width: 80%; height: 100%;">
-        <form th:action="@{/users/create-professor}" th:object="${user}" method="post">
-            <label class="form-label">Identificación</label>
-            <input class="form-control" type="text" th:field="*{personalId}">
-            <label class="form-label">Tipo Identificación</label>
-            <input class="form-control" type="text" th:field="*{typePersonalId}">
-            <label class="form-label">Nombre</label>
-            <input class="form-control" type="text" th:field="*{firstName}">
-            <label class="form-label">Apellidos</label>
-            <input class="form-control" type="text" th:field="*{lastName}">
-            <label class="form-label">Tipo Docente</label>
-            <input class="form-control" type="text" th:field="*{professorType.name}">
-            <label class="form-label">Correo</label>
-            <input class="form-control" type="text" th:field="*{email}">
-            <button class="btn btn-primary" type="submit"> submit</button>
-        </form>
+    <div
+        th:replace="~{fragments/menu :: menu('/users/professor-management','/labours/labour-management','/users/autoevaluation-management')}">
     </div>
+
+    <div class="mx-3" style="width: 100%;">
+        <div th:replace="~{fragments/navbar :: navbar('Jojan Serna')}"></div>
+
+        <h1 class="mt-4 mb-3" style="font-weight: 600;">Gestión de Docentes</h1>
+
+        <h3 class="me-4" style="font-weight: 600;">Crear Docente</h3>
+
+        <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 80%; height: 100%;">
+            <form th:action="@{/users/create-professor}" th:object="${user}" method="post">
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Identificación</label>
+                    <input class="form-control" type="text" th:field="*{personalId}"
+                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                        required />
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Tipo Identificación</label>
+                    <select class="form-select" th:field="*{typePersonalId}"
+                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;">
+                        <option value="CC">CC</option>
+                        <option value="TI">TI</option>
+                        <option value="CE">CE</option>
+                    </select>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Nombre</label>
+                    <input class="form-control" type="text" th:field="*{firstName}"
+                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                        required />
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Apellidos</label>
+                    <input class="form-control" type="text" th:field="*{lastName}"
+                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                        required />
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Tipo Docente</label>
+                    <select class="form-select" th:field="*{professorType.name}"
+                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;">
+                        <option value="CATEDRA">Catedra</option>
+                        <option value="TIEMPO_COMPLETO">Tiempo Completo</option>
+                        <option value="PLANTA">Planta</option>
+                    </select>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Correo</label>
+                    <input class="form-control" type="email" th:field="*{email}"
+                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                        required />
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Ultimo Titulo Alcanzado</label>
+                    <input class="form-control" type="text"
+                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                        required />
+                </div>
+
+                <div class="mb-5">
+                    <div th:replace="~{fragments/buttons :: button1('submit','Crear')}"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
 </body>
 
 </html>

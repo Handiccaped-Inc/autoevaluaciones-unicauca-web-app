@@ -9,6 +9,11 @@
     border-color: var(--primary-color);
 }
 
+.btn-primary:hover {
+    background-color: #6a41fc !important;
+    border-color: #6a41fc !important;
+}
+
 input::placeholder {
     color: #BCBCBC !important;
 }

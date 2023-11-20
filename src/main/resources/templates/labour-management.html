@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docentes</title>
+    <title>Labores</title>
     <link th:replace="fragments/configuration :: bootstrap">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}">
 </head>
@@ -20,10 +20,10 @@
         <div th:replace="~{fragments/navbar :: navbar('Jojan Serna')}"> </div>
 
         <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 80%; height: 100%;">
-            <div th:replace="~{fragments/headers :: professor-head('Gestión de Docentes')}">
+            <div th:replace="~{fragments/headers :: labour-head('Gestión de Labores')}">
             </div>
         </div>
-        <div th:replace="~{fragments/tables :: tableProfessor}">
+        <div th:replace="~{fragments/tables :: tableLabour}">
         </div>
     </div>
 
