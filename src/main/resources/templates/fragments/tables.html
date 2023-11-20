@@ -21,7 +21,6 @@
             <td th:text="${professor.professorType.name.toString()}"></td>
             <td th:text="${professor.email}"></td>
             <td>
-                <a th:href="@{/users/view-professor}" class="btn btn-info btn-sm">Detalles</a>
                 <a th:href="@{/users/edit-professor}" class="btn btn-warning btn-sm">Editar</a>
                 <a th:href="@{/users/delete-professor}" class="btn btn-danger btn-sm"
                     onclick="return confirm('¿Estás seguro de que deseas eliminar este profesor?')">Eliminar</a>
@@ -48,7 +47,6 @@
             <td th:text="${labour.type}"></td>
             <td th:text="${labour.assignedHours}"></td>
             <td>
-                <a th:href="@{/users/view-labour}" class="btn btn-info btn-sm">Detalles</a>
                 <a th:href="@{/users/update-labour}" class="btn btn-warning btn-sm">Editar</a>
                 <a th:href="@{/users/delete-labour/{id}(id=${labour.id})}" class="btn btn-danger btn-sm"
                     onclick="return confirm('¿Estás seguro de que deseas eliminar esta labor?')">Eliminar</a>
