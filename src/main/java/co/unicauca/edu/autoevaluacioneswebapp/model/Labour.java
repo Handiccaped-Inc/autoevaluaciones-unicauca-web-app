@@ -9,6 +9,8 @@
  */
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
+import org.hibernate.annotations.Cascade;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -30,7 +32,7 @@ public class Labour {
     @NotBlank
     private String labourName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "labour_type")
     private LabourType type;
 
