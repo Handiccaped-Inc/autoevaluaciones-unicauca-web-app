@@ -2,13 +2,15 @@
         overflow: hidden;">
     <thead class="table-dark">
         <tr>
-            <th style="background-color: #7752FE !important;"> Identificación</th>
-            <th style="background-color: #7752FE !important;"> Tipo De Identificación</th>
-            <th style="background-color: #7752FE !important;"> Nombres </th>
-            <th style="background-color: #7752FE !important;"> Apellidos </th>
-            <th style="background-color: #7752FE !important;"> Tipo Docente </th>
-            <th style="background-color: #7752FE !important;"> Correo </th>
-            <th style="background-color: #7752FE !important;"> Acciones </th>
+            <th style="background-color: #7752FE !important;">Identificación</th>
+            <th style="background-color: #7752FE !important;">Tipo De Identificación</th>
+            <th style="background-color: #7752FE !important;">Nombres</th>
+            <th style="background-color: #7752FE !important;">Apellidos</th>
+            <th style="background-color: #7752FE !important;">Tipo Docente</th>
+            <th style="background-color: #7752FE !important;">Estado</th>
+            <th style="background-color: #7752FE !important;">Correo</th>
+            <th style="background-color: #7752FE !important;">Ultimo Titulo</th>
+            <th style="background-color: #7752FE !important;">Acciones</th>
         </tr>
     </thead>
 
@@ -19,9 +21,15 @@
             <td th:text="${professor.firstName}"></td>
             <td th:text="${professor.lastName}"></td>
             <td th:text="${professor.professorType.name.toString()}"></td>
-            <td th:text="${professor.email}"></td>
             <td>
-                <a th:href="@{/users/edit-professor}" class="btn btn-warning btn-sm">Editar</a>
+                <span th:if="${professor.active} == true">Activo</span>
+                <span th:if="${professor.active} == false">Inactivo</span>
+            </td>
+            <td th:text="${professor.email}"></td>
+            <td>NaNN</td>
+            <td>
+                <a th:href="@{/users/edit-professor/{email}(email=${professor.email})}"
+                    class="btn btn-info btn-sm text-white">Editar</a>
             </td>
         </tr>
     </tbody>
@@ -31,11 +39,11 @@
         overflow: hidden;">
     <thead class="table-dark">
         <tr>
-            <th style="background-color: #7752FE !important;"> Nombre</th>
-            <th style="background-color: #7752FE !important;"> Tipo De Labor</th>
-            <th style="background-color: #7752FE !important;"> Estado </th>
-            <th style="background-color: #7752FE !important;"> Horas Asignadas </th>
-            <th style="background-color: #7752FE !important;"> Acciones </th>
+            <th style="background-color: #7752FE !important;">Nombre</th>
+            <th style="background-color: #7752FE !important;">Tipo De Labor</th>
+            <th style="background-color: #7752FE !important;">Estado</th>
+            <th style="background-color: #7752FE !important;">Horas Asignadas</th>
+            <th style="background-color: #7752FE !important;">Acciones</th>
         </tr>
     </thead>
 
@@ -43,9 +51,14 @@
         <tr class="table-dark" th:each="labour: ${labours}">
             <td th:text="${labour.labourName}"></td>
             <td th:text="${labour.type.code}"></td>
+            <td>
+                <span th:if="${labour.active} == true">Activo</span>
+                <span th:if="${labour.active} == false">Inactivo</span>
+            </td>
             <td th:text="${labour.assignedHours}"></td>
             <td>
-                <a th:href="@{/users/update-labour}" class="btn btn-warning btn-sm">Editar</a>
+                <a th:href="@{/labours/edit-labour/{name}(name=${labour.labourName})}"
+                    class="btn btn-info btn-sm text-white">Editar</a>
             </td>
         </tr>
     </tbody>

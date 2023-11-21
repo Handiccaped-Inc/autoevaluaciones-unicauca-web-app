@@ -2,6 +2,7 @@ package co.unicauca.edu.autoevaluacioneswebapp.controllers;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.NoSuchElementException;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.*;
 import co.unicauca.edu.autoevaluacioneswebapp.services.*;
@@ -10,6 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
@@ -26,7 +28,8 @@ public class UsersController {
     private IProfessorTypeService professorTypeService;
 
     @Autowired
-    public UsersController(IUserService userService, IUserRoleService userRoleService, IRoleService roleService, IProfessorTypeService professorTypeService) {
+    public UsersController(IUserService userService, IUserRoleService userRoleService, IRoleService roleService,
+            IProfessorTypeService professorTypeService) {
         this.userService = userService;
         this.userRoleService = userRoleService;
         this.roleService = roleService;
@@ -41,7 +44,6 @@ public class UsersController {
 
     }
 
-
     @GetMapping("/create-professor")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String createProfessorForm(Model model) {
@@ -49,7 +51,6 @@ public class UsersController {
         UserEntity user = new UserEntity();
         model.addAttribute("user", user);
         return "create-professor";
-
 
     }
 
@@ -59,7 +60,8 @@ public class UsersController {
         /*
          * Añadir Validacion de usuario y redirrecion a la pagina
          */
-        ProfessorType professorType = professorTypeService.findByName(String.valueOf(user.getProfessorType().getName()));
+        ProfessorType professorType = professorTypeService
+                .findByName(String.valueOf(user.getProfessorType().getName()));
         user.setProfessorType(professorType);
         Role role = roleService.findByName("ROLE_DOCENTE");
         user.setPassword(user.getPersonalId().toString());
@@ -69,13 +71,20 @@ public class UsersController {
                         .initDate(LocalDate.now())
                         .finishDate(LocalDate.now().plusYears(1))
                         .user(user)
-                        .build())
-        );
+                        .build()));
 
         userService.save(user);
         return "redirect:/users/professor-management";
-        
+
     }
 
+    @GetMapping("/edit-professor/{email}")
+    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
+    public String editProfessorForm(@PathVariable String email, Model model) {
+        UserEntity user = userService.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con el correo: " + email));
+        model.addAttribute("user", user);
+        return "edit-professor";
+    }
 
 }

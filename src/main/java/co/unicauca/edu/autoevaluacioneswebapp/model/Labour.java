@@ -18,7 +18,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,4 +37,5 @@ public class Labour {
 
     private int assignedHours;
 
+    private boolean active = true;
 }

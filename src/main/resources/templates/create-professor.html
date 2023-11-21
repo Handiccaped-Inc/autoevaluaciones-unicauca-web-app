@@ -13,11 +13,11 @@
     style="font-family: Inter; background-color: #0E0E0E; color: #FFFFFF;">
 
     <div
-        th:replace="~{fragments/menu :: menu('/users/professor-management','/labours/labour-management','/users/autoevaluation-management')}">
+        th:replace="fragments/menu :: menu('/users/professor-management','/labours/labour-management','/users/autoevaluation-management')">
     </div>
 
     <div class="mx-3" style="width: 100%;">
-        <div th:replace="~{fragments/navbar :: navbar('Jojan Serna')}"></div>
+        <div th:replace="fragments/navbar :: navbar('Jojan Serna')"></div>
 
         <h1 class="mt-4 mb-3" style="font-weight: 600;">Gestión de Docentes</h1>
 
@@ -27,7 +27,7 @@
             <form th:action="@{/users/create-professor}" th:object="${user}" method="post">
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Identificación</label>
-                    <input class="form-control" type="text" th:field="*{personalId}"
+                    <input class="form-control" type="number" th:field="*{personalId}"
                         style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
                         required />
                 </div>
@@ -81,7 +81,7 @@
                 </div>
 
                 <div class="mb-5">
-                    <div th:replace="~{fragments/buttons :: button1('submit','Crear')}"></div>
+                    <div th:replace="fragments/buttons :: button1('submit','Crear')"></div>
                 </div>
             </form>
         </div>
