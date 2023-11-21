@@ -87,4 +87,24 @@ public class UsersController {
         return "edit-professor";
     }
 
+    @PostMapping("/edit-professor/{email}")
+    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
+    public String editProfessor(@PathVariable String email, @ModelAttribute("professor") UserEntity updatedUser) {
+        UserEntity user = userService.findByEmail(email)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con el correo: " + email));
+
+        user.setPersonalId(updatedUser.getPersonalId());
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        user.setProfessorType(
+                professorTypeService.findByName(String.valueOf(updatedUser.getProfessorType().getName())));
+        user.setActive(updatedUser.isActive());
+        user.setTypePersonalId(updatedUser.getTypePersonalId());
+        user.setEmail(updatedUser.getEmail());
+
+        userService.save(user);
+
+        return "redirect:/users/professor-management";
+    }
+
 }
