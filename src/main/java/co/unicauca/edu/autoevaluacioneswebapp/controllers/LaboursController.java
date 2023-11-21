@@ -3,7 +3,6 @@ package co.unicauca.edu.autoevaluacioneswebapp.controllers;
 import java.util.NoSuchElementException;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.Labour;
-import co.unicauca.edu.autoevaluacioneswebapp.model.UserEntity;
 import co.unicauca.edu.autoevaluacioneswebapp.services.ILabourService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.LabourService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +56,22 @@ public class LaboursController {
                 .orElseThrow(() -> new NoSuchElementException("Labor no encontrado con el nombre: " + name));
         model.addAttribute("labour", labour);
         return "edit-labour";
+    }
+
+    @PostMapping("/edit-labour/{name}")
+    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
+    public String editProfessor(@PathVariable String name, @ModelAttribute("labour") Labour updatedLabour) {
+        Labour labour = labourService.findByLabourName(name)
+                .orElseThrow(() -> new NoSuchElementException("Labor no encontrada con el nombre: " + name));
+
+        labour.setLabourName(updatedLabour.getLabourName());
+        labour.setType(updatedLabour.getType());
+        labour.setActive(updatedLabour.isActive());
+        labour.setAssignedHours(updatedLabour.getAssignedHours());
+
+        labourService.save(labour);
+
+        return "redirect:/labours/labour-management";
     }
 
 }

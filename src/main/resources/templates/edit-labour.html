@@ -24,7 +24,8 @@
         <h3 class="me-4" style="font-weight: 600;">Editar Labor</h3>
 
         <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 80%; height: 100%;">
-            <form th:action="@{/labours/edit-labour}" th:object="${labour}" method="post">
+            <form th:action="@{/labours/edit-labour/{labourName}(labourName=*{labourName})}" th:object="${labour}"
+                method="post">
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Nombre</label>
                     <input class="form-control" type="text" th:field="*{labourName}"
