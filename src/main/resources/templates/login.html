@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
-    <link th:replace="fragments/configuration :: bootstrap">
+    <link th:replace="~{fragments/configuration :: bootstrap}">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}">
     <style>
         @keyframes moveUpDown {
@@ -41,11 +41,11 @@
             <h1 class="mb-5" style="font-weight: 800; text-align: center;">Iniciar Sesión</h1>
             <form th:action="@{/login}" method="post" class="flex-column">
                 <div class="input-group mb-5">
-                    <div th:replace="fragments/inputs :: input1('email','username','Correo')"></div>
+                    <div th:replace="~{fragments/inputs :: input1('email','username','Correo')}"></div>
                 </div>
 
                 <div class="input-group">
-                    <div th:replace="fragments/inputs :: input1('password','password','Contraseña')"></div>
+                    <div th:replace="~{fragments/inputs :: input1('password','password','Contraseña')}"></div>
                 </div>
 
                 <div class="py-3">
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="text-center">
-                    <div th:replace="fragments/buttons :: button1('submit','Iniciar Sesión')"></div>
+                    <div th:replace="~{fragments/buttons :: button1('submit','Iniciar Sesión')}"></div>
                 </div>
             </form>
         </div>
