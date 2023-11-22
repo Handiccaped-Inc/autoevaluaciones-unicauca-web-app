@@ -45,6 +45,6 @@ public class Autoevaluation {
     @Max(value = 100)
     private long evaluation;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private UserRole userRole;
 }

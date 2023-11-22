@@ -3,10 +3,7 @@ package co.unicauca.edu.autoevaluacioneswebapp.controllers;
 import co.unicauca.edu.autoevaluacioneswebapp.configuration.security.SecurityAuthority;
 import co.unicauca.edu.autoevaluacioneswebapp.configuration.security.SecurityUser;
 import co.unicauca.edu.autoevaluacioneswebapp.facades.AutoevaluationFacade;
-import co.unicauca.edu.autoevaluacioneswebapp.model.Autoevaluation;
-import co.unicauca.edu.autoevaluacioneswebapp.model.EAutoevaluationState;
-import co.unicauca.edu.autoevaluacioneswebapp.model.Labour;
-import co.unicauca.edu.autoevaluacioneswebapp.model.UserRole;
+import co.unicauca.edu.autoevaluacioneswebapp.model.*;
 import co.unicauca.edu.autoevaluacioneswebapp.services.ILabourService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.IUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,9 +59,9 @@ public class AutoevaluationsController {
         return "user-autoevaluations";
     }
 
-    @GetMapping("/create-autoevaluation/{userId}")
+    @GetMapping("/add-autoevaluation/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String createAutoevaluationForm(@PathVariable Long userId, Model model) {
+    public String addAutoevaluationForm(@PathVariable Long userId, Model model) {
         UserRole user = userRoleService.findByUserId(userId);
         List<Labour> labours = labourService.findAll();
         Labour selectedLabour = new Labour();
@@ -77,14 +74,17 @@ public class AutoevaluationsController {
         model.addAttribute("user", user);
         model.addAttribute("labours", labours);
         model.addAttribute("selectedLabour", selectedLabour);
-        return "create-autoevaluation";
+        return "add-autoevaluation";
     }
 
-    @PostMapping("/create-autoevaluation")
+    @PostMapping("/add-autoevaluation")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String createAutoevaluation(@ModelAttribute("autoevaluation") Autoevaluation autoevaluation, @ModelAttribute("selectedLabour") Labour selectedLabour, Model model) {
+    public String addAutoevaluation(@ModelAttribute("autoevaluation") Autoevaluation autoevaluation, @ModelAttribute("selectedLabour") Labour selectedLabour, Model model) {
         selectedLabour = labourService.findById(selectedLabour.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la labor"));
         autoevaluation.setLabour(selectedLabour);
+        autoevaluation.setState(EAutoevaluationState.EJECUCION);
+        autoevaluation.setInitDate(AcademicPeriod.getInitDate());
+        autoevaluation.setFinishDate(AcademicPeriod.getEndDate());
         //TODO: Añadir los otros campos que no estan en el formulario
         autoevaluationFacade.save(autoevaluation);
         Long userId = autoevaluation.getUserRole().getUser().getId();
@@ -94,11 +94,39 @@ public class AutoevaluationsController {
 
     @GetMapping("autoevaluations-report")
     @PreAuthorize("hasAnyAuthority('ROLE_COORDINADOR', 'ROLE_DECANO')")
-    public String report(Model model) {
+    public String getReport(Model model) {
         int totalAutoevaluations = autoevaluationFacade.countAll();
         int done = autoevaluationFacade.countByState(EAutoevaluationState.TERMINADO);
         model.addAttribute("total", totalAutoevaluations);
         model.addAttribute("done", done);
         return "autoevaluations-report";
+    }
+
+
+    @GetMapping("perform-autoevaluation")
+    @PreAuthorize("hasRole('ROLE_DOCENTE')")
+    public String performAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails, Model model) {
+        UserRole userRole = userRoleService.findByUserId(userDetails.getUserEntity().getId());
+        List<Autoevaluation> autoevaluations = userRole.getAutoevaluations();
+        List<Autoevaluation> autoevaluationsToPerform = new ArrayList<>();
+        for (Autoevaluation autoevaluation : autoevaluations) {
+            if (autoevaluation.getState().equals(EAutoevaluationState.EJECUCION)) {
+                autoevaluationsToPerform.add(autoevaluation);
+            }
+        }
+        model.addAttribute("autoevaluations", autoevaluationsToPerform);
+        model.addAttribute("userRole", userRole);
+        return "perform-autoevaluation";
+    }
+
+
+    @PostMapping("perform-autoevaluation")
+    @PreAuthorize("hasRole('ROLE_DOCENTE')")
+    public String performAutoevaluation(@ModelAttribute("autoevaluations") List<Autoevaluation> autoevaluations, Model model) {
+        for (Autoevaluation autoevaluation : autoevaluations) {
+            autoevaluation.setState(EAutoevaluationState.TERMINADO);
+            autoevaluationFacade.save(autoevaluation);
+        }
+        return "redirect:/autoevaluations/perform-autoevaluation";
     }
 }
