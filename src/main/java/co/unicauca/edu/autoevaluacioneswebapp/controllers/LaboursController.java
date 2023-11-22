@@ -60,7 +60,7 @@ public class LaboursController {
 
     @PostMapping("/edit-labour/{name}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String editProfessor(@PathVariable String name, @ModelAttribute("labour") Labour updatedLabour) {
+    public String editLabour(@PathVariable String name, @ModelAttribute("labour") Labour updatedLabour) {
         Labour labour = labourService.findByLabourName(name)
                 .orElseThrow(() -> new NoSuchElementException("Labor no encontrada con el nombre: " + name));
 
