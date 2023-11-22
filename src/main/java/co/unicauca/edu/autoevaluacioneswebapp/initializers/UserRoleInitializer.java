@@ -40,8 +40,8 @@ public class UserRoleInitializer implements ApplicationRunner {
                         .role(Role.builder()
                                 .name(ERole.ROLE_DECANO)
                                 .build())
-                        .initDate(LocalDate.now())
-                        .finishDate(LocalDate.now().plusYears(1))
+                        .initDate(AcademicPeriod.getInitDate())
+                        .finishDate(AcademicPeriod.getEndDate())
                         .build(),
                 UserRole.builder()
                         .user(UserEntity.builder()
@@ -58,8 +58,8 @@ public class UserRoleInitializer implements ApplicationRunner {
                         .role(Role.builder()
                                 .name(ERole.ROLE_COORDINADOR)
                                 .build())
-                        .initDate(LocalDate.now())
-                        .finishDate(LocalDate.now().plusYears(1))
+                        .initDate(AcademicPeriod.getInitDate())
+                        .finishDate(AcademicPeriod.getEndDate())
                         .build(),
                 UserRole.builder()
                         .user(UserEntity.builder()
@@ -76,8 +76,8 @@ public class UserRoleInitializer implements ApplicationRunner {
                         .role(Role.builder()
                                 .name(ERole.ROLE_DOCENTE)
                                 .build())
-                        .initDate(LocalDate.now())
-                        .finishDate(LocalDate.now().plusYears(1))
+                        .initDate(AcademicPeriod.getInitDate())
+                        .finishDate(AcademicPeriod.getEndDate())
                         .build()
         ));
     }

@@ -68,8 +68,8 @@ public class UsersController {
         user.setUserRoles(
                 Set.of(UserRole.builder()
                         .role(role)
-                        .initDate(LocalDate.now())
-                        .finishDate(LocalDate.now().plusYears(1))
+                        .initDate(AcademicPeriod.getInitDate())
+                        .finishDate(AcademicPeriod.getEndDate())
                         .user(user)
                         .build()));
 
