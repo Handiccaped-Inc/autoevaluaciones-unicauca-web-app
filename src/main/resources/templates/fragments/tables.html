@@ -1,65 +1,79 @@
-<table th:fragment="tableProfessor" class="table table-striped" style="text-align: center; border-radius: 10px;
+<div th:fragment="tableProfessor" style="overflow-y: auto;">
+    <table class="table table-striped" style="text-align: center; border-radius: 10px;
         overflow: hidden;">
-    <thead class="table-dark">
-        <tr>
-            <th style="background-color: #7752FE !important;">Identificación</th>
-            <th style="background-color: #7752FE !important;">Tipo De Identificación</th>
-            <th style="background-color: #7752FE !important;">Nombres</th>
-            <th style="background-color: #7752FE !important;">Apellidos</th>
-            <th style="background-color: #7752FE !important;">Tipo Docente</th>
-            <th style="background-color: #7752FE !important;">Estado</th>
-            <th style="background-color: #7752FE !important;">Correo</th>
-            <th style="background-color: #7752FE !important;">Ultimo Titulo</th>
-            <th style="background-color: #7752FE !important;">Acciones</th>
-        </tr>
-    </thead>
+        <thead class="table-dark align-middle">
+            <tr>
+                <th style="background-color: #7752FE !important;">Identificación</th>
+                <th style="background-color: #7752FE !important;">Tipo De Identificación</th>
+                <th style="background-color: #7752FE !important;">Nombres</th>
+                <th style="background-color: #7752FE !important;">Apellidos</th>
+                <th style="background-color: #7752FE !important;">Tipo Docente</th>
+                <th style="background-color: #7752FE !important; min-width: 100px;">Estado</th>
+                <th style="background-color: #7752FE !important;">Correo</th>
+                <th style="background-color: #7752FE !important;">Ultimo Titulo</th>
+                <th style="background-color: #7752FE !important;">Acciones</th>
+            </tr>
+        </thead>
 
-    <tbody>
-        <tr class="table-dark" th:each="professor: ${professors}">
-            <td th:text="${professor.personalId}"></td>
-            <td th:text="${professor.typePersonalId}"></td>
-            <td th:text="${professor.firstName}"></td>
-            <td th:text="${professor.lastName}"></td>
-            <td th:text="${professor.professorType.name.toString()}"></td>
-            <td>
-                <span th:if="${professor.active} == true">Activo</span>
-                <span th:if="${professor.active} == false">Inactivo</span>
-            </td>
-            <td th:text="${professor.email}"></td>
-            <td>NaNN</td>
-            <td>
-                <a th:href="@{/users/edit-professor/{email}(email=${professor.email})}"
-                    class="btn btn-info btn-sm text-white">Editar</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+        <tbody>
+            <tr class="table-dark" th:each="professor: ${professors}">
+                <td th:text="${professor.personalId}"></td>
+                <td th:text="${professor.typePersonalId}"></td>
+                <td th:text="${professor.firstName}"></td>
+                <td th:text="${professor.lastName}"></td>
+                <td th:text="${professor.professorType.name.toString()}"></td>
+                <td>
+                    <span th:if="${professor.active}"
+                        style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #1FF434;"></span>
+                    <span th:if="${professor.active}">Activo</span>
 
-<table th:fragment="tableLabour" class="table table-striped" style="text-align: center; border-radius: 10px;
+                    <span th:if="${!professor.active}"
+                        style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #F00;"></span>
+                    <span th:if="${!professor.active}">Inactivo</span>
+                </td>
+                <td th:text="${professor.email}"></td>
+                <td>NaNN</td>
+                <td>
+                    <a th:href="@{/users/edit-professor/{email}(email=${professor.email})}"
+                        class="btn btn-info btn-sm text-white">Editar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="tableLabour" style="overflow-y: auto;">
+    <table class="table table-striped" style="text-align: center; border-radius: 10px;
         overflow: hidden;">
-    <thead class="table-dark">
-        <tr>
-            <th style="background-color: #7752FE !important;">Nombre</th>
-            <th style="background-color: #7752FE !important;">Tipo De Labor</th>
-            <th style="background-color: #7752FE !important;">Estado</th>
-            <th style="background-color: #7752FE !important;">Horas Asignadas</th>
-            <th style="background-color: #7752FE !important;">Acciones</th>
-        </tr>
-    </thead>
+        <thead class="table-dark align-middle">
+            <tr>
+                <th style="background-color: #7752FE !important;">Nombre</th>
+                <th style="background-color: #7752FE !important;">Tipo De Labor</th>
+                <th style="background-color: #7752FE !important; min-width: 100px;">Estado</th>
+                <th style="background-color: #7752FE !important;">Horas Asignadas</th>
+                <th style="background-color: #7752FE !important;">Acciones</th>
+            </tr>
+        </thead>
 
-    <tbody>
-        <tr class="table-dark" th:each="labour: ${labours}">
-            <td th:text="${labour.labourName}"></td>
-            <td th:text="${labour.type.code}"></td>
-            <td>
-                <span th:if="${labour.active} == true">Activo</span>
-                <span th:if="${labour.active} == false">Inactivo</span>
-            </td>
-            <td th:text="${labour.assignedHours}"></td>
-            <td>
-                <a th:href="@{/labours/edit-labour/{name}(name=${labour.labourName})}"
-                    class="btn btn-info btn-sm text-white">Editar</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+        <tbody>
+            <tr class="table-dark" th:each="labour: ${labours}">
+                <td th:text="${labour.labourName}"></td>
+                <td th:text="${labour.type.code}"></td>
+                <td>
+                    <span th:if="${labour.active}"
+                        style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #1FF434;"></span>
+                    <span th:if="${labour.active}">Activo</span>
+
+                    <span th:if="${!labour.active}"
+                        style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #F00;"></span>
+                    <span th:if="${!labour.active}">Inactivo</span>
+                </td>
+                <td th:text="${labour.assignedHours}"></td>
+                <td>
+                    <a th:href="@{/labours/edit-labour/{name}(name=${labour.labourName})}"
+                        class="btn btn-info btn-sm text-white">Editar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
