@@ -2,6 +2,7 @@ package co.unicauca.edu.autoevaluacioneswebapp.facades;
 
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.Autoevaluation;
+import co.unicauca.edu.autoevaluacioneswebapp.model.EAutoevaluationState;
 import co.unicauca.edu.autoevaluacioneswebapp.model.Labour;
 import co.unicauca.edu.autoevaluacioneswebapp.model.UserRole;
 import co.unicauca.edu.autoevaluacioneswebapp.services.*;
@@ -38,4 +39,15 @@ public class AutoevaluationFacade {
     }
 
 
+    public List<Autoevaluation> findAll() {
+        return autoevaluationService.findAll();
+    }
+
+    public int countAll() {
+        return autoevaluationService.countAll();
+    }
+
+    public int countByState(EAutoevaluationState state) {
+        return autoevaluationService.countByState(state);
+    }
 }

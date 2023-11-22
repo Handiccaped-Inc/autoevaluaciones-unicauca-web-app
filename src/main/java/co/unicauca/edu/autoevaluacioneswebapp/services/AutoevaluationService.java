@@ -3,6 +3,8 @@ package co.unicauca.edu.autoevaluacioneswebapp.services;
 
 import co.unicauca.edu.autoevaluacioneswebapp.facades.AutoevaluationFacade;
 import co.unicauca.edu.autoevaluacioneswebapp.model.Autoevaluation;
+import co.unicauca.edu.autoevaluacioneswebapp.model.EAutoevaluationState;
+
 import co.unicauca.edu.autoevaluacioneswebapp.repositories.AutoevaluationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,23 @@ public class AutoevaluationService implements IAutoevaluationService {
     public List<Autoevaluation> findByUserId(Long userId) {
         LocalDate now = LocalDate.now();
         return autoevaluationRepository.findByUserRole_User_IdAndInitDateLessThanEqualAndFinishDateGreaterThanEqual(userId, now, now);
+    }
+
+    @Override
+    public List<Autoevaluation> findAll() {
+        LocalDate now = LocalDate.now();
+        return  autoevaluationRepository.findByInitDateLessThanAndFinishDateGreaterThan(now, now);
+    }
+
+    @Override
+    public int countAll() {
+        LocalDate now = LocalDate.now();
+        return autoevaluationRepository.countByInitDateLessThanAndFinishDateGreaterThan(now, now);
+    }
+
+    @Override
+    public int countByState(EAutoevaluationState state) {
+        LocalDate now = LocalDate.now();
+        return autoevaluationRepository.countByInitDateLessThanAndFinishDateGreaterThanAndState(now,now, state);
     }
 }

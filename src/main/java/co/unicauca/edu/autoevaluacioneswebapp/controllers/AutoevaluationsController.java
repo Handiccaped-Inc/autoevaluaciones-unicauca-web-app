@@ -4,6 +4,7 @@ import co.unicauca.edu.autoevaluacioneswebapp.configuration.security.SecurityAut
 import co.unicauca.edu.autoevaluacioneswebapp.configuration.security.SecurityUser;
 import co.unicauca.edu.autoevaluacioneswebapp.facades.AutoevaluationFacade;
 import co.unicauca.edu.autoevaluacioneswebapp.model.Autoevaluation;
+import co.unicauca.edu.autoevaluacioneswebapp.model.EAutoevaluationState;
 import co.unicauca.edu.autoevaluacioneswebapp.model.Labour;
 import co.unicauca.edu.autoevaluacioneswebapp.model.UserRole;
 import co.unicauca.edu.autoevaluacioneswebapp.services.ILabourService;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,9 +37,15 @@ public class AutoevaluationsController {
         this.labourService = labourService;
     }
 
-    //TODO: Este metodo muestra autoevaluaciones, con las adiciones correctas se puede usar para redirigir a la vista de añadir
-    // Una autoevaluacion para el usario con id userid, esto se puede ver segun yo de mejor forma desde UserRole, para no agregar una por una
-    // sino con un checkbox
+    @GetMapping("/autoevaluation-management")
+    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
+    public String getAutoevaluations(@AuthenticationPrincipal SecurityUser userDetails, Model model) {
+        List<Autoevaluation> autoevaluations;
+        autoevaluations = autoevaluationFacade.findAll();
+        model.addAttribute("autoevaluations", autoevaluations);
+        return "autoevaluation-management";
+    }
+
     @GetMapping("/user-autoevaluations/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR') or hasRole('ROLE_DOCENTE')")
     public String getUserAutoevaluations(@AuthenticationPrincipal SecurityUser userDetails, @PathVariable Long userId, Model model) {
@@ -53,30 +61,44 @@ public class AutoevaluationsController {
         model.addAttribute("userId", userId);
         return "user-autoevaluations";
     }
-    //FIXME: es esto necesario?, podria simplemente crearlo en plural, seleccionar labores con checkbox, y crear
-    //un objeto autoevaluacion por cada una, luego simplemente asignarselas a userrole y de esa forma no tendria que agregar una por una
+
     @GetMapping("/create-autoevaluation/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String createAutoevaluationForm(@PathVariable Long userId, Model model) {
         UserRole user = userRoleService.findByUserId(userId);
         List<Labour> labours = labourService.findAll();
+        Labour selectedLabour = new Labour();
+
         Autoevaluation autoevaluation = Autoevaluation.builder()
                 .userRole(user)
                 .build();
 
-        //TODO: Con th:field crear los dropdown y los campos mapeados a EAutoevaluationState para que sea posible guardar
         model.addAttribute("autoevaluation", autoevaluation);
         model.addAttribute("user", user);
         model.addAttribute("labours", labours);
-        return "redirect:/autoevaluations/user-autoevaluations/" + userId;
+        model.addAttribute("selectedLabour", selectedLabour);
+        return "create-autoevaluation";
     }
 
-    //TODO: Mejorar la logica para agregar los campos de las autoevaluaciones
     @PostMapping("/create-autoevaluation")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String createAutoevaluation(@ModelAttribute("autoevaluation") Autoevaluation autoevaluation, Model model) {
+    public String createAutoevaluation(@ModelAttribute("autoevaluation") Autoevaluation autoevaluation, @ModelAttribute("selectedLabour") Labour selectedLabour, Model model) {
+        selectedLabour = labourService.findById(selectedLabour.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la labor"));
+        autoevaluation.setLabour(selectedLabour);
+        //TODO: Añadir los otros campos que no estan en el formulario
         autoevaluationFacade.save(autoevaluation);
         Long userId = autoevaluation.getUserRole().getUser().getId();
         return "redirect:/autoevaluations/user-autoevaluations/" + userId;
+    }
+
+
+    @GetMapping("autoevaluations-report")
+    @PreAuthorize("hasAnyAuthority('ROLE_COORDINADOR', 'ROLE_DECANO')")
+    public String report(Model model) {
+        int totalAutoevaluations = autoevaluationFacade.countAll();
+        int done = autoevaluationFacade.countByState(EAutoevaluationState.TERMINADO);
+        model.addAttribute("total", totalAutoevaluations);
+        model.addAttribute("done", done);
+        return "autoevaluations-report";
     }
 }

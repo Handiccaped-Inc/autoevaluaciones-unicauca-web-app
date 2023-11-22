@@ -38,4 +38,8 @@ public class LabourService implements ILabourService{
     public List<Labour> findAll(){
         return laboursRepository.findAll();
     }
+    @Override
+    public Optional<Labour> findById(Long id) {
+        return laboursRepository.findById(id);
+    }
 }
