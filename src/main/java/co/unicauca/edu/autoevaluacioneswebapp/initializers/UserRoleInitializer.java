@@ -6,6 +6,7 @@ import co.unicauca.edu.autoevaluacioneswebapp.repositories.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.Ordered;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class UserRoleInitializer implements ApplicationRunner {
+public class UserRoleInitializer implements ApplicationRunner, Ordered {
     UserRoleRepository userRoleRepository;
     ProfessorTypeRepository professorTypeRepository;
     PasswordEncoder passwordEncoder;
@@ -94,5 +95,10 @@ public class UserRoleInitializer implements ApplicationRunner {
 
         //Para añadir mas en el professor type de los que se creen a partir de aqui usar los  ProfesorType que se sacaron de la bd y no usar el builder
 
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
     }
 }
