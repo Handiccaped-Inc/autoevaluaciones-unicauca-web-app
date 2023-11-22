@@ -55,7 +55,7 @@ public class UserEntity {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private ProfessorType professorType;
-
+    @Builder.Default
     private boolean active = true;
 
 }
