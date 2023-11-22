@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +15,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Component
-public class UserRoleInitializer implements ApplicationRunner, Ordered {
+@Order(1)
+public class UserRoleInitializer implements ApplicationRunner {
     UserRoleRepository userRoleRepository;
     ProfessorTypeRepository professorTypeRepository;
     PasswordEncoder passwordEncoder;
@@ -97,8 +99,4 @@ public class UserRoleInitializer implements ApplicationRunner, Ordered {
 
     }
 
-    @Override
-    public int getOrder() {
-        return 0;
-    }
 }

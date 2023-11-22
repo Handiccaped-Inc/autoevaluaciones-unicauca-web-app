@@ -10,7 +10,7 @@ import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
 //@Component
-public class LabourInitializer implements ApplicationRunner, Ordered {
+public class LabourInitializer implements ApplicationRunner {
     LaboursRepository laboursRepository;
 
     //@Autowired
@@ -24,8 +24,4 @@ public class LabourInitializer implements ApplicationRunner, Ordered {
         throw new UnsupportedOperationException("Unimplemented method 'run'");
     }
 
-    @Override
-    public int getOrder() {
-        return 1;
-    }
 }

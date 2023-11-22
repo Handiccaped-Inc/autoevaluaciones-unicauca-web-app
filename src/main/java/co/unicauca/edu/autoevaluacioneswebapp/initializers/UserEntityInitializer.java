@@ -9,12 +9,14 @@ import co.unicauca.edu.autoevaluacioneswebapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
 @Component
-public class UserEntityInitializer implements CommandLineRunner , Ordered {
+@Order(3)
+public class UserEntityInitializer implements CommandLineRunner {
     
     UsersRepository usersRepository;
     ProfessorTypeRepository professorTypeRepository;
@@ -54,8 +56,4 @@ public class UserEntityInitializer implements CommandLineRunner , Ordered {
         userService.save(user);
     }
 
-    @Override
-    public int getOrder() {
-        return 2;
-    }
 }
