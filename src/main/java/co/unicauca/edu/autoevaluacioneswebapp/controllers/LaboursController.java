@@ -2,9 +2,6 @@ package co.unicauca.edu.autoevaluacioneswebapp.controllers;
 
 import java.util.NoSuchElementException;
 
-import co.unicauca.edu.autoevaluacioneswebapp.model.Labour;
-import co.unicauca.edu.autoevaluacioneswebapp.services.ILabourService;
-import co.unicauca.edu.autoevaluacioneswebapp.services.LabourService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import co.unicauca.edu.autoevaluacioneswebapp.model.Labour;
+import co.unicauca.edu.autoevaluacioneswebapp.services.ILabourService;
 
 @Controller
 @RequestMapping("/labours")
