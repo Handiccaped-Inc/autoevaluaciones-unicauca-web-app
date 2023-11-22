@@ -86,17 +86,6 @@ public class UserRoleInitializer implements ApplicationRunner {
                 .finishDate(AcademicPeriod.getEndDate())
                 .build();
         userRoleRepository.saveAllAndFlush(List.of(user1, user2, user3));
-
-
-        ProfessorType typeTiempoCompleto = professorTypeRepository.findByName(EProfessorType.TIEMPO_COMPLETO).orElseThrow();
-
-        ProfessorType typeCatedra = professorTypeRepository.findByName(EProfessorType.CATEDRA).orElseThrow();
-
-        ProfessorType typePlanta = professorTypeRepository.findByName(EProfessorType.PLANTA).orElseThrow();
-
-
-        //Para añadir mas en el professor type de los que se creen a partir de aqui usar los  ProfesorType que se sacaron de la bd y no usar el builder
-
     }
 
 }
