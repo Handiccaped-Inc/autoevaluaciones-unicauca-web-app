@@ -22,6 +22,7 @@ public class LabourService implements ILabourService{
     }
     @Override
     public void save(Labour labour){
+        //TODO; Añadir la logica de negocio, validaciones de horas de acuerdo al tipo de labor
         laboursRepository.save(labour);
     }
     @Override
