@@ -9,11 +9,11 @@ import co.unicauca.edu.autoevaluacioneswebapp.repositories.LaboursRepository;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class LabourInitializer implements ApplicationRunner, Ordered {
     LaboursRepository laboursRepository;
 
-    @Autowired
+    //@Autowired
     public LabourInitializer(LaboursRepository laboursRepository) {
         this.laboursRepository = laboursRepository;
     }
