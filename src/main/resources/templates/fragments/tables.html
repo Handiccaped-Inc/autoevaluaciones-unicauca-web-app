@@ -77,3 +77,39 @@
         </tbody>
     </table>
 </div>
+
+<div th:fragment="tableAutoevaluationAll" style="overflow-y: auto;">
+    <table class="table table-striped" style="text-align: center; border-radius: 10px;
+        overflow: hidden;">
+        <thead class="table-dark align-middle">
+            <tr>
+                <th style="background-color: #7752FE !important;">ID</th>
+                <th style="background-color: #7752FE !important;">Docente</th>
+                <th style="background-color: #7752FE !important; min-width: 100px;">Estado</th>
+                <th style="background-color: #7752FE !important;">Notificar</th>
+                <th style="background-color: #7752FE !important;">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr class="table-dark" th:each="autoevaluation: ${autoevaluations}">
+                <td th:text="${autoevaluation.id}"></td>
+                <td>Preguntar</td>
+                <td>
+                    <span th:if="${autoevaluation.act}"
+                        style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #1FF434;"></span>
+                    <span th:if="${autoevaluation.act}">Activo</span>
+
+                    <span th:if="${!autoevaluation.act}"
+                        style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #F00;"></span>
+                    <span th:if="${!autoevaluation.act}">Inactivo</span>
+                </td>
+                <td>Notificar</td>
+                <td>
+                    <a th:href="@{/labours/edit-labour/{name}(name=${labour.labourName})}"
+                        class="btn btn-info btn-sm text-white">Editar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -17,3 +17,66 @@
     <div th:replace="~{fragments/inputs :: input2('         Buscar','Buscar', '/labours/create-labour')}"></div>
   </div>
 </div>
+
+<div th:fragment="autoevaluation-head1(title, id)">
+  <h1 th:text="${title}" style="font-weight: 600;"></h1>
+  <div class="d-flex flex-row mt-4" style="width: 100%;">
+    <div style="width: 100%;">
+      <div class="mb-4">
+        <div th:replace="~{fragments/buttons :: button2('/autoevaluations/autoevaluation-management','Consultar')}">
+        </div>
+        <div th:replace="~{fragments/buttons :: button2('/autoevaluations/add-autoevaluation','Configurar')}">
+        </div>
+        <div
+          th:replace="~{fragments/buttons :: button2(@{/autoevaluations/user-autoevaluations/} + ${id}, 'Realizar')}">
+        </div>
+        <div th:replace="~{fragments/buttons :: button2('/autoevaluations/autoevaluations-report','Reporte')}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div th:fragment="autoevaluation-head2">
+  <div class="d-flex position-relative mb-3" style="width: 100%;">
+    <div th:replace="~{fragments/inputs :: input2('         Buscar','Buscar', '/labours/create-labour')}"></div>
+
+    <div class="d-flex position-relative ms-auto">
+      <select class="form-select me-3"
+        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;">
+        <option value="" selected disabled>Tipo de Labor</option>
+        <option value="D">Docente</option>
+        <option value="TD">Trabajos Docencia</option>
+        <option value="PI">Proyecto Investigación</option>
+        <option value="TI">Trabajos Investigación</option>
+        <option value="AD">Administración</option>
+        <option value="AS">Asesoría</option>
+        <option value="S">Servicios</option>
+        <option value="E">Extensión</option>
+        <option value="C">Capacitación</option>
+        <option value="OS">Otros Servicios</option>
+      </select>
+
+      <select class="form-select me-3"
+        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;">
+        <option value="" selected disabled>Fecha Inicio</option>
+      </select>
+
+      <select class="form-select me-3"
+        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;">
+        <option value="" selected disabled>Fecha Fin</option>
+      </select>
+
+      <select class="form-select me-3"
+        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;">
+        <option value="" selected disabled>Estado</option>
+        <option value="D">Activo</option>
+        <option value="TD">Inactivo</option>
+      </select>
+    </div>
+  </div>
+
+</div>
+</div>
+</div>

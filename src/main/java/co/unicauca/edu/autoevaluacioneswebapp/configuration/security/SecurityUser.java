@@ -17,11 +17,12 @@ import java.util.Set;
 @Setter
 public class SecurityUser implements UserDetails {
     private final UserEntity userEntity;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<UserRole> userRoles = userEntity.getUserRoles();
         LocalDate now = LocalDate.now();
-        //Mapear los roles que esten activos en la fecha actual
+        // Mapear los roles que esten activos en la fecha actual
         return userRoles.stream()
                 .filter(userRole -> !userRole.getInitDate().isAfter(now) && !userRole.getFinishDate().isBefore(now))
                 .map(userRole -> new SecurityAuthority(userRole.getRole()))
@@ -36,6 +37,10 @@ public class SecurityUser implements UserDetails {
     @Override
     public String getUsername() {
         return userEntity.getEmail();
+    }
+
+    public Long getId() {
+        return userEntity.getId();
     }
 
     @Override
@@ -56,6 +61,6 @@ public class SecurityUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-        //return userEntity.isActive();
+        // return userEntity.isActive();
     }
 }
