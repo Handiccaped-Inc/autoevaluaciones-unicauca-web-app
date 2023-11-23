@@ -25,6 +25,32 @@
             <div th:replace="~{fragments/tables :: tableAutoevaluationAdd}">
             </div>
 
+            <form th:action="@{/autoevaluations/add-autoevaluation}" th:object="${autoevaluation}" method="post">
+                <input th:field="*{userRole.id}" placeholder="ID usuario">
+                <p>
+                    <label for="labour">Labor:</label>
+                    <select id="labour" name="selectedLabour.id" th:field="*{id}">
+                        <option th:each="labour : ${labours}" th:value="${labour.id}" th:text="${labour.labourName}">
+                        </option>
+                    </select>
+                </p>
+                <p>
+                    <label for="act">Activo:</label>
+                    <input id="act" type="checkbox" th:field="*{act}">
+                </p>
+                <p>
+                    <label for="result">Resultado:</label>
+                    <input id="result" type="text" th:field="*{result}">
+                </p>
+                <p>
+                    <label for="evaluation">Evaluación:</label>
+                    <input id="evaluation" name="evaluation" type="number" th:field="*{evaluation}">
+                </p>
+                <p>
+                    <button type="submit">Enviar</button>
+                </p>
+            </form>
+
         </div>
     </div>
 
