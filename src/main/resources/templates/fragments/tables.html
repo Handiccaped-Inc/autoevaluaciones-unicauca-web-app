@@ -32,7 +32,7 @@
                     <span th:if="${!professor.active}">Inactivo</span>
                 </td>
                 <td th:text="${professor.email}"></td>
-                <td>NaNN</td>
+                <td th:text="${professor.lastDegreeAchivement}"></td>
                 <td>
                     <a th:href="@{/users/edit-professor/{email}(email=${professor.email})}"
                         class="btn btn-info btn-sm text-white">Editar</a>

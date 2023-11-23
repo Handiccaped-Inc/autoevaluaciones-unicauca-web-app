@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-@Component
+
 @Order(3)
 public class UserEntityInitializer implements CommandLineRunner {
     
@@ -24,7 +24,7 @@ public class UserEntityInitializer implements CommandLineRunner {
     UserService userService;
     
     RoleService roleService;
-    @Autowired
+    
     public UserEntityInitializer(UsersRepository usersRepository, ProfessorTypeRepository professorTypeRepository, UserService userService, ProfessorTypeService professorTypeService, RoleService roleService){
         this.usersRepository = usersRepository;
         this.professorTypeRepository = professorTypeRepository;
