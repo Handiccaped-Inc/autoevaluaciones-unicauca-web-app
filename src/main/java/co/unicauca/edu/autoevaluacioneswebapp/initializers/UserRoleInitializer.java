@@ -17,78 +17,80 @@ import java.util.List;
 @Component
 @Order(1)
 public class UserRoleInitializer implements ApplicationRunner {
-    UserRoleRepository userRoleRepository;
-    ProfessorTypeRepository professorTypeRepository;
-    PasswordEncoder passwordEncoder;
+        UserRoleRepository userRoleRepository;
+        ProfessorTypeRepository professorTypeRepository;
+        PasswordEncoder passwordEncoder;
 
-    @Autowired
-    public UserRoleInitializer(UserRoleRepository userRoleRepository, ProfessorTypeRepository professorTypeRepository, PasswordEncoder passwordEncoder) {
-        this.userRoleRepository = userRoleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.professorTypeRepository = professorTypeRepository;
-    }
+        @Autowired
+        public UserRoleInitializer(UserRoleRepository userRoleRepository,
+                        ProfessorTypeRepository professorTypeRepository, PasswordEncoder passwordEncoder) {
+                this.userRoleRepository = userRoleRepository;
+                this.passwordEncoder = passwordEncoder;
+                this.professorTypeRepository = professorTypeRepository;
+        }
 
-    @Override
-    public void run(ApplicationArguments args) throws Exception {
-        UserRole user1 = UserRole.builder()
-                .user(UserEntity.builder()
-                        .firstName("Pablo")
-                        .lastName("Ruiz")
-                        .email("prestrepo@unicauca.edu.co")
-                        .password(passwordEncoder.encode("123456"))
-                        .personalId(123456789L)
-                        .typePersonalId("CC")
-                        .professorType(ProfessorType.builder()
-                                .name(EProfessorType.TIEMPO_COMPLETO)
-                                .build())
-                        .lastDegreeAchivement("Doctorado En Computación")
-                        .build())
-                .role(Role.builder()
-                        .name(ERole.ROLE_DECANO)
-                        .build())
-                .initDate(AcademicPeriod.getInitDate())
-                .finishDate(AcademicPeriod.getEndDate())
-                .build();
+        @Override
+        public void run(ApplicationArguments args) throws Exception {
+                UserRole user1 = UserRole.builder()
+                                .user(UserEntity.builder()
+                                                .firstName("Pablo")
+                                                .lastName("Ruiz")
+                                                .email("prestrepo@unicauca.edu.co")
+                                                .password(passwordEncoder.encode("123456"))
+                                                .personalId(123456789L)
+                                                .typePersonalId("CC")
+                                                .professorType(ProfessorType.builder()
+                                                                .name(EProfessorType.TIEMPO_COMPLETO)
+                                                                .build())
+                                                .lastDegreeAchivement("Doctorado En Computación")
+                                                .build())
+                                .role(Role.builder()
+                                                .name(ERole.ROLE_DECANO)
+                                                .build())
+                                .initDate(AcademicPeriod.getInitDate())
+                                .finishDate(AcademicPeriod.getEndDate())
+                                .build();
 
-        UserRole user2 = UserRole.builder()
-                .user(UserEntity.builder()
-                        .firstName("Jojan")
-                        .lastName("Serna")
-                        .email("jeserna@unicauca.edu.co")
-                        .password(passwordEncoder.encode("123456"))
-                        .personalId(123456789L)
-                        .typePersonalId("CC")
-                        .professorType(ProfessorType.builder()
-                                .name(EProfessorType.CATEDRA)
-                                .build())
-                        .lastDegreeAchivement("Magister en Datos")
-                        .build())
-                .role(Role.builder()
-                        .name(ERole.ROLE_COORDINADOR)
-                        .build())
-                .initDate(AcademicPeriod.getInitDate())
-                .finishDate(AcademicPeriod.getEndDate())
-                .build();
-        UserRole user3 = UserRole.builder()
-                .user(UserEntity.builder()
-                        .firstName("Santiago")
-                        .lastName("Agredo")
-                        .email("sagredov@unicauca.edu.co")
-                        .password(passwordEncoder.encode("123456"))
-                        .personalId(123456789L)
-                        .typePersonalId("CC")
-                        .professorType(ProfessorType.builder()
-                                .name(EProfessorType.PLANTA)
-                                .build())
-                        .lastDegreeAchivement("Magister en seguridad")
-                        .build())
-                .role(Role.builder()
-                        .name(ERole.ROLE_DOCENTE)
-                        .build())
-                .initDate(AcademicPeriod.getInitDate())
-                .finishDate(AcademicPeriod.getEndDate())
-                .build();
-        userRoleRepository.saveAllAndFlush(List.of(user1, user2, user3));
-    }
+                UserRole user2 = UserRole.builder()
+                                .user(UserEntity.builder()
+                                                .firstName("Jojan")
+                                                .lastName("Serna")
+                                                .email("jeserna@unicauca.edu.co")
+                                                .password(passwordEncoder.encode("123456"))
+                                                .personalId(123456789L)
+                                                .typePersonalId("CC")
+                                                .professorType(ProfessorType.builder()
+                                                                .name(EProfessorType.CATEDRA)
+                                                                .build())
+                                                .lastDegreeAchivement("Magister en Datos")
+                                                .build())
+                                .role(Role.builder()
+                                                .name(ERole.ROLE_COORDINADOR)
+                                                .build())
+                                .initDate(AcademicPeriod.getInitDate())
+                                .finishDate(AcademicPeriod.getEndDate())
+                                .build();
+                UserRole user3 = UserRole.builder()
+                                .user(UserEntity.builder()
+                                                .firstName("Santiago")
+                                                .lastName("Agredo")
+                                                .email("sagredov@unicauca.edu.co")
+                                                .password(passwordEncoder.encode("123456"))
+                                                .personalId(123456789L)
+                                                .typePersonalId("CC")
+                                                .professorType(ProfessorType.builder()
+                                                                .name(EProfessorType.PLANTA)
+                                                                .build())
+                                                .lastDegreeAchivement("Magister en seguridad")
+                                                .build())
+                                .role(Role.builder()
+                                                .name(ERole.ROLE_DOCENTE)
+                                                .build())
+                                .initDate(AcademicPeriod.getInitDate())
+                                .finishDate(AcademicPeriod.getEndDate())
+                                .build();
+
+                userRoleRepository.saveAllAndFlush(List.of(user1, user2, user3));
+        }
 
 }

@@ -91,8 +91,8 @@ public class AutoevaluationsController {
         autoevaluation.setFinishDate(AcademicPeriod.getEndDate());
         // TODO: Añadir los otros campos que no estan en el formulario
         autoevaluationFacade.save(autoevaluation);
-        Long userId = autoevaluation.getUserRole().getUser().getId();
-        return "redirect:/autoevaluations/user-autoevaluations/" + userId;
+        /* Long userId = autoevaluation.getUserRole().getUser().getId(); */
+        return "redirect:/users/professor-management";
     }
 
     @GetMapping("autoevaluations-report")
