@@ -20,7 +20,7 @@
         <div th:replace="~{fragments/navbar :: navbar('Jojan Serna')}"> </div>
 
         <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 100%; height: 100%;">
-            <div th:replace="~{fragments/headers :: autoevaluation-head1('Gestión de Autoevaluación')}">
+            <div th:replace="~{fragments/headers :: autoevaluation-head1('Reporte de Autoevaluación', ${userId})}">
             </div>
 
         </div>

@@ -15,7 +15,7 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody class="align-middle">
             <tr class="table-dark" th:each="professor: ${professors}">
                 <td th:text="${professor.personalId}"></td>
                 <td th:text="${professor.typePersonalId}"></td>
@@ -36,6 +36,9 @@
                 <td>
                     <a th:href="@{/users/edit-professor/{email}(email=${professor.email})}"
                         class="btn btn-info btn-sm text-white">Editar</a>
+
+                    <a th:href="@{/autoevaluations/add-autoevaluation/{personalId}(personalId=${professor.personalId})}"
+                        class="btn btn-success btn-sm text-white">Crear AutoEv.</a>
                 </td>
             </tr>
         </tbody>
@@ -55,7 +58,7 @@
             </tr>
         </thead>
 
-        <tbody>
+        <tbody class="align-middle">
             <tr class="table-dark" th:each="labour: ${labours}">
                 <td th:text="${labour.labourName}"></td>
                 <td th:text="${labour.type.code}"></td>
@@ -85,29 +88,78 @@
             <tr>
                 <th style="background-color: #7752FE !important;">ID</th>
                 <th style="background-color: #7752FE !important;">Docente</th>
-                <th style="background-color: #7752FE !important; min-width: 100px;">Estado</th>
+                <th style="background-color: #7752FE !important; min-width: 100px;">ACTA</th>
+                <th style="background-color: #7752FE !important;">Estado</th>
                 <th style="background-color: #7752FE !important;">Notificar</th>
                 <th style="background-color: #7752FE !important;">Acciones</th>
             </tr>
         </thead>
 
-        <tbody>
+        <tbody class="align-middle">
             <tr class="table-dark" th:each="autoevaluation: ${autoevaluations}">
                 <td th:text="${autoevaluation.id}"></td>
-                <td>Preguntar</td>
+                <td th:text="${autoevaluation.userRole.user.firstName + ' ' + autoevaluation.userRole.user.lastName}">
+                </td>
                 <td>
                     <span th:if="${autoevaluation.act}"
                         style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #1FF434;"></span>
-                    <span th:if="${autoevaluation.act}">Activo</span>
+                    <span th:if="${autoevaluation.act}">Si</span>
 
                     <span th:if="${!autoevaluation.act}"
                         style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #F00;"></span>
-                    <span th:if="${!autoevaluation.act}">Inactivo</span>
+                    <span th:if="${!autoevaluation.act}">No</span>
                 </td>
-                <td>Notificar</td>
                 <td>
-                    <a th:href="@{/labours/edit-labour/{name}(name=${labour.labourName})}"
-                        class="btn btn-info btn-sm text-white">Editar</a>
+                    <span th:if="${autoevaluation.state.toString() == 'EJECUCION'}"
+                        style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #FFC107;"></span>
+                    <span th:if="${autoevaluation.state.toString() == 'EJECUCION'}">En Ejecución</span>
+
+                    <span th:if="${autoevaluation.state.toString() == 'TERMINADO'}"
+                        style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #1FF434;"></span>
+                    <span th:if="${autoevaluation.state.toString() == 'TERMINADO'}">Terminado</span>
+
+                    <span th:if="${autoevaluation.state.toString() == 'SUSPENDIDO'}"
+                        style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #F00;"></span>
+                    <span th:if="${autoevaluation.state.toString() == 'SUSPENDIDO'}">Suspendido</span>
+                </td>
+
+                <td>
+                    <div th:replace="~{fragments/buttons :: button3}">
+                    </div>
+                </td>
+                <td>
+                    <a class="btn btn-info btn-sm text-white">Ver Detalles</a>
+                    <!-- th:href="@{/autoevaluations/edit-autoevaluation/{id}(id=${autoevaluation.id})}" -->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:fragment="tableAutoevaluationAdd" style="overflow-y: auto;">
+    <table class="table table-striped" style="text-align: center; border-radius: 10px;
+        overflow: hidden;">
+        <thead class="table-dark align-middle">
+            <tr>
+                <th style="background-color: #7752FE !important;">Nombre de Labor</th>
+                <th style="background-color: #7752FE !important;">Tipo de Labor</th>
+                <th style="background-color: #7752FE !important; ">Horas</th>
+                <th style="background-color: #7752FE !important;">Descripción</th>
+                <th style="background-color: #7752FE !important;">ACTA (Si Aplica)</th>
+                <th style="background-color: #7752FE !important;">Fecha Inicio</th>
+                <th style="background-color: #7752FE !important;">Fecha Fin</th>
+                <th style="background-color: #7752FE !important;">Estado</th>
+            </tr>
+        </thead>
+
+        <tbody class="align-middle">
+            <tr class="table-dark">
+                <td>
+                    <select>
+                        <option th:each="labour:${labours}" th:value=${labour.labourName.toString()}><span
+                                th:text=${labour.labourName.toString()}></span>
+                        </option>
+                    </select>
                 </td>
             </tr>
         </tbody>
