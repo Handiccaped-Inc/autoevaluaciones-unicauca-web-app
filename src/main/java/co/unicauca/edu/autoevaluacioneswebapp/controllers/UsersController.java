@@ -101,6 +101,7 @@ public class UsersController {
         user.setActive(updatedUser.isActive());
         user.setTypePersonalId(updatedUser.getTypePersonalId());
         user.setEmail(updatedUser.getEmail());
+        user.setLastDegreeAchivement(updatedUser.getLastDegreeAchivement());
 
         userService.save(user);
 

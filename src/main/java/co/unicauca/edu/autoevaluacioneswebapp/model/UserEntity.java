@@ -59,4 +59,6 @@ public class UserEntity {
     @Builder.Default
     private boolean active = true;
 
+    private String lastDegreeAchivement;
+
 }
