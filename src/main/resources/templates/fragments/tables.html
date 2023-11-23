@@ -90,6 +90,8 @@
                 <th style="background-color: #7752FE !important;">Docente</th>
                 <th style="background-color: #7752FE !important; min-width: 100px;">ACTA</th>
                 <th style="background-color: #7752FE !important;">Estado</th>
+                <th style="background-color: #7752FE !important;">Fecha Inicio</th>
+                <th style="background-color: #7752FE !important;">Fecha Fin</th>
                 <th style="background-color: #7752FE !important;">Notificar</th>
                 <th style="background-color: #7752FE !important;">Acciones</th>
             </tr>
@@ -123,6 +125,10 @@
                     <span th:if="${autoevaluation.state.toString() == 'SUSPENDIDO'}">Suspendido</span>
                 </td>
 
+                <td th:text="${autoevaluation.initDate.toString()}"></td>
+
+                <td th:text="${autoevaluation.finishDate.toString()}"></td>
+
                 <td>
                     <div th:replace="~{fragments/buttons :: button3}">
                     </div>
@@ -137,31 +143,44 @@
 </div>
 
 <div th:fragment="tableAutoevaluationAdd" style="overflow-y: auto;">
-    <table class="table table-striped" style="text-align: center; border-radius: 10px;
+    <form th:action="@{/autoevaluations/add-autoevaluation}" th:object="${autoevaluation}" method="post">
+        <table class="table table-striped" style="text-align: center; border-radius: 10px;
         overflow: hidden;">
-        <thead class="table-dark align-middle">
-            <tr>
-                <th style="background-color: #7752FE !important;">Nombre de Labor</th>
-                <th style="background-color: #7752FE !important;">Tipo de Labor</th>
-                <th style="background-color: #7752FE !important; ">Horas</th>
-                <th style="background-color: #7752FE !important;">Descripción</th>
-                <th style="background-color: #7752FE !important;">ACTA (Si Aplica)</th>
-                <th style="background-color: #7752FE !important;">Fecha Inicio</th>
-                <th style="background-color: #7752FE !important;">Fecha Fin</th>
-                <th style="background-color: #7752FE !important;">Estado</th>
-            </tr>
-        </thead>
+            <thead class="table-dark align-middle">
+                <tr>
+                    <th style="background-color: #7752FE !important;">ID usuario</th>
+                    <th style="background-color: #7752FE !important;">Nombre de Labor</th>
+                    <th style="background-color: #7752FE !important;">ACTA (Si Aplica)</th>
+                    <th style="background-color: #7752FE !important;">Acciones</th>
+                </tr>
+            </thead>
 
-        <tbody class="align-middle">
-            <tr class="table-dark">
-                <td>
-                    <select>
-                        <option th:each="labour:${labours}" th:value=${labour.labourName.toString()}><span
-                                th:text=${labour.labourName.toString()}></span>
-                        </option>
-                    </select>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+            <tbody class="align-middle">
+                <tr class="table-dark">
+                    <td>
+                        <input
+                            style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                            th:field="*{userRole.id}">
+                    </td>
+                    <td>
+                        <select
+                            style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                            id="labour" name="selectedLabour.id" th:field="*{id}">
+                            <option th:each="labour : ${labours}" th:value="${labour.id}"
+                                th:text="${labour.labourName}">
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input
+                            style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                            id="act" type="checkbox" th:field="*{act}">
+                    </td>
+                    <td>
+                        <div th:replace="~{fragments/buttons :: button1('submit','Crear Autoevaluación')}"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
 </div>
