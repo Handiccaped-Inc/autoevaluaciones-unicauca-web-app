@@ -28,14 +28,14 @@ import co.unicauca.edu.autoevaluacioneswebapp.services.LabourService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.RoleService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.UserRoleService;
 
-@Component
+
 public class AutoevaluationsInitializer implements ApplicationRunner {
     UserRoleRepository userRoleRepository;
     LabourService labourService;
     AutoevaluationRepository autoevaluationRepository;
       PasswordEncoder passwordEncoder;
       RoleService roleService;
-    @Autowired
+      
     public AutoevaluationsInitializer( UserRoleRepository userRoleRepository,LabourService labourService ,AutoevaluationRepository autoevaluationRepository,  PasswordEncoder passwordEncoder, RoleService roleService){
         this.autoevaluationRepository = autoevaluationRepository;
         this.userRoleRepository = userRoleRepository;

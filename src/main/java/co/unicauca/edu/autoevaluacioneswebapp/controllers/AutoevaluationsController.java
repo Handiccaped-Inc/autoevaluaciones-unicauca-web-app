@@ -83,12 +83,14 @@ public class AutoevaluationsController {
          UserRole user = userRoleService.findByUserId(Long.parseLong(userIdP));
         selectedLabour = labourService.findById(selectedLabour.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la labor"));
-        autoevaluation.setUserRole(user);
-        autoevaluation.setLabour(selectedLabour);
-        autoevaluation.setState(EAutoevaluationState.EJECUCION);
-        autoevaluation.setInitDate(AcademicPeriod.getInitDate());
-        autoevaluation.setFinishDate(AcademicPeriod.getEndDate());
-        autoevaluationFacade.save(autoevaluation);
+        Autoevaluation autoevaluationsave = new Autoevaluation();
+        autoevaluationsave.setUserRole(user);
+        autoevaluationsave.setLabour(selectedLabour);
+        autoevaluationsave.setState(EAutoevaluationState.EJECUCION);
+        autoevaluationsave.setInitDate(AcademicPeriod.getInitDate());
+        autoevaluationsave.setFinishDate(AcademicPeriod.getEndDate());
+        autoevaluationsave.setAct(autoevaluation.isAct());
+        autoevaluationFacade.save(autoevaluationsave);
         return "redirect:/users/professor-management";
     }
 

@@ -28,7 +28,7 @@ public class Autoevaluation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL) //Cambidado para las prubeas Cambiar EN version final
+    @ManyToOne(cascade = CascadeType.PERSIST) //Cambidado para las prubeas Cambiar EN version final
     private Labour labour;
 
     private boolean act;
@@ -45,6 +45,6 @@ public class Autoevaluation {
     @Max(value = 100)
     private long evaluation;
 
-    @ManyToOne(cascade = CascadeType.MERGE) //Cambiado Para El Inicializar Version final colocoar Persite si no genera error
+    @ManyToOne(cascade = CascadeType.PERSIST) //Cambiado Para El Inicializar Version final colocoar Persite si no genera error
     private UserRole userRole;
 }

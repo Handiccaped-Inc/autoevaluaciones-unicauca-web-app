@@ -12,6 +12,7 @@ public interface UsersRepository extends JpaRepository<UserEntity, Long> {
 
     List<UserEntity> findByUserRoles_Role_NameAndUserRoles_InitDateLessThanEqualAndUserRoles_FinishDateGreaterThanEqual(ERole name, LocalDate now, LocalDate now1);
 
+
     //@Query("SELECT u FROM UserEntity u JOIN u.role r WHERE r.name = ?1")
     //List<UserEntity> findAllByRole(ERole role);
 }
