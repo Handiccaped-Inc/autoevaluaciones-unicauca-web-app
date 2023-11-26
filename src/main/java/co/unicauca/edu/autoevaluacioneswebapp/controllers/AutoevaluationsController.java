@@ -63,33 +63,30 @@ public class AutoevaluationsController {
 
     @GetMapping("/add-autoevaluation/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String addAutoevaluationForm(@PathVariable Long userId, Model model) {
-        UserRole user = userRoleService.findByUserId(userId);
+    public String addAutoevaluationForm(@PathVariable Long userId,Model model) {
         List<Labour> labours = labourService.findAll();
         Labour selectedLabour = new Labour();
 
-        Autoevaluation autoevaluation = Autoevaluation.builder()
-                .userRole(user)
-                .build();
+        Autoevaluation autoevaluation = new Autoevaluation();
 
         model.addAttribute("autoevaluation", autoevaluation);
-        model.addAttribute("user", user);
         model.addAttribute("labours", labours);
         model.addAttribute("selectedLabour", selectedLabour);
         return "add-autoevaluation";
     }
 
-    @PostMapping("/add-autoevaluation")
+    @PostMapping("/add-autoevaluation/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String addAutoevaluation(@ModelAttribute("autoevaluation") Autoevaluation autoevaluation,
-            @ModelAttribute("selectedLabour") Labour selectedLabour, Model model) {
+            @ModelAttribute("selectedLabour") Labour selectedLabour,@PathVariable Long userId, Model model) {
+         UserRole user = userRoleService.findByUserId(userId);
         selectedLabour = labourService.findById(selectedLabour.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la labor"));
+        autoevaluation.setUserRole(user);
         autoevaluation.setLabour(selectedLabour);
         autoevaluation.setState(EAutoevaluationState.EJECUCION);
         autoevaluation.setInitDate(AcademicPeriod.getInitDate());
         autoevaluation.setFinishDate(AcademicPeriod.getEndDate());
-        // TODO: Añadir los otros campos que no estan en el formulario
         autoevaluationFacade.save(autoevaluation);
         /* Long userId = autoevaluation.getUserRole().getUser().getId(); */
         return "redirect:/users/professor-management";
