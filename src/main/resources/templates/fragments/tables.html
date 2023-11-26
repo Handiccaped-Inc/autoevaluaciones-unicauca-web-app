@@ -87,7 +87,7 @@
         <thead class="table-dark align-middle">
             <tr>
                 <th style="background-color: #7752FE !important;">ID</th>
-                <!-- <th style="background-color: #7752FE !important;">Docente</th> -->
+                <th style="background-color: #7752FE !important;">Docente</th>
                 <th style="background-color: #7752FE !important; min-width: 100px;">ACTA</th>
                 <th style="background-color: #7752FE !important;">Estado</th>
                 <th style="background-color: #7752FE !important;">Fecha Inicio</th>
@@ -100,7 +100,7 @@
         <tbody class="align-middle">
             <tr class="table-dark" th:each="autoevaluation: ${autoevaluations}">
                 <td th:text="${autoevaluation.id}"></td>
-                <!-- <td th:text="${autoevaluation.userRole.user.firstName + ' ' + autoevaluation.userRole.user.lastName}"> -->
+                <td th:text="${autoevaluation.userRole.user.firstName + ' ' + autoevaluation.userRole.user.lastName}">
                 </td>
                 <td>
                     <span th:if="${autoevaluation.act}"

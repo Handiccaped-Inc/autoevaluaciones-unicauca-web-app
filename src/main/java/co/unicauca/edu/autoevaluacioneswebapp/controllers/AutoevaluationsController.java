@@ -63,7 +63,7 @@ public class AutoevaluationsController {
 
     @GetMapping("/add-autoevaluation/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String addAutoevaluationForm(@PathVariable Long userId,Model model) {
+    public String addAutoevaluationForm(@PathVariable Long userId, Model model) {
         List<Labour> labours = labourService.findAll();
         Labour selectedLabour = new Labour();
 
@@ -78,8 +78,8 @@ public class AutoevaluationsController {
     @PostMapping("/add-autoevaluation/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String addAutoevaluation(@ModelAttribute("autoevaluation") Autoevaluation autoevaluation,
-            @ModelAttribute("selectedLabour") Labour selectedLabour,@PathVariable Long userId, Model model) {
-         UserRole user = userRoleService.findByUserId(userId);
+            @ModelAttribute("selectedLabour") Labour selectedLabour, @PathVariable Long userId, Model model) {
+        UserRole user = userRoleService.findByUserId(userId);
         selectedLabour = labourService.findById(selectedLabour.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la labor"));
         autoevaluation.setUserRole(user);
@@ -88,8 +88,7 @@ public class AutoevaluationsController {
         autoevaluation.setInitDate(AcademicPeriod.getInitDate());
         autoevaluation.setFinishDate(AcademicPeriod.getEndDate());
         autoevaluationFacade.save(autoevaluation);
-        /* Long userId = autoevaluation.getUserRole().getUser().getId(); */
-        return "redirect:/users/professor-management";
+        return "redirect:/autoevaluations/user-autoevaluations/" + userId;
     }
 
     @GetMapping("autoevaluations-report")
