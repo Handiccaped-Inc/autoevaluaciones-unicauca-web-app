@@ -29,8 +29,7 @@
     </div>
 
     <div>
-        <form th:action="@{/autoevaluations/add-autoevaluation/{userId}(userId=${userId})}" th:object="${autoevaluation}" method="post">
-            <input th:field="*{userRole.id}" placeholder="ID usuario">
+        <form th:action="@{/autoevaluations/add-autoevaluation(userIdP=${userId})}" th:object="${autoevaluation}" method="post">
             <p>
                 <label for="labour">Labor:</label>
                 <select id="labour" name="selectedLabour.id" th:field="*{id}">
@@ -39,7 +38,7 @@
                 </select>
             </p>
             <p th:text="${userId}">
-
+                <input name="userIdP" id="userIdP" type="hidden" th:value="${userId}">
             </p>
             <p>
                 <label for="act">Activo:</label>

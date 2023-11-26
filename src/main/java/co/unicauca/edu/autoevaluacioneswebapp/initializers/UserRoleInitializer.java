@@ -76,7 +76,7 @@ public class UserRoleInitializer implements ApplicationRunner {
                                                 .lastName("Agredo")
                                                 .email("sagredov@unicauca.edu.co")
                                                 .password(passwordEncoder.encode("123456"))
-                                                .personalId(123456789L)
+                                                .personalId(12345678911L)
                                                 .typePersonalId("CC")
                                                 .professorType(ProfessorType.builder()
                                                                 .name(EProfessorType.PLANTA)

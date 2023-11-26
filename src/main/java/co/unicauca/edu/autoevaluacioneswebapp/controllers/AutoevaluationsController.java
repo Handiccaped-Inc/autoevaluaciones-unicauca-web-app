@@ -7,6 +7,7 @@ import co.unicauca.edu.autoevaluacioneswebapp.model.*;
 import co.unicauca.edu.autoevaluacioneswebapp.services.ILabourService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.IUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -63,7 +64,7 @@ public class AutoevaluationsController {
 
     @GetMapping("/add-autoevaluation/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String addAutoevaluationForm(@PathVariable Long userId, Model model) {
+    public String addAutoevaluationForm(@PathVariable Long userId,Model model) {
         List<Labour> labours = labourService.findAll();
         Labour selectedLabour = new Labour();
 
@@ -75,11 +76,11 @@ public class AutoevaluationsController {
         return "add-autoevaluation";
     }
 
-    @PostMapping("/add-autoevaluation/{userId}")
+    @PostMapping("/add-autoevaluation")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String addAutoevaluation(@ModelAttribute("autoevaluation") Autoevaluation autoevaluation,
-            @ModelAttribute("selectedLabour") Labour selectedLabour, @PathVariable Long userId, Model model) {
-        UserRole user = userRoleService.findByUserId(userId);
+            @ModelAttribute("selectedLabour") Labour selectedLabour,@RequestParam("userIdP") String userIdP, Model model) {
+         UserRole user = userRoleService.findByUserId(Long.parseLong(userIdP));
         selectedLabour = labourService.findById(selectedLabour.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la labor"));
         autoevaluation.setUserRole(user);
@@ -88,7 +89,7 @@ public class AutoevaluationsController {
         autoevaluation.setInitDate(AcademicPeriod.getInitDate());
         autoevaluation.setFinishDate(AcademicPeriod.getEndDate());
         autoevaluationFacade.save(autoevaluation);
-        return "redirect:/autoevaluations/user-autoevaluations/" + userId;
+        return "redirect:/users/professor-management";
     }
 
     @GetMapping("autoevaluations-report")
@@ -129,4 +130,5 @@ public class AutoevaluationsController {
         }
         return "redirect:/autoevaluations/perform-autoevaluation";
     }
+
 }

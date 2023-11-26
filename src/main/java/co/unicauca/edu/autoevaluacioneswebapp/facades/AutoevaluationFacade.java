@@ -30,7 +30,7 @@ public class AutoevaluationFacade {
     }
 
     public void save(Autoevaluation autoevaluation){
-        //TODO: Validar las horas y esas cosas
+        System.out.println("LA AUTOLVEAUCON USERR:"+autoevaluation.getUserRole().getUser().getPersonalId());
         autoevaluationService.save(autoevaluation);
     }
 
