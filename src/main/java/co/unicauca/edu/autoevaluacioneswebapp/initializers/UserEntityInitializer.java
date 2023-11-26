@@ -39,7 +39,7 @@ public class UserEntityInitializer implements CommandLineRunner {
                 .build();
 
         ProfessorType professorType = professorTypeService
-                .findByName(String.valueOf(EProfessorType.CATEDRA));
+                .findByName(String.valueOf(EProfessorType.CATEDRA_MEDIO_TIEMPO));
 
         user.setProfessorType(professorType);
 

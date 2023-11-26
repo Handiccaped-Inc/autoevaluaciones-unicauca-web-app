@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/users")
@@ -106,6 +107,13 @@ public class UsersController {
         userService.save(user);
 
         return "redirect:/users/professor-management";
+    }
+
+    @PostMapping("/search-proffesor")
+    public String searchProffesor(@RequestParam("SearchV") String userSearch,Model model){
+        model.addAttribute("professors", userService.search(userSearch));
+        return "professor-management";
+
     }
 
 }

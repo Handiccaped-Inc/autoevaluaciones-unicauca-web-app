@@ -35,7 +35,7 @@ public class AutoevaluationsInitializer implements ApplicationRunner {
     AutoevaluationRepository autoevaluationRepository;
       PasswordEncoder passwordEncoder;
       RoleService roleService;
-      
+
     public AutoevaluationsInitializer( UserRoleRepository userRoleRepository,LabourService labourService ,AutoevaluationRepository autoevaluationRepository,  PasswordEncoder passwordEncoder, RoleService roleService){
         this.autoevaluationRepository = autoevaluationRepository;
         this.userRoleRepository = userRoleRepository;
@@ -80,7 +80,7 @@ public class AutoevaluationsInitializer implements ApplicationRunner {
                         .personalId(123456789L)
                         .typePersonalId("CC")
                         .professorType(ProfessorType.builder()
-                                .name(EProfessorType.TIEMPO_COMPLETO)
+                                .name(EProfessorType.CATEDRA_MEDIO_TIEMPO)
                                 .build())
                         .build())
                 .role(roleService.findByName("ROLE_DOCENTE"))
