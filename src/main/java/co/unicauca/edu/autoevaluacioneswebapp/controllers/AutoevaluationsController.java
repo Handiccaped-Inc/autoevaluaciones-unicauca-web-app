@@ -98,7 +98,7 @@ public class AutoevaluationsController {
         autoevaluationsave.setFinishDate(AcademicPeriod.getEndDate());
         autoevaluationsave.setAct(autoevaluation.isAct());
         autoevaluationFacade.save(autoevaluationsave);
-        return "redirect:/users/professor-management";
+        return "redirect:/autoevaluations/autoevaluation-management";
     }
 
     @GetMapping("autoevaluations-report")
@@ -129,26 +129,29 @@ public class AutoevaluationsController {
         return "perform-autoevaluation";
     }
 
-     @GetMapping("perform-autoevaluation/{autoevaluationId}")
-     @PreAuthorize("hasRole('ROLE_DOCENTE')")
-    public String perfomAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,@PathVariable Long autoevaluationId, Model model){
+    @GetMapping("perform-autoevaluation/{autoevaluationId}")
+    @PreAuthorize("hasRole('ROLE_DOCENTE')")
+    public String perfomAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,
+            @PathVariable Long autoevaluationId, Model model) {
         UserRole userRole = userRoleService.findByUserId(userDetails.getUserEntity().getId());
-        Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId).
-        orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
-         model.addAttribute("autoevaluation", autoevaluation);
-         model.addAttribute("userRole", userRole);
+        Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
+                .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+        model.addAttribute("autoevaluation", autoevaluation);
+        model.addAttribute("userRole", userRole);
         return "realize-autoevaluation";
     }
+
     @PostMapping("perform-autoevaluation/{autoevaluationId}")
     @PreAuthorize("hasRole('ROLE_DOCENTE')")
-    public String performAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,@ModelAttribute("autoevaluation") Autoevaluation updatedAutoevaluation,@PathVariable Long autoevaluationId,
+    public String performAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,
+            @ModelAttribute("autoevaluation") Autoevaluation updatedAutoevaluation, @PathVariable Long autoevaluationId,
             Model model) {
-             Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId).
-        orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
-             autoevaluation.setEvaluation(updatedAutoevaluation.getEvaluation());
-             autoevaluation.setResult(updatedAutoevaluation.getResult());
-            autoevaluation.setState(EAutoevaluationState.TERMINADO);
-            autoevaluationFacade.save(autoevaluation);
+        Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
+                .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+        autoevaluation.setEvaluation(updatedAutoevaluation.getEvaluation());
+        autoevaluation.setResult(updatedAutoevaluation.getResult());
+        autoevaluation.setState(EAutoevaluationState.TERMINADO);
+        autoevaluationFacade.save(autoevaluation);
         return "redirect:/autoevaluations/ShowProffesor-autoevaluation";
     }
 

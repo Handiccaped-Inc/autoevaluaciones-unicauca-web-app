@@ -1,6 +1,5 @@
 package co.unicauca.edu.autoevaluacioneswebapp.facades;
 
-
 import co.unicauca.edu.autoevaluacioneswebapp.model.Autoevaluation;
 import co.unicauca.edu.autoevaluacioneswebapp.model.EAutoevaluationState;
 import co.unicauca.edu.autoevaluacioneswebapp.model.EProfessorType;
@@ -27,20 +26,20 @@ public class AutoevaluationFacade {
     private IAutoevaluationService autoevaluationService;
 
     @Autowired
-    public AutoevaluationFacade(LabourService labourService, UserRoleService userRoleService, UserService userService, AutoevaluationService autoevaluationService){
+    public AutoevaluationFacade(LabourService labourService, UserRoleService userRoleService, UserService userService,
+            AutoevaluationService autoevaluationService) {
         this.labourService = labourService;
         this.userRoleService = userRoleService;
         this.userService = userService;
         this.autoevaluationService = autoevaluationService;
     }
 
-    public void save(Autoevaluation autoevaluation){
+    public void save(Autoevaluation autoevaluation) {
         EProfessorType type = autoevaluation.getUserRole().getUser().getProfessorType().getName();
         int hours = autoevaluation.getLabour().getAssignedHours();
         String labourcode = autoevaluation.getLabour().getType().getCode();
-        System.out.println(type+" "+hours+" "+labourcode+"VEEEEER");
-        if(autoevaluationvalidatedhours(type, hours,labourcode)){
-             autoevaluationService.save(autoevaluation);
+        if (autoevaluationvalidatedhours(type, hours, labourcode)) {
+            autoevaluationService.save(autoevaluation);
         }
     }
 
@@ -48,9 +47,9 @@ public class AutoevaluationFacade {
         return autoevaluationService.findByUserId(userId);
     }
 
-    public Optional<Autoevaluation> findAutoevaluationbyId(Long autoevaluationId){
-        Autoevaluation aut = autoevaluationService.findById(autoevaluationId).
-        orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+    public Optional<Autoevaluation> findAutoevaluationbyId(Long autoevaluationId) {
+        Autoevaluation aut = autoevaluationService.findById(autoevaluationId)
+                .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
         return autoevaluationService.findById(autoevaluationId);
     }
 
@@ -66,42 +65,46 @@ public class AutoevaluationFacade {
         return autoevaluationService.countByState(state);
     }
 
-    public boolean autoevaluationvalidatedhours(EProfessorType type, int hours, String labourcode)
-    {
-        System.out.println("ENTROO AL METODO "+labourcode);
-     if(labourcode.equals("D")){
-        System.out.println("ENTROOO AQUIII "+labourcode);
-        if(type == EProfessorType.valueOf("PLANTA_TIEMPO_COMPLETO") && (((hours/16) <= 16 && (hours/16) >= 6))){
-            return true;
-        }else if(type == EProfessorType.valueOf("PLANTA_MEDIO_TIEMPO") && (((hours/16) <= 8 && (hours/16) >= 4))){
-            return true;
-        }else if(type == EProfessorType.valueOf("CATEDRA_TIEMPO_COMPLETO") && (((hours/16) <= 18 && (hours/16) >= 16))){
-            return true;
-        }else if(type == EProfessorType.valueOf("CATEDRA_MEDIO_TIEMPO") && (((hours/16) <= 14 && (hours/16) >= 12))){
-            return true;
-        }
-    }else if(labourcode.equals("PI") || labourcode.equals("TI"))
-    {
-        if(hours <= 20 && hours >= 1){
-            return true;
-        }
-     }else if(labourcode.equals("TD") || labourcode.equals("AS") || labourcode.equals("S") ){
-        if(type == EProfessorType.valueOf("PLANTA_TIEMPO_COMPLETO") && (((hours/16) <= 16 && (hours/16) >= 6))){
-            return true;
-        }else if(type == EProfessorType.valueOf("PLANTA_MEDIO_TIEMPO") && (((hours/16) <= 8 && (hours/16) >= 4))){
-            return true;
-        }else if(type == EProfessorType.valueOf("CATEDRA_TIEMPO_COMPLETO") && (((hours/16) <= 18 && (hours/16) >= 16))){
-            return true;
-        }else if(type == EProfessorType.valueOf("CATEDRA_MEDIO_TIEMPO") && (((hours/16) <= 14 && (hours/16) >= 12))){
-            return true;
-        }
-        }else if(labourcode.equals("AD")){
+    public boolean autoevaluationvalidatedhours(EProfessorType type, int hours, String labourcode) {
+        if (labourcode.equals("D")) {
+            if (type == EProfessorType.valueOf("PLANTA_TIEMPO_COMPLETO")
+                    && (((hours / 16) <= 16 && (hours / 16) >= 6))) {
+                return true;
+            } else if (type == EProfessorType.valueOf("PLANTA_MEDIO_TIEMPO")
+                    && (((hours / 16) <= 8 && (hours / 16) >= 4))) {
+                return true;
+            } else if (type == EProfessorType.valueOf("CATEDRA_TIEMPO_COMPLETO")
+                    && (((hours / 16) <= 18 && (hours / 16) >= 16))) {
+                return true;
+            } else if (type == EProfessorType.valueOf("CATEDRA_MEDIO_TIEMPO")
+                    && (((hours / 16) <= 14 && (hours / 16) >= 12))) {
+                return true;
+            }
+        } else if (labourcode.equals("PI") || labourcode.equals("TI")) {
+            if (hours <= 20 && hours >= 1) {
+                return true;
+            }
+        } else if (labourcode.equals("TD") || labourcode.equals("AS") || labourcode.equals("S")) {
+            if (type == EProfessorType.valueOf("PLANTA_TIEMPO_COMPLETO")
+                    && (((hours / 16) <= 16 && (hours / 16) >= 6))) {
+                return true;
+            } else if (type == EProfessorType.valueOf("PLANTA_MEDIO_TIEMPO")
+                    && (((hours / 16) <= 8 && (hours / 16) >= 4))) {
+                return true;
+            } else if (type == EProfessorType.valueOf("CATEDRA_TIEMPO_COMPLETO")
+                    && (((hours / 16) <= 18 && (hours / 16) >= 16))) {
+                return true;
+            } else if (type == EProfessorType.valueOf("CATEDRA_MEDIO_TIEMPO")
+                    && (((hours / 16) <= 14 && (hours / 16) >= 12))) {
+                return true;
+            }
+        } else if (labourcode.equals("AD")) {
 
-            if(hours <= 20 && hours >= 2){
+            if (hours <= 20 && hours >= 2) {
                 return true;
             }
         }
-    return false;
+        return false;
 
     }
 }

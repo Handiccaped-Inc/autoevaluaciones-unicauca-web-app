@@ -5,9 +5,8 @@
             <tr>
                 <th style="background-color: #7752FE !important;">Identificación</th>
                 <th style="background-color: #7752FE !important;">Tipo De Identificación</th>
-                <th style="background-color: #7752FE !important;">Nombres</th>
-                <th style="background-color: #7752FE !important;">Apellidos</th>
-                <th style="background-color: #7752FE !important;">Tipo Docente</th>
+                <th style="background-color: #7752FE !important;">Nombre</th>
+                <th style="background-color: #7752FE !important;">Tipo De Docente</th>
                 <th style="background-color: #7752FE !important; min-width: 100px;">Estado</th>
                 <th style="background-color: #7752FE !important;">Correo</th>
                 <th style="background-color: #7752FE !important;">Ultimo Titulo</th>
@@ -19,9 +18,15 @@
             <tr class="table-dark" th:each="professor: ${professors}">
                 <td th:text="${professor.personalId}"></td>
                 <td th:text="${professor.typePersonalId}"></td>
-                <td th:text="${professor.firstName}"></td>
-                <td th:text="${professor.lastName}"></td>
-                <td th:text="${professor.professorType.name.toString()}"></td>
+                <td th:text="${professor.firstName + ' ' + professor.lastName}"></td>
+                <td>
+                    <span th:if="${professor.professorType.name.toString() == 'PLANTA_MEDIO_TIEMPO'}">Planta - Medio
+                        Tiempo</span>
+                    <span th:if="${professor.professorType.name.toString() == 'CATEDRA_MEDIO_TIEMPO'}">Catedra - Medio
+                        Tiempo</span>
+                    <span th:if="${professor.professorType.name.toString() == 'PLANTA_TIEMPO_COMPLETO'}">Planta - Tiempo
+                        Completo</span>
+                </td>
                 <td>
                     <span th:if="${professor.active}"
                         style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #1FF434;"></span>
@@ -35,10 +40,10 @@
                 <td th:text="${professor.lastDegreeAchivement}"></td>
                 <td>
                     <a th:href="@{/users/edit-professor/{email}(email=${professor.email})}"
-                        class="btn btn-info btn-sm text-white">Editar</a>
+                        class="btn btn-info btn-sm text-white mt-1">Editar</a>
 
                     <a th:href="@{/autoevaluations/add-autoevaluation/{personalId}(personalId=${professor.Id})}"
-                        class="btn btn-success btn-sm text-white">Crear AutoEv.</a>
+                        class="btn btn-success btn-sm text-white mt-1 p-0">Crear Autoevaluación</a>
                 </td>
             </tr>
         </tbody>
@@ -61,7 +66,19 @@
         <tbody class="align-middle">
             <tr class="table-dark" th:each="labour: ${labours}">
                 <td th:text="${labour.labourName}"></td>
-                <td th:text="${labour.type.code}"></td>
+                <td>
+                    <span th:if="${labour.type.code.toString() == 'D'}">Docencia</span>
+                    <span th:if="${labour.type.code.toString() == 'TD'}">Trabajos Docencia</span>
+                    <span th:if="${labour.type.code.toString() == 'PI'}">Proyectos Investigación</span>
+                    <span th:if="${labour.type.code.toString() == 'TI'}">Trabajos Investigación</span>
+                    <span th:if="${labour.type.code.toString() == 'AD'}">Administración</span>
+                    <span th:if="${labour.type.code.toString() == 'AS'}">Asesoría</span>
+                    <span th:if="${labour.type.code.toString() == 'S'}">Servicios</span>
+                    <span th:if="${labour.type.code.toString() == 'E'}">Extensión</span>
+                    <span th:if="${labour.type.code.toString() == 'C'}">Capacitación</span>
+                    <span th:if="${labour.type.code.toString() == 'OS'}">Otros Servicios</span>
+                </td>
+
                 <td>
                     <span th:if="${labour.active}"
                         style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 5px; background-color: #1FF434;"></span>
@@ -88,7 +105,7 @@
             <tr>
                 <th style="background-color: #7752FE !important;">ID</th>
                 <th style="background-color: #7752FE !important;">Docente</th>
-                <th style="background-color: #7752FE !important; min-width: 100px;">ACTA</th>
+                <th style="background-color: #7752FE !important; min-width: 100px;">ACTO</th>
                 <th style="background-color: #7752FE !important;">Estado</th>
                 <th style="background-color: #7752FE !important;">Fecha Inicio</th>
                 <th style="background-color: #7752FE !important;">Fecha Fin</th>
@@ -144,28 +161,27 @@
 </div>
 
 <div th:fragment="tableAutoevaluationAdd" style="overflow-y: auto;">
-    <form th:action="@{/autoevaluations/add-autoevaluation}" th:object="${autoevaluation}" method="post">
+    <form th:action="@{/autoevaluations/add-autoevaluation(userIdP=${userId})}" th:object="${autoevaluation}"
+        method="post">
         <table class="table table-striped" style="text-align: center; border-radius: 10px;
         overflow: hidden;">
             <thead class="table-dark align-middle">
                 <tr>
-                    <th style="background-color: #7752FE !important;">ID usuario</th>
-                    <th style="background-color: #7752FE !important;">Nombre de Labor</th>
-                    <th style="background-color: #7752FE !important;">ACTA (Si Aplica)</th>
+                    <th style="background-color: #7752FE !important;">ID del Usuario</th>
+                    <th style="background-color: #7752FE !important;">Nombre de la Labor</th>
+                    <th style="background-color: #7752FE !important;">ACTO (Si Aplica)</th>
+                    <th style="background-color: #7752FE !important;">Resultado</th>
+                    <th style="background-color: #7752FE !important;">Evaluación</th>
                     <th style="background-color: #7752FE !important;">Acciones</th>
                 </tr>
             </thead>
 
             <tbody class="align-middle">
                 <tr class="table-dark">
+                    <td th:text="${userId}"></td>
                     <td>
-                        <input
-                            style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
-                            th:field="*{userRole.id}">
-                    </td>
-                    <td>
-                        <select
-                            style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                        <select class="p-2"
+                            style="font-weight: 700; border-radius: 15px; border: 3px solid #1f1f20; background-color: #0E0E0E; color: #FFFFFF;"
                             id="labour" name="selectedLabour.id" th:field="*{id}">
                             <option th:each="labour : ${labours}" th:value="${labour.id}"
                                 th:text="${labour.labourName}">
@@ -173,10 +189,19 @@
                         </select>
                     </td>
                     <td>
-                        <input
-                            style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
+                        <input class="p-2"
+                            style="font-weight: 700; border-radius: 15px; border: 3px solid #1f1f20; background-color: #0E0E0E; color: #FFFFFF;"
                             id="act" type="checkbox" th:field="*{act}">
                     </td>
+                    <td>
+                        <input class="p-2"
+                            style="font-weight: 700; border-radius: 15px; border: 3px solid #1f1f20; background-color: #0E0E0E; color: #FFFFFF;"
+                            id="result" type="text" th:field="*{result}" disabled>
+                    </td>
+                    <td>
+                        <input class="p-2"
+                            style="font-weight: 700; border-radius: 15px; border: 3px solid #1f1f20; background-color: #0E0E0E; color: #FFFFFF;"
+                            id="evaluation" name="evaluation" type="number" th:field="*{evaluation}" disabled>
                     <td>
                         <div th:replace="~{fragments/buttons :: button1('submit','Crear Autoevaluación')}"></div>
                     </td>
