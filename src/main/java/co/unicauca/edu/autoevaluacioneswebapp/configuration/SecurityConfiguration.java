@@ -64,7 +64,7 @@ public class SecurityConfiguration {
                             } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_DOCENTE"))) {
                                 response.sendRedirect("/autoevaluations/ShowProffesor-autoevaluation");
                             } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_DECANO"))) {
-                                response.sendRedirect("/users/professor-management");
+                                response.sendRedirect("/autoevaluations/autoevaluation-management");
                             }
                 });
         }
