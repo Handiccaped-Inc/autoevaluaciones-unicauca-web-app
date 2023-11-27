@@ -205,7 +205,6 @@ public class AutoevaluationsController {
         return "redirect:/autoevaluations/ShowProffesor-autoevaluation";
     }
 
-<<<<<<< HEAD
     @PostMapping("/send-email")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String enviarCorreo(@RequestParam String correoDestinatario, @RequestParam String nombreDestinatario) {
@@ -231,8 +230,8 @@ public class AutoevaluationsController {
 
         System.out.println("Respuesta: " + responseEntity.getBody());
 
-        return "redirect:/autoevaluations/autoevaluation-management";
-=======
+        return "redirect:/autoevaluations/autoevaluation-management";}
+
     @GetMapping("/view-deatails/{autoevaluationId}")
     @PreAuthorize("hasRole('ROLE_DOCENTE')")
     public String viewDetailsDocente(@AuthenticationPrincipal SecurityUser userDetails,
@@ -242,7 +241,7 @@ public class AutoevaluationsController {
                 model.addAttribute("autoevaluation", autoevaluation);
                 return "view-datails";
 
->>>>>>> bcbad0a085c1284bf01e8371f2c69f2ffffca6de
+
     }
 
 }
