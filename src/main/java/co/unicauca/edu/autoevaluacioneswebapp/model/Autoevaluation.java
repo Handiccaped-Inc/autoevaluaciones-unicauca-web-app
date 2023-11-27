@@ -11,44 +11,40 @@
  */
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import java.util.Set;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Autoevaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST) //Cambidado para las prubeas Cambiar EN version final
     private Labour labour;
 
-    private boolean Act;
+    private boolean act;
 
     private LocalDate initDate;
 
     private LocalDate finishDate;
 
-    private String Estate;
+    @Enumerated(EnumType.STRING)
+    private EAutoevaluationState state;
 
     private String result;
 
     @Max(value = 100)
     private long evaluation;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST) //Cambiado Para El Inicializar Version final colocoar Persite si no genera error
     private UserRole userRole;
 }

@@ -9,23 +9,22 @@
  */
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
+import org.hibernate.annotations.Cascade;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
-
-import co.unicauca.edu.autoevaluacioneswebapp.model.Role;
-
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Labour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +33,11 @@ public class Labour {
     @NotBlank
     private String labourName;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "labour_type")
     private LabourType type;
 
     private int assignedHours;
-
+    @Builder.Default
+    private boolean active = true;
 }

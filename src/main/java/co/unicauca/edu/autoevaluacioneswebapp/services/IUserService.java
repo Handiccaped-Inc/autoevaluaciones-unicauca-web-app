@@ -11,4 +11,5 @@ public interface IUserService {
     public UserEntity save(UserEntity user);
     public UserEntity update(UserEntity user);
     public void deleteById(Long id);
+    public  List<UserEntity> search(String search);
 }

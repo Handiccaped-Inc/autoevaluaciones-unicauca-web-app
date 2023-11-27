@@ -366,3 +366,4 @@ fabric.properties
 /build/
 /.gradle/
 /.idea/
+/bin/

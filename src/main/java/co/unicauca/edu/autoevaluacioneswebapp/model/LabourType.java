@@ -2,6 +2,7 @@ package co.unicauca.edu.autoevaluacioneswebapp.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class LabourType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

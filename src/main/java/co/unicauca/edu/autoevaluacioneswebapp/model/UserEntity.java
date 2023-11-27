@@ -15,10 +15,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 import java.util.Set;
-
 
 @Entity
 @NoArgsConstructor
@@ -36,29 +34,31 @@ public class UserEntity {
 
     private String typePersonalId;
 
-     @NotBlank
-     @Size(max = 30)
+    @NotBlank
+    @Size(max = 30)
     private String firstName;
 
     @NotBlank
     @Size(max = 30)
     private String lastName;
 
-     @Email
-     @NotBlank
-     @Size(max = 80)
+    @Email
+    @NotBlank
+    @Size(max = 80)
     private String email;
 
     @NotBlank
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER ,cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<UserRole> userRoles;
-
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private ProfessorType professorType;
+    
+    @Builder.Default
+    private boolean active = true;
 
-
+    private String lastDegreeAchivement;
 
 }

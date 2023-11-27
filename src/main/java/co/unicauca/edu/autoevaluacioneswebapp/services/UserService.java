@@ -50,5 +50,13 @@ public class UserService implements IUserService {
         LocalDate now = LocalDate.now();
         return usersRepository.findByUserRoles_Role_NameAndUserRoles_InitDateLessThanEqualAndUserRoles_FinishDateGreaterThanEqual(role, now,now);
     }
+
+    @Override
+    public List<UserEntity> search(String search) {
+        long id;
+        if(search.chars().allMatch( Character::isDigit)){
+            id = Long.parseLong(search);}else{ id = 0L;}
+       return usersRepository.findByPersonalIdOrTypePersonalIdOrFirstNameOrLastNameOrProfessorTypeOrActive(id, search, search, search, null, Boolean.parseBoolean(search) );
+    }
 }
    
