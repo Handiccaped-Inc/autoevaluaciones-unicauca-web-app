@@ -3,12 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenida</title>
+    <title>Bienvenido</title>
+    <link th:replace="~{fragments/configuration :: bootstrap}">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}">
 </head>
 
-<body>
-    <h1>Bienvenido</h1>
-    <a href="/login">Loggearse</a>
+<body class="d-flex align-items-center justify-content-center"
+    style="min-height: 100vh; background-color: #0E0E0E; color: #FFFFFF; font-family: Inter;">
+
+    <div class="text-center">
+        <h1 class="mb-5" style="font-weight: 800;">Bienvenido</h1>
+        <a href="/login" class="btn btn-primary btn-hover-custom" style="font-weight: 700;">Iniciar Sesión</a>
+    </div>
+
 </body>
+
 
 </html>

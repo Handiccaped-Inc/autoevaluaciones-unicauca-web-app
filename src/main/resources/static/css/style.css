@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #7752FE;
+    --primary-color: #2b53e4;
     --secondary-color: #32A0EF;
     --tertiary-color: #474747;
 }
@@ -10,10 +10,18 @@
 }
 
 .btn-primary:hover {
-    background-color: #6a41fc !important;
-    border-color: #6a41fc !important;
+    background-color: #2b53e4 !important;
+    border-color: #2b53e4 !important;
 }
 
 input::placeholder {
     color: #BCBCBC !important;
+}
+
+body {
+    background-color: #e0e0e0;
+    background-image: url('/img/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: rgba(0, 0, 0, 0.5);
 }
