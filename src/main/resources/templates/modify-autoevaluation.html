@@ -12,7 +12,7 @@
 <body class="vh-100 d-flex justify-content-start align-items-start flex-row"
     style="font-family: Inter; background-color: #0E0E0E; color: #FFFFFF;">
 
-    <div th:replace="~{fragments/menu :: menuProfessor('/autoevaluations/autoevaluation-management')}">
+    <div th:replace="~{fragments/menu :: menu('/users/professor-management','/labours/labour-management','/autoevaluations/autoevaluation-management')}">
     </div>
 
 
@@ -24,7 +24,13 @@
         <h3 class="me-4" style="font-weight: 600;">Crear Docente</h3>
 
         <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 80%; height: 100%;">
-            <form th:action="@{/autoevaluations/perform-autoevaluation/{autoevaluationId}(autoevaluationId=${autoevaluation.Id})}" th:object="${autoevaluation}" method="post">
+            <form th:action="@{/autoevaluations/modify-autoevaluation/{autoevaluationId}(autoevaluationId=${autoevaluation.Id})}" th:object="${autoevaluation}" method="post">
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Docente</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.userRole.user.firstName + ' ' + autoevaluation.userRole.user.lastName}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">ID</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.userRole.user.personalId}"></label>
+                </div>
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Labor</label>
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.labour.labourName}"></label>
@@ -42,21 +48,32 @@
 
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">resultados</label>
-                    <input class="form-control" type="text" th:field="*{result}"
-                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
-                        required />
-                </div>
-
-                <div class="mb-4" style="max-width: 320px;">
-                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Sugerencias</label>
-                    <input class="form-control" type="text" th:field="*{suggestion}"
-                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
-                        required />
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.result}"></label>
                 </div>
 
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Autoevaluación</label>
-                    <input class="form-control" type="number" th:field="*{evaluation}"
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.result}"></label>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Sugestiones</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.suggestion}"></label>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Estado</label>
+                    <select class="form-select" th:field="*{state}"
+                        style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;">
+                        <option value="EJECUCION">EJECUCION</option>
+                        <option value="TERMINADO">TERMINADO</option>
+                        <option value="SUSPENDIDO">SUSPENCION</option>
+                    </select>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Observaciones</label>
+                    <input class="form-control" type="text" th:field="*{observation}"
                         style="font-weight: 700; border-radius: 15px; border: 3px solid #2F3033; background-color: #0E0E0E; color: #FFFFFF;"
                         required />
                 </div>

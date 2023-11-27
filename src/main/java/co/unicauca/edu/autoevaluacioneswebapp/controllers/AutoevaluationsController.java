@@ -104,12 +104,36 @@ public class AutoevaluationsController {
         Autoevaluation autoevaluationsave = new Autoevaluation();
         autoevaluationsave.setUserRole(user);
         autoevaluationsave.setLabour(selectedLabour);
-        autoevaluationsave.setState(EAutoevaluationState.EJECUCION);
+        autoevaluationsave.setState(EAutoevaluationState.SUSPENDIDO);
         autoevaluationsave.setInitDate(AcademicPeriod.getInitDate());
         autoevaluationsave.setFinishDate(AcademicPeriod.getEndDate());
         autoevaluationsave.setAct(autoevaluation.isAct());
         autoevaluationFacade.save(autoevaluationsave);
         return "redirect:/autoevaluations/autoevaluation-management";
+    }
+
+    @GetMapping("/modify-autoevaluation/{autoevaluationId}")
+    @PreAuthorize("hasRole('ROLE_COORDINADOR')  or hasRole('ROLE_DECANO')")
+    public String modifyAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,
+            @PathVariable Long autoevaluationId, Model model){
+        Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
+                .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+                model.addAttribute("autoevaluation", autoevaluation);
+                return "modify-autoevaluation";
+
+    }
+
+     @PostMapping("/modify-autoevaluation/{autoevaluationId}")
+    @PreAuthorize("hasRole('ROLE_COORDINADOR')  or hasRole('ROLE_DECANO')")
+    public String modifyAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,@ModelAttribute("autoevaluation") Autoevaluation updatedAutoevaluation,
+            @PathVariable Long autoevaluationId, Model model){
+                Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
+                .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+        autoevaluation.setObservation(updatedAutoevaluation.getObservation());
+        autoevaluation.setState(updatedAutoevaluation.getState());
+        autoevaluationFacade.save(autoevaluation);
+                return "redirect:/autoevaluations/autoevaluation-management";
+
     }
 
     @GetMapping("autoevaluations-report")

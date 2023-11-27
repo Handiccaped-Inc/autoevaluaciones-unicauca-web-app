@@ -42,6 +42,10 @@ public class Autoevaluation {
 
     private String result;
 
+    private String suggestion;
+
+    private String observation;
+
     @Max(value = 100)
     private long evaluation;
 
