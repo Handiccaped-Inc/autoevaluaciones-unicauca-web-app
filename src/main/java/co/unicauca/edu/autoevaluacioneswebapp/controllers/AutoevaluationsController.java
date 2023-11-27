@@ -129,6 +129,11 @@ public class AutoevaluationsController {
             @PathVariable Long autoevaluationId, Model model){
                 Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
                 .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+        if(updatedAutoevaluation.getState().equals(EAutoevaluationState.valueOf("EJECUCION"))){
+            /**
+             * Mandar El Correo
+             */
+        }
         autoevaluation.setObservation(updatedAutoevaluation.getObservation());
         autoevaluation.setState(updatedAutoevaluation.getState());
         autoevaluationFacade.save(autoevaluation);
@@ -185,6 +190,7 @@ public class AutoevaluationsController {
                 .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
         autoevaluation.setEvaluation(updatedAutoevaluation.getEvaluation());
         autoevaluation.setResult(updatedAutoevaluation.getResult());
+        autoevaluation.setSuggestion(updatedAutoevaluation.getSuggestion());
         autoevaluation.setState(EAutoevaluationState.TERMINADO);
         autoevaluationFacade.save(autoevaluation);
         return "redirect:/autoevaluations/ShowProffesor-autoevaluation";
