@@ -7,6 +7,17 @@
     <title>Autoevaluaciones</title>
     <link th:replace="~{fragments/configuration :: bootstrap}">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}">
+    <script>
+        $(document).ready(function () {
+            $("#enviarCorreoBtn").click(function () {
+                // Realiza una solicitud AJAX al servidor
+                $.post("/autoevaluations/send-email", function (data) {
+                    // Muestra algún tipo de confirmación al usuario
+                    alert(data);
+                });
+            });
+        });
+    </script>
 </head>
 
 <body class="vh-100 d-flex justify-content-start align-items-start flex-row"

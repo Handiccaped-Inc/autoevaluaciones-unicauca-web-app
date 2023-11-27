@@ -8,12 +8,17 @@ import co.unicauca.edu.autoevaluacioneswebapp.services.ILabourService;
 import co.unicauca.edu.autoevaluacioneswebapp.services.IUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -39,19 +44,21 @@ public class AutoevaluationsController {
     @GetMapping("/autoevaluation-management")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')  or hasRole('ROLE_DECANO')")
     public String getAutoevaluations(@AuthenticationPrincipal SecurityUser userDetails, Model model) {
-          boolean isDecano = userDetails.getAuthorities().stream()
+        boolean isDecano = userDetails.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_DECANO"));
         List<Autoevaluation> autoevaluations;
         autoevaluations = autoevaluationFacade.findAll();
-        if(isDecano){
+        if (isDecano) {
             List<Autoevaluation> autoevaluationsToSend = new ArrayList<>();
             for (Autoevaluation autoevaluation : autoevaluations) {
-                if(autoevaluation.getUserRole().getRole().getName().equals(ERole.valueOf("ROLE_COORDINADOR"))){
-                    autoevaluationsToSend.add(autoevaluation);}}
-             model.addAttribute("autoevaluations", autoevaluationsToSend);
-             model.addAttribute("userId", userDetails.getId());
-             return "autoevaluation-management";
-    }
+                if (autoevaluation.getUserRole().getRole().getName().equals(ERole.valueOf("ROLE_COORDINADOR"))) {
+                    autoevaluationsToSend.add(autoevaluation);
+                }
+            }
+            model.addAttribute("autoevaluations", autoevaluationsToSend);
+            model.addAttribute("userId", userDetails.getId());
+            return "autoevaluation-management";
+        }
         model.addAttribute("autoevaluations", autoevaluations);
         model.addAttribute("userId", userDetails.getId());
         return "autoevaluation-management";
@@ -115,24 +122,25 @@ public class AutoevaluationsController {
     @GetMapping("/modify-autoevaluation/{autoevaluationId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')  or hasRole('ROLE_DECANO')")
     public String modifyAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,
-            @PathVariable Long autoevaluationId, Model model){
+            @PathVariable Long autoevaluationId, Model model) {
         Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
                 .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
-                model.addAttribute("autoevaluation", autoevaluation);
-                return "modify-autoevaluation";
+        model.addAttribute("autoevaluation", autoevaluation);
+        return "modify-autoevaluation";
 
     }
 
-     @PostMapping("/modify-autoevaluation/{autoevaluationId}")
+    @PostMapping("/modify-autoevaluation/{autoevaluationId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')  or hasRole('ROLE_DECANO')")
-    public String modifyAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,@ModelAttribute("autoevaluation") Autoevaluation updatedAutoevaluation,
-            @PathVariable Long autoevaluationId, Model model){
-                Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
+    public String modifyAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,
+            @ModelAttribute("autoevaluation") Autoevaluation updatedAutoevaluation,
+            @PathVariable Long autoevaluationId, Model model) {
+        Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
                 .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
         autoevaluation.setObservation(updatedAutoevaluation.getObservation());
         autoevaluation.setState(updatedAutoevaluation.getState());
         autoevaluationFacade.save(autoevaluation);
-                return "redirect:/autoevaluations/autoevaluation-management";
+        return "redirect:/autoevaluations/autoevaluation-management";
 
     }
 
@@ -188,6 +196,34 @@ public class AutoevaluationsController {
         autoevaluation.setState(EAutoevaluationState.TERMINADO);
         autoevaluationFacade.save(autoevaluation);
         return "redirect:/autoevaluations/ShowProffesor-autoevaluation";
+    }
+
+    @PostMapping("/send-email")
+    @PreAuthorize("hasRole('ROLE_COORDINADOR')")
+    public String enviarCorreo(@RequestParam String correoDestinatario, @RequestParam String nombreDestinatario) {
+        String url = "https://correos-sw3.onrender.com/enviar_correo";
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        String requestBody = "{\n" +
+                "  \"correo_destinatario\": \"" + correoDestinatario + "\",\n" +
+                "  \"titulo_correo\": \"" + nombreDestinatario
+                + ", recuerda que tienes una autoevaluación pendiente\",\n" +
+                "  \"cuerpo_correo\": \"Recuerda que tienes una autoevaluación pendiente, ingresa a la plataforma para realizarla.\"\n"
+                +
+                "}";
+
+        System.out.println(requestBody);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(url,
+                requestEntity, String.class);
+
+        System.out.println("Respuesta: " + responseEntity.getBody());
+
+        return "redirect:/autoevaluations/autoevaluation-management";
     }
 
 }
