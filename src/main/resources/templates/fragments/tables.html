@@ -170,6 +170,7 @@
                     <th style="background-color: #7752FE !important;">ID del Usuario</th>
                     <th style="background-color: #7752FE !important;">Nombre de la Labor</th>
                     <th style="background-color: #7752FE !important;">ACTO (Si Aplica)</th>
+                    <th style="background-color: #7752FE !important;">Estado</th>
                     <th style="background-color: #7752FE !important;">Resultado</th>
                     <th style="background-color: #7752FE !important;">Evaluación</th>
                     <th style="background-color: #7752FE !important;">Acciones</th>
@@ -180,7 +181,7 @@
                 <tr class="table-dark">
                     <td th:text="${userId}"></td>
                     <td>
-                        <select class="p-2"
+                        <select class="form-control p-2"
                             style="font-weight: 700; border-radius: 15px; border: 3px solid #1f1f20; background-color: #0E0E0E; color: #FFFFFF;"
                             id="labour" name="selectedLabour.id" th:field="*{id}">
                             <option th:each="labour : ${labours}" th:value="${labour.id}"
@@ -194,12 +195,21 @@
                             id="act" type="checkbox" th:field="*{act}">
                     </td>
                     <td>
-                        <input class="p-2"
+                        <select class="form-control p-2"
+                            style="font-weight: 700; border-radius: 15px; border: 3px solid #1f1f20; background-color: #0E0E0E; color: #FFFFFF;"
+                            id="state" name="state" th:field="*{state}">
+                            <option value="EJECUCION">En Ejecución</option>
+                            <option value="TERMINADO">Terminado</option>
+                            <option value="SUSPENDIDO">Suspendido</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control p-2"
                             style="font-weight: 700; border-radius: 15px; border: 3px solid #1f1f20; background-color: #0E0E0E; color: #FFFFFF;"
                             id="result" type="text" th:field="*{result}" disabled>
                     </td>
                     <td>
-                        <input class="p-2"
+                        <input class="form-control p-2"
                             style="font-weight: 700; border-radius: 15px; border: 3px solid #1f1f20; background-color: #0E0E0E; color: #FFFFFF;"
                             id="evaluation" name="evaluation" type="number" th:field="*{evaluation}" disabled>
                     <td>
