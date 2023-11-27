@@ -61,7 +61,9 @@ public class AutoevaluationFacade {
 
     public boolean autoevaluationvalidatedhours(EProfessorType type, int hours, String labourcode)
     {
-     if(labourcode == "D"){
+        System.out.println("ENTROO AL METODO "+labourcode);
+     if(labourcode.equals("D")){
+        System.out.println("ENTROOO AQUIII "+labourcode);
         if(type == EProfessorType.valueOf("PLANTA_TIEMPO_COMPLETO") && (((hours/16) <= 16 && (hours/16) >= 6))){
             return true;
         }else if(type == EProfessorType.valueOf("PLANTA_MEDIO_TIEMPO") && (((hours/16) <= 8 && (hours/16) >= 4))){
@@ -70,15 +72,13 @@ public class AutoevaluationFacade {
             return true;
         }else if(type == EProfessorType.valueOf("CATEDRA_MEDIO_TIEMPO") && (((hours/16) <= 14 && (hours/16) >= 12))){
             return true;
-        }else{
-            return false;
         }
-    }else if(labourcode == "PI" || labourcode == "TI" )
+    }else if(labourcode.equals("PI") || labourcode.equals("TI"))
     {
         if(hours <= 20 && hours >= 1){
             return true;
         }
-     }else if(labourcode == "TD" || labourcode == "AS" || labourcode == "AS" || labourcode == "S" ){
+     }else if(labourcode.equals("TD") || labourcode.equals("AS") || labourcode.equals("S") ){
         if(type == EProfessorType.valueOf("PLANTA_TIEMPO_COMPLETO") && (((hours/16) <= 16 && (hours/16) >= 6))){
             return true;
         }else if(type == EProfessorType.valueOf("PLANTA_MEDIO_TIEMPO") && (((hours/16) <= 8 && (hours/16) >= 4))){
@@ -87,10 +87,8 @@ public class AutoevaluationFacade {
             return true;
         }else if(type == EProfessorType.valueOf("CATEDRA_MEDIO_TIEMPO") && (((hours/16) <= 14 && (hours/16) >= 12))){
             return true;
-        }else{
-            return false;
         }
-        }else if(labourcode == "AD"){
+        }else if(labourcode.equals("AD")){
 
             if(hours <= 20 && hours >= 2){
                 return true;
