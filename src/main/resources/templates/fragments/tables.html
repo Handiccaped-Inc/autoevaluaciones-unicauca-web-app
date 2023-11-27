@@ -252,6 +252,20 @@
                         class="btn btn-info btn-sm text-white">Realizar</a>
 
                 </td>
+                <tr class="table-dark" th:each="autoevaluation: ${autoevaluationsT}">
+                    <td th:text="${autoevaluation.id}"></td>
+                    <td th:text="${autoevaluation.labour.labourName}">
+                    </td>
+                    <td th:text="${autoevaluation.labour.type.code}"></td>
+                    <td th:text="${autoevaluation.labour.assignedHours.toString()}"></td>
+                    <td th:text="${autoevaluation.initDate.toString()}"></td>
+                    <td th:text="${autoevaluation.finishDate.toString()}"></td>
+    
+                    <td>
+                        <a th:href="@{/autoevaluations/view-deatails/{autoevaluationId}(autoevaluationId=${autoevaluation.Id})}"
+                            class="btn btn-success btn-sm text-white">Ver Detalles</a>
+    
+                    </td>
             </tr>
         </tbody>
     </table>

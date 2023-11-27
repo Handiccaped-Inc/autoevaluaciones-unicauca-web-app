@@ -158,12 +158,16 @@ public class AutoevaluationsController {
         UserRole userRole = userRoleService.findByUserId(userDetails.getUserEntity().getId());
         List<Autoevaluation> autoevaluations = userRole.getAutoevaluations();
         List<Autoevaluation> autoevaluationsToPerform = new ArrayList<>();
+        List<Autoevaluation> autoevaluationTerminated = new ArrayList<>();
         for (Autoevaluation autoevaluation : autoevaluations) {
             if (autoevaluation.getState().equals(EAutoevaluationState.EJECUCION)) {
                 autoevaluationsToPerform.add(autoevaluation);
+            }else if(autoevaluation.getState().equals(EAutoevaluationState.TERMINADO)){
+                autoevaluationTerminated.add(autoevaluation);
             }
         }
         model.addAttribute("autoevaluations", autoevaluationsToPerform);
+         model.addAttribute("autoevaluationsT", autoevaluationTerminated);
         model.addAttribute("userRole", userRole);
         model.addAttribute("userId", userDetails.getId());
         return "perform-autoevaluation";
@@ -194,6 +198,17 @@ public class AutoevaluationsController {
         autoevaluation.setState(EAutoevaluationState.TERMINADO);
         autoevaluationFacade.save(autoevaluation);
         return "redirect:/autoevaluations/ShowProffesor-autoevaluation";
+    }
+
+    @GetMapping("/view-deatails/{autoevaluationId}")
+    @PreAuthorize("hasRole('ROLE_DOCENTE')")
+    public String viewDetailsDocente(@AuthenticationPrincipal SecurityUser userDetails,
+            @PathVariable Long autoevaluationId, Model model){
+        Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
+                .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+                model.addAttribute("autoevaluation", autoevaluation);
+                return "view-datails";
+
     }
 
 }
