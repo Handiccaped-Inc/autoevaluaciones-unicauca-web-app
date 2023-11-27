@@ -1,32 +1,4 @@
 package co.unicauca.edu.autoevaluacioneswebapp.services;
 
-
-import co.unicauca.edu.autoevaluacioneswebapp.facades.AutoevaluationFacade;
-import co.unicauca.edu.autoevaluacioneswebapp.model.Autoevaluation;
-import co.unicauca.edu.autoevaluacioneswebapp.repositories.AutoevaluationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.List;
-
-@Service
-public class AutoevaluationService implements IAutoevaluationService {
-    AutoevaluationRepository autoevaluationRepository;
-
-    @Autowired
-    public AutoevaluationService(AutoevaluationRepository autoevaluationRepository) {
-        this.autoevaluationRepository = autoevaluationRepository;
-    }
-
-    @Override
-    public void save(Autoevaluation autoevaluation) {
-        autoevaluationRepository.save(autoevaluation);
-    }
-
-    @Override
-    public List<Autoevaluation> findByUserId(Long userId) {
-        LocalDate now = LocalDate.now();
-        return autoevaluationRepository.findByUserRole_User_IdAndInitDateLessThanEqualAndFinishDateGreaterThanEqual(userId, now, now);
-    }
+public class AutoevaluationService {
 }

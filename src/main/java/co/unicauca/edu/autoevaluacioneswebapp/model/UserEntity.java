@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Set;
 
@@ -58,6 +59,6 @@ public class UserEntity {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private ProfessorType professorType;
 
-    private boolean active = true;
+
 
 }

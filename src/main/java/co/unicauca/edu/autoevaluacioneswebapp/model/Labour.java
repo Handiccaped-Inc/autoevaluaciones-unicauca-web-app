@@ -16,6 +16,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
+import co.unicauca.edu.autoevaluacioneswebapp.model.Role;
+
 
 @Entity
 @NoArgsConstructor

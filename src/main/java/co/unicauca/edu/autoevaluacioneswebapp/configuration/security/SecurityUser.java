@@ -55,6 +55,6 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return userEntity.isActive();
+        return true;
     }
 }

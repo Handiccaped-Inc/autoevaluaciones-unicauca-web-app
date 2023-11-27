@@ -11,18 +11,23 @@
  */
 package co.unicauca.edu.autoevaluacioneswebapp.model;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 public class Autoevaluation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,14 +36,13 @@ public class Autoevaluation {
     @ManyToOne
     private Labour labour;
 
-    private boolean act;
+    private boolean Act;
 
     private LocalDate initDate;
 
     private LocalDate finishDate;
 
-    @Enumerated(EnumType.STRING)
-    private EAutoevaluationState state;
+    private String Estate;
 
     private String result;
 
