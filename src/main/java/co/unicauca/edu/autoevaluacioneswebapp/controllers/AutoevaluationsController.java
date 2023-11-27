@@ -59,12 +59,17 @@ public class AutoevaluationsController {
         model.addAttribute("autoevaluations", autoevaluations);
         model.addAttribute("userRole", userRole);
         model.addAttribute("userId", userId);
-        return "user-autoevaluations";
+
+        if (isCoordinator) {
+            return "user-autoevaluations-coordinator";
+        }
+
+        return "user-autoevaluations-professor";
     }
 
     @GetMapping("/add-autoevaluation/{userId}")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
-    public String addAutoevaluationForm(@PathVariable Long userId,Model model) {
+    public String addAutoevaluationForm(@PathVariable Long userId, Model model) {
         List<Labour> labours = labourService.findAll();
         Labour selectedLabour = new Labour();
 
@@ -79,8 +84,9 @@ public class AutoevaluationsController {
     @PostMapping("/add-autoevaluation")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String addAutoevaluation(@ModelAttribute("autoevaluation") Autoevaluation autoevaluation,
-            @ModelAttribute("selectedLabour") Labour selectedLabour,@RequestParam("userIdP") String userIdP, Model model) {
-         UserRole user = userRoleService.findByUserId(Long.parseLong(userIdP));
+            @ModelAttribute("selectedLabour") Labour selectedLabour, @RequestParam("userIdP") String userIdP,
+            Model model) {
+        UserRole user = userRoleService.findByUserId(Long.parseLong(userIdP));
         selectedLabour = labourService.findById(selectedLabour.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró la labor"));
         Autoevaluation autoevaluationsave = new Autoevaluation();

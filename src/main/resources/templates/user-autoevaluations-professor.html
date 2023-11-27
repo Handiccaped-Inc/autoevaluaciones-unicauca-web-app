@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realizar Autoevaluación</title>
+    <title>Tus Autoevaluaciones</title>
     <link th:replace="~{fragments/configuration :: bootstrap}">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}">
 </head>
@@ -19,23 +19,10 @@
         <div th:replace="~{fragments/navbar :: navbar('Jojan Serna')}"> </div>
 
         <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 100%; height: 100%;">
-            <h2 class="mb-4">Formulario de Evaluación</h2>
-
-            <form th:action="@{/autoevaluations/perform-autoevaluation}" method="post">
-
-                <div class="form-group">
-                    <label for="resultado">Resultado Evaluación:</label>
-                    <input type="number" class="form-control" id="resultado" name="resultado" required />
-                </div>
-
-                <div class="form-group">
-                    <label for="sugerencias">Sugerencias:</label>
-                    <textarea class="form-control" id="sugerencias" name="sugerencias" rows="4" required></textarea>
-                </div>
-
-                <button type="submit" class="btn btn-primary">Enviar</button>
-
-            </form>
+            <div th:replace="~{fragments/headers :: autoevaluation-head2}">
+            </div>
+            <div th:replace="~{fragments/tables :: tableAutoevaluationAll}">
+            </div>
         </div>
     </div>
 
