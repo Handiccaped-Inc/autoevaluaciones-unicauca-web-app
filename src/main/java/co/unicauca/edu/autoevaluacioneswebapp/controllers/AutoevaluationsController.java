@@ -139,15 +139,17 @@ public class AutoevaluationsController {
          model.addAttribute("userRole", userRole);
         return "realize-autoevaluation";
     }
-    @PostMapping("perform-autoevaluation")
+    @PostMapping("perform-autoevaluation/{autoevaluationId}")
     @PreAuthorize("hasRole('ROLE_DOCENTE')")
-    public String performAutoevaluation(@ModelAttribute("autoevaluations") List<Autoevaluation> autoevaluations,
+    public String performAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,@ModelAttribute("autoevaluation") Autoevaluation updatedAutoevaluation,@PathVariable Long autoevaluationId,
             Model model) {
-        for (Autoevaluation autoevaluation : autoevaluations) {
+             Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId).
+        orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+             autoevaluation.setEvaluation(updatedAutoevaluation.getEvaluation());
+             autoevaluation.setResult(updatedAutoevaluation.getResult());
             autoevaluation.setState(EAutoevaluationState.TERMINADO);
             autoevaluationFacade.save(autoevaluation);
-        }
-        return "redirect:/autoevaluations/perform-autoevaluation";
+        return "redirect:/autoevaluations/ShowProffesor-autoevaluation";
     }
 
 }

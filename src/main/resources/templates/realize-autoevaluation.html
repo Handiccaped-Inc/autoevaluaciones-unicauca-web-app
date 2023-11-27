@@ -24,7 +24,7 @@
         <h3 class="me-4" style="font-weight: 600;">Crear Docente</h3>
 
         <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 80%; height: 100%;">
-            <form th:action="@{/autoevaluations/perform-autoevaluation}" th:object="${autoevaluation}" method="post">
+            <form th:action="@{/autoevaluations/perform-autoevaluation/{autoevaluationId}(autoevaluationId=${autoevaluation.Id})}" th:object="${autoevaluation}" method="post">
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Labor</label>
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.labour.labourName}"></label>
