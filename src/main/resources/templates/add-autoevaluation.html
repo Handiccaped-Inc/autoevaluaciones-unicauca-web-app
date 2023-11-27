@@ -22,42 +22,11 @@
         <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 100%; height: 100%;">
             <div th:replace="~{fragments/headers :: autoevaluation-head1('Gestión de Autoevaluación', ${userId})}">
             </div>
+
             <div th:replace="~{fragments/tables :: tableAutoevaluationAdd}">
             </div>
 
         </div>
-    </div>
-
-    <div>
-        <form th:action="@{/autoevaluations/add-autoevaluation(userIdP=${userId})}" th:object="${autoevaluation}" method="post">
-            <p>
-                <label for="labour">Labor:</label>
-                <select id="labour" name="selectedLabour.id" th:field="*{id}">
-                    <option th:each="labour : ${labours}" th:value="${labour.id}" th:text="${labour.labourName}">
-                    </option>
-                </select>
-            </p>
-            <p th:text="${userId}">
-                <input name="userIdP" id="userIdP" type="hidden" th:value="${userId}">
-            </p>
-            <p>
-                <label for="act">Activo:</label>
-                <input id="act" type="checkbox" th:field="*{act}">
-            </p>
-            <p>
-                <label for="result">Resultado:</label>
-                <input id="result" type="text" th:field="*{result}">
-            </p>
-            <p>
-                <label for="evaluation">Evaluación:</label>
-                <input id="evaluation" name="evaluation" type="number" th:field="*{evaluation}">
-            </p>
-            <p>
-                <button type="submit">Enviar</button>
-            </p>
-        </form>
-    </div>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AutoevaluationService implements IAutoevaluationService {
@@ -48,5 +49,10 @@ public class AutoevaluationService implements IAutoevaluationService {
     public int countByState(EAutoevaluationState state) {
         LocalDate now = LocalDate.now();
         return autoevaluationRepository.countByInitDateLessThanAndFinishDateGreaterThanAndState(now,now, state);
+    }
+
+    @Override
+    public Optional<Autoevaluation> findById(Long autoEvaluationID) {
+        return autoevaluationRepository.findById(autoEvaluationID);
     }
 }

@@ -2,10 +2,13 @@ package co.unicauca.edu.autoevaluacioneswebapp.controllers;
 
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 import co.unicauca.edu.autoevaluacioneswebapp.model.*;
 import co.unicauca.edu.autoevaluacioneswebapp.services.*;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -40,7 +43,10 @@ public class UsersController {
     @GetMapping("/professor-management")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')")
     public String listProfessors(Model model) {
-        model.addAttribute("professors", userService.findAllByRole("ROLE_DOCENTE"));
+        List<UserEntity> proffesor = userService.findAllByRole("ROLE_DOCENTE");
+        proffesor.addAll(userService.findAllByRole("ROLE_COORDINADOR"));
+
+        model.addAttribute("professors", proffesor);
         return "professor-management";
 
     }

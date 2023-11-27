@@ -4,6 +4,7 @@ import co.unicauca.edu.autoevaluacioneswebapp.model.Autoevaluation;
 import co.unicauca.edu.autoevaluacioneswebapp.model.EAutoevaluationState;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IAutoevaluationService {
     public void save(Autoevaluation autoevaluation);
@@ -11,6 +12,8 @@ public interface IAutoevaluationService {
     List<Autoevaluation> findByUserId(Long userId);
 
     List<Autoevaluation> findAll();
+
+    Optional<Autoevaluation> findById(Long autoevaluationId);
 
     int countAll();
 

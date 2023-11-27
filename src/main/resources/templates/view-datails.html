@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realizar Autoevaluación</title>
+    <link th:replace="~{fragments/configuration :: bootstrap}">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}">
+</head>
+
+<body class="vh-100 d-flex justify-content-start align-items-start flex-row"
+    style="font-family: Inter; background-color: #0E0E0E; color: #FFFFFF;">
+
+    <div th:replace="~{fragments/menu :: menuProfessor('/autoevaluations/autoevaluation-management')}">
+    </div>
+
+
+    <div class="mx-3" style="width: 100%;">
+        <div th:replace="~{fragments/navbar :: navbar('Jojan Serna')}"></div>
+
+        <h1 class="mt-4 mb-3" style="font-weight: 600;">Realizar Autoevaluación</h1>
+
+        <h3 class="me-4" style="font-weight: 600;">Crear Docente</h3>
+
+        <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 80%; height: 100%;" th:object="${autoevaluation}">
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Docente</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.userRole.user.firstName + ' ' + autoevaluation.userRole.user.lastName}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">ID</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.userRole.user.personalId}"></label>
+                </div>
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Labor</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.labour.labourName}"></label>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Tipo Labor</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.labour.type.description}"></label>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Horas Asignadas</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.labour.assignedHours}"></label>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">resultados</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.result}"></label>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Autoevaluación</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.evaluation.toString()}"></label>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Sugestiones</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.suggestion}"></label>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Estado</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.state}"></label>
+                </div>
+
+                <div class="mb-4" style="max-width: 320px;">
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Observaciones</label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.state}"></label>
+                </div>
+
+                <div class="mb-5">
+                    <div th:replace="~{fragments/buttons :: button2('/autoevaluations/ShowProffesor-autoevaluation','Retroceder')}"></div>
+                </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
+</body>
+
+</html>

@@ -3,11 +3,18 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Bienvenida</title>
+    <title>Acceso Denegado</title>
+    <link th:replace="~{fragments/configuration :: bootstrap}">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" th:href="@{/css/style.css}">
 </head>
 
-<body>
-    <h1>Acceso denegado</h1>
+<body class="d-flex align-items-center justify-content-center"
+    style="min-height: 100vh; background-color: #0E0E0E; color: #FFFFFF; font-family: Inter;">
+
+    <div class="text-center">
+        <h1 class="mb-5" style="font-weight: 800;">Acceso Denegado</h1>
+    </div>
+
 </body>
 
 </html>

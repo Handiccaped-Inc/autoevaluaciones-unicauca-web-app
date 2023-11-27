@@ -12,6 +12,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.http.HttpMethod;
 
 @Configuration
 @EnableWebSecurity
@@ -57,11 +58,20 @@ public class SecurityConfiguration {
         }
 
         public AuthenticationSuccessHandler successHandler() {
-                return ((request, response, authentication) -> response.sendRedirect("/users/professor-management"));
+                return ((request, response, authentication) -> {
+                        if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_COORDINADOR"))) {
+                                response.sendRedirect("/users/professor-management");
+                            } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_DOCENTE"))) {
+                                response.sendRedirect("/autoevaluations/ShowProffesor-autoevaluation");
+                            } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_DECANO"))) {
+                                response.sendRedirect("/autoevaluations/autoevaluation-management");
+                            }
+                });
         }
 
         @Bean
         public PasswordEncoder passwordEncoder() {
                 return PasswordEncoderFactories.createDelegatingPasswordEncoder();
         }
+
 }

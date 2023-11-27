@@ -49,3 +49,35 @@
         </div>
     </nav>
 </div>
+
+<div th:fragment="menuProfessor(link)" class="d-flex" style="height: 100%;">
+    <nav class="navbar navbar-expand-md align-items-start">
+        <div class="container-fluid flex-column" style="font-weight: 800;">
+            <a class="collapse navbar-collapse navbar-brand text-center text-white mb-5" href="#">
+                <span class="fs-4" style="font-weight: 800;">Gestión de<br> Autoevaluación</span>
+            </a>
+            <button class="navbar-toggler me-auto mb-3" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav flex-column" style="font-weight: 600;">
+                    <li class="nav-item">
+                        <a th:href="${link}" class="nav-link d-flex align-items-center text-white">
+                            <svg class="bi me-3" width="23" height="20">
+                                <path
+                                    d="M5 5.83333H11.6667V7.49999H5V5.83333ZM5 9.16666H15V10.8333H5V9.16666ZM5 12.5H7.49167V14.1667H5V12.5Z"
+                                    fill="white" />
+                                <path
+                                    d="M11.8 2.5L9.1 0V1.66667H2.8C2.32261 1.66667 1.86477 1.84226 1.52721 2.15482C1.18964 2.46738 1 2.89131 1 3.33333V16.6667C1 17.1087 1.18964 17.5326 1.52721 17.8452C1.86477 18.1577 2.32261 18.3333 2.8 18.3333H6.4V16.6667H2.8V3.33333H9.1V5L11.8 2.5ZM8.2 17.5L10.9 20V18.3333H17.2C17.6774 18.3333 18.1352 18.1577 18.4728 17.8452C18.8104 17.5326 19 17.1087 19 16.6667V3.33333C19 2.89131 18.8104 2.46738 18.4728 2.15482C18.1352 1.84226 17.6774 1.66667 17.2 1.66667H13.6V3.33333H17.2V16.6667H10.9V15L8.2 17.5Z"
+                                    fill="white" />
+                            </svg>
+                            Autoevaluación
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
