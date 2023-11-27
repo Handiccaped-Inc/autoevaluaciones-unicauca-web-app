@@ -27,13 +27,9 @@
 
             var url = 'https://correos-sw3.onrender.com/enviar_correo';
 
-            var currentDomain = window.location.origin;
-
             fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Access-Control-Allow-Origin': currentDomain,
-                    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(jsonData),
