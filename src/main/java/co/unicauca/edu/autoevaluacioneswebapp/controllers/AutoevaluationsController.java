@@ -39,19 +39,21 @@ public class AutoevaluationsController {
     @GetMapping("/autoevaluation-management")
     @PreAuthorize("hasRole('ROLE_COORDINADOR')  or hasRole('ROLE_DECANO')")
     public String getAutoevaluations(@AuthenticationPrincipal SecurityUser userDetails, Model model) {
-          boolean isDecano = userDetails.getAuthorities().stream()
+        boolean isDecano = userDetails.getAuthorities().stream()
                 .anyMatch(authority -> authority.getAuthority().equals("ROLE_DECANO"));
         List<Autoevaluation> autoevaluations;
         autoevaluations = autoevaluationFacade.findAll();
-        if(isDecano){
+        if (isDecano) {
             List<Autoevaluation> autoevaluationsToSend = new ArrayList<>();
             for (Autoevaluation autoevaluation : autoevaluations) {
-                if(autoevaluation.getUserRole().getRole().getName().equals(ERole.valueOf("ROLE_COORDINADOR"))){
-                    autoevaluationsToSend.add(autoevaluation);}}
-             model.addAttribute("autoevaluations", autoevaluationsToSend);
-             model.addAttribute("userId", userDetails.getId());
-             return "autoevaluation-management";
-    }
+                if (autoevaluation.getUserRole().getRole().getName().equals(ERole.valueOf("ROLE_COORDINADOR"))) {
+                    autoevaluationsToSend.add(autoevaluation);
+                }
+            }
+            model.addAttribute("autoevaluations", autoevaluationsToSend);
+            model.addAttribute("userId", userDetails.getId());
+            return "autoevaluation-management";
+        }
         model.addAttribute("autoevaluations", autoevaluations);
         model.addAttribute("userId", userDetails.getId());
         return "autoevaluation-management";
@@ -104,7 +106,7 @@ public class AutoevaluationsController {
         Autoevaluation autoevaluationsave = new Autoevaluation();
         autoevaluationsave.setUserRole(user);
         autoevaluationsave.setLabour(selectedLabour);
-        autoevaluationsave.setState(EAutoevaluationState.EJECUCION);
+        autoevaluationsave.setState(autoevaluation.getState());
         autoevaluationsave.setInitDate(AcademicPeriod.getInitDate());
         autoevaluationsave.setFinishDate(AcademicPeriod.getEndDate());
         autoevaluationsave.setAct(autoevaluation.isAct());
