@@ -58,8 +58,15 @@ public class AutoevaluationsController {
             model.addAttribute("autoevaluations", autoevaluationsToSend);
             model.addAttribute("userId", userDetails.getId());
             return "autoevaluation-management";
+        }else{
+            List<Autoevaluation> autoevaluationsToSend = new ArrayList<>();
+            for (Autoevaluation autoevaluation : autoevaluations) {
+                if (autoevaluation.getUserRole().getRole().getName().equals(ERole.valueOf("ROLE_DOCENTE"))) {
+                    autoevaluationsToSend.add(autoevaluation);
+                }
+            }
+             model.addAttribute("autoevaluations", autoevaluationsToSend);
         }
-        model.addAttribute("autoevaluations", autoevaluations);
         model.addAttribute("userId", userDetails.getId());
         return "autoevaluation-management";
     }
@@ -111,7 +118,7 @@ public class AutoevaluationsController {
         Autoevaluation autoevaluationsave = new Autoevaluation();
         autoevaluationsave.setUserRole(user);
         autoevaluationsave.setLabour(selectedLabour);
-        autoevaluationsave.setState(autoevaluation.getState());
+        autoevaluationsave.setState(EAutoevaluationState.SUSPENDIDO);
         autoevaluationsave.setInitDate(AcademicPeriod.getInitDate());
         autoevaluationsave.setFinishDate(AcademicPeriod.getEndDate());
         autoevaluationsave.setAct(autoevaluation.isAct());
@@ -158,7 +165,7 @@ public class AutoevaluationsController {
     }
 
     @GetMapping("ShowProffesor-autoevaluation")
-    @PreAuthorize("hasRole('ROLE_DOCENTE')")
+    @PreAuthorize("hasRole('ROLE_DOCENTE') or hasRole('ROLE_COORDINADOR')")
     public String ShowProffesorAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails, Model model) {
         UserRole userRole = userRoleService.findByUserId(userDetails.getUserEntity().getId());
         List<Autoevaluation> autoevaluations = userRole.getAutoevaluations();
@@ -179,7 +186,7 @@ public class AutoevaluationsController {
     }
 
     @GetMapping("perform-autoevaluation/{autoevaluationId}")
-    @PreAuthorize("hasRole('ROLE_DOCENTE')")
+    @PreAuthorize("hasRole('ROLE_DOCENTE')or hasRole('ROLE_COORDINADOR')")
     public String perfomAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,
             @PathVariable Long autoevaluationId, Model model) {
         UserRole userRole = userRoleService.findByUserId(userDetails.getUserEntity().getId());
@@ -191,7 +198,7 @@ public class AutoevaluationsController {
     }
 
     @PostMapping("perform-autoevaluation/{autoevaluationId}")
-    @PreAuthorize("hasRole('ROLE_DOCENTE')")
+    @PreAuthorize("hasRole('ROLE_DOCENTE') or hasRole('ROLE_COORDINADOR')")
     public String performAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,
             @ModelAttribute("autoevaluation") Autoevaluation updatedAutoevaluation, @PathVariable Long autoevaluationId,
             Model model) {
@@ -233,7 +240,7 @@ public class AutoevaluationsController {
         return "redirect:/autoevaluations/autoevaluation-management";}
 
     @GetMapping("/view-deatails/{autoevaluationId}")
-    @PreAuthorize("hasRole('ROLE_DOCENTE')")
+    @PreAuthorize("hasRole('ROLE_DOCENTE') or hasRole('ROLE_COORDINADOR')")
     public String viewDetailsDocente(@AuthenticationPrincipal SecurityUser userDetails,
             @PathVariable Long autoevaluationId, Model model){
         Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
