@@ -185,3 +185,39 @@
         </table>
     </form>
 </div>
+
+
+<div th:fragment="tableAutoevaluationDocente" style="overflow-y: auto;">
+    <table class="table table-striped" style="text-align: center; border-radius: 10px;
+        overflow: hidden;">
+        <thead class="table-dark align-middle">
+            <tr>
+                <th style="background-color: #7752FE !important;">ID</th>
+                <th style="background-color: #7752FE !important;">Labor</th>
+                <th style="background-color: #7752FE !important; min-width: 100px;">TipoLabor</th>
+                <th style="background-color: #7752FE !important; min-width: 100px;">Horas Asignadas</th>
+                <th style="background-color: #7752FE !important;">Fecha Inicio</th>
+                <th style="background-color: #7752FE !important;">Fecha Fin</th>
+                <th style="background-color: #7752FE !important;">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody class="align-middle">
+            <tr class="table-dark" th:each="autoevaluation: ${autoevaluations}">
+                <td th:text="${autoevaluation.id}"></td>
+                <td th:text="${autoevaluation.labour.labourName}">
+                </td>
+                <td th:text="${autoevaluation.labour.type.code}"></td>
+                <td th:text="${autoevaluation.labour.assignedHours.toString()}"></td>
+                <td th:text="${autoevaluation.initDate.toString()}"></td>
+                <td th:text="${autoevaluation.finishDate.toString()}"></td>
+
+                <td>
+                    <a th:href="@{/autoevaluations/perform-autoevaluation/{autoevaluationId}(autoevaluationId=${autoevaluation.Id})}"
+                        class="btn btn-info btn-sm text-white">Realizar</a>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

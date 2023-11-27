@@ -18,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequestMapping("/autoevaluations")
@@ -111,9 +112,9 @@ public class AutoevaluationsController {
         return "autoevaluations-report";
     }
 
-    @GetMapping("perform-autoevaluation")
+    @GetMapping("ShowProffesor-autoevaluation")
     @PreAuthorize("hasRole('ROLE_DOCENTE')")
-    public String performAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails, Model model) {
+    public String ShowProffesorAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails, Model model) {
         UserRole userRole = userRoleService.findByUserId(userDetails.getUserEntity().getId());
         List<Autoevaluation> autoevaluations = userRole.getAutoevaluations();
         List<Autoevaluation> autoevaluationsToPerform = new ArrayList<>();
@@ -128,6 +129,16 @@ public class AutoevaluationsController {
         return "perform-autoevaluation";
     }
 
+     @GetMapping("perform-autoevaluation/{autoevaluationId}")
+     @PreAuthorize("hasRole('ROLE_DOCENTE')")
+    public String perfomAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,@PathVariable Long autoevaluationId, Model model){
+        UserRole userRole = userRoleService.findByUserId(userDetails.getUserEntity().getId());
+        Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId).
+        orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+         model.addAttribute("autoevaluation", autoevaluation);
+         model.addAttribute("userRole", userRole);
+        return "realize-autoevaluation";
+    }
     @PostMapping("perform-autoevaluation")
     @PreAuthorize("hasRole('ROLE_DOCENTE')")
     public String performAutoevaluation(@ModelAttribute("autoevaluations") List<Autoevaluation> autoevaluations,

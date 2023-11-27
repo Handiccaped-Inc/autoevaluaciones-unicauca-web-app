@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class AutoevaluationFacade {
@@ -46,6 +48,11 @@ public class AutoevaluationFacade {
         return autoevaluationService.findByUserId(userId);
     }
 
+    public Optional<Autoevaluation> findAutoevaluationbyId(Long autoevaluationId){
+        Autoevaluation aut = autoevaluationService.findById(autoevaluationId).
+        orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
+        return autoevaluationService.findById(autoevaluationId);
+    }
 
     public List<Autoevaluation> findAll() {
         return autoevaluationService.findAll();

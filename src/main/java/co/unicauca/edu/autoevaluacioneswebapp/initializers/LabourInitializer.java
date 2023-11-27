@@ -27,19 +27,19 @@ public class LabourInitializer implements ApplicationRunner {
         Labour labor1 = Labour.builder()
                 .labourName("Ingeneria De software")
                 .type(LabourType.builder()
-                        .code("CC")
+                        .code("D")
                         .description("Labor de pablo")
                         .build())
-                .assignedHours(30)
+                .assignedHours(100)
                 .active(true)
                 .build();
         Labour labor2 = Labour.builder()
                 .labourName("Ingeneria De Requisitos")
                 .type(LabourType.builder()
-                        .code("JJ")
+                        .code("TD")
                         .description("Labor de Santiago")
                         .build())
-                .assignedHours(50)
+                .assignedHours(100)
                 .active(true)
                 .build();
 

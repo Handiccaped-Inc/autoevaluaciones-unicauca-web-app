@@ -58,7 +58,15 @@ public class SecurityConfiguration {
         }
 
         public AuthenticationSuccessHandler successHandler() {
-                return ((request, response, authentication) -> response.sendRedirect("/users/professor-management"));
+                return ((request, response, authentication) -> {
+                        if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_COORDINADOR"))) {
+                                response.sendRedirect("/users/professor-management");
+                            } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_DOCENTE"))) {
+                                response.sendRedirect("/autoevaluations/ShowProffesor-autoevaluation");
+                            } else if (authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_DECANO"))) {
+                                response.sendRedirect("/users/professor-management");
+                            }
+                });
         }
 
         @Bean
