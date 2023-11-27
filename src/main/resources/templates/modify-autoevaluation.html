@@ -12,7 +12,8 @@
 <body class="vh-100 d-flex justify-content-start align-items-start flex-row"
     style="font-family: Inter; background-color: #0E0E0E; color: #FFFFFF;">
 
-    <div th:replace="~{fragments/menu :: menu('/users/professor-management','/labours/labour-management','/autoevaluations/autoevaluation-management')}">
+    <div
+        th:replace="~{fragments/menu :: menu('/users/professor-management','/labours/labour-management','/autoevaluations/autoevaluation-management')}">
     </div>
 
 
@@ -24,41 +25,52 @@
         <h3 class="me-4" style="font-weight: 600;">Crear Docente</h3>
 
         <div class="d-flex flex-column flex-shrink-0 text-white" style="width: 80%; height: 100%;">
-            <form th:action="@{/autoevaluations/modify-autoevaluation/{autoevaluationId}(autoevaluationId=${autoevaluation.Id})}" th:object="${autoevaluation}" method="post">
+            <form
+                th:action="@{/autoevaluations/modify-autoevaluation/{autoevaluationId}(autoevaluationId=${autoevaluation.Id})}"
+                th:object="${autoevaluation}" method="post">
+                <input type="hidden" name="correoDestinatario" th:value="${autoevaluation.userRole.user.email}" />
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Docente</label>
-                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.userRole.user.firstName + ' ' + autoevaluation.userRole.user.lastName}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;"
+                        th:text="${autoevaluation.userRole.user.firstName + ' ' + autoevaluation.userRole.user.lastName}"></label>
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">ID</label>
-                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.userRole.user.personalId}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;"
+                        th:text="${autoevaluation.userRole.user.personalId}"></label>
                 </div>
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Labor</label>
-                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.labour.labourName}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;"
+                        th:text="${autoevaluation.labour.labourName}"></label>
                 </div>
 
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Tipo Labor</label>
-                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.labour.type.description}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;"
+                        th:text="${autoevaluation.labour.type.description}"></label>
                 </div>
 
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Horas Asignadas</label>
-                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.labour.assignedHours}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;"
+                        th:text="${autoevaluation.labour.assignedHours}"></label>
                 </div>
 
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">resultados</label>
-                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.result}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;"
+                        th:text="${autoevaluation.result}"></label>
                 </div>
 
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Autoevaluación</label>
-                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.result}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;"
+                        th:text="${autoevaluation.result}"></label>
                 </div>
 
                 <div class="mb-4" style="max-width: 320px;">
                     <label class="mb-1" style="font-weight: 600; color: #FFFFFF;">Sugestiones</label>
-                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;" th:text="${autoevaluation.suggestion}"></label>
+                    <label class="mb-1" style="font-weight: 600; color: #FFFFFF;"
+                        th:text="${autoevaluation.suggestion}"></label>
                 </div>
 
                 <div class="mb-4" style="max-width: 320px;">

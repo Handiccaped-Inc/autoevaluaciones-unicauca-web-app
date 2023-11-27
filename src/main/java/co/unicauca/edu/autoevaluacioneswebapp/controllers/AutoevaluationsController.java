@@ -111,7 +111,7 @@ public class AutoevaluationsController {
         Autoevaluation autoevaluationsave = new Autoevaluation();
         autoevaluationsave.setUserRole(user);
         autoevaluationsave.setLabour(selectedLabour);
-        autoevaluationsave.setState(EAutoevaluationState.SUSPENDIDO);
+        autoevaluationsave.setState(autoevaluation.getState());
         autoevaluationsave.setInitDate(AcademicPeriod.getInitDate());
         autoevaluationsave.setFinishDate(AcademicPeriod.getEndDate());
         autoevaluationsave.setAct(autoevaluation.isAct());
@@ -134,19 +134,16 @@ public class AutoevaluationsController {
     @PreAuthorize("hasRole('ROLE_COORDINADOR')  or hasRole('ROLE_DECANO')")
     public String modifyAutoevaluation(@AuthenticationPrincipal SecurityUser userDetails,
             @ModelAttribute("autoevaluation") Autoevaluation updatedAutoevaluation,
-            @PathVariable Long autoevaluationId, Model model) {
+            @PathVariable Long autoevaluationId, Model model, @RequestParam String correoDestinatario) {
         Autoevaluation autoevaluation = autoevaluationFacade.findAutoevaluationbyId(autoevaluationId)
                 .orElseThrow(() -> new NoSuchElementException("Autoevaluacion no Encontrada "));
-        if(updatedAutoevaluation.getState().equals(EAutoevaluationState.valueOf("EJECUCION"))){
-            /**
-             * Mandar El Correo
-             */
+        if (updatedAutoevaluation.getState().equals(EAutoevaluationState.valueOf("EJECUCION"))) {
+            enviarCorreo(correoDestinatario, "Hola");
         }
         autoevaluation.setObservation(updatedAutoevaluation.getObservation());
         autoevaluation.setState(updatedAutoevaluation.getState());
         autoevaluationFacade.save(autoevaluation);
         return "redirect:/autoevaluations/autoevaluation-management";
-
     }
 
     @GetMapping("autoevaluations-report")
